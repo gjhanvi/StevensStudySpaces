@@ -58,6 +58,19 @@ let passwordChecker = (string) =>
 }
 };
 
+let checkId = (id, field) => {
+  
+};
+
+let checkFloor = (floor, building) => {
+  //assuming we will need to check each floor/building input to make sure the floor is a valid number for that building
+  //gonna have to do some research for this 
+};
+
+let checkRating = (rating, type) => { //type is either location, noise, or view
+  //rating needs to be integer 0 to 5
+};
+
 let checkUsername = async (username) =>{
   //check if username is a valid string
   username = username.trim();
@@ -117,3 +130,4 @@ let checkPassword = async (password) =>{
 }
 
   module.exports = {stringChecker,letternumberonly,letterSpaceNumber,letterSpacesOnly,letterOnly,passwordChecker,checkUsername,checkPassword};
+
