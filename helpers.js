@@ -55,5 +55,18 @@ let passwordChecker = (string) =>
 }
 };
 
+let checkId = (id, field) => {
+  
+};
 
-  module.exports = {stringChecker,letternumberonly,letterSpaceNumber,letterSpacesOnly,letterOnly,passwordChecker};
+let checkFloor = (floor, building) => {
+  //assuming we will need to check each floor/building input to make sure the floor is a valid number for that building
+  //gonna have to do some research for this 
+};
+
+let checkRating = (rating, type) => { //type is either location, noise, or view
+  //rating needs to be integer 0 to 5
+};
+
+
+  module.exports = {stringChecker,letternumberonly,letterSpaceNumber,letterSpacesOnly,letterOnly,passwordChecker, checkId, checkFloor, checkRating};
