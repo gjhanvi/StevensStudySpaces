@@ -36,7 +36,7 @@ const addPost = async(
 }
 
 const removePost = async(postId) => {
-    postId = validation.checkId(postId, 'ID');
+    postId = helpers.checkId(postId, 'ID');
     const postCollection = await posts();
 
     
