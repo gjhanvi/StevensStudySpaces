@@ -1,0 +1,24 @@
+{{! This will be your default layout for all handlebars file rendered. This will be inherited by all other templates. }}
+{{! Refer lecture code to learn more on how this works }}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{title}}</title>
+</head>
+<body>
+    <header>
+    <p class="mainhead">People Finder</p>
+    <a class="headReturn" href="/">Back to homepage</a>
+    </header>
+    
+    <p class="slogan">A Site Where People Can Be Found</p>
+    <main>
+        {{{body}}}
+    </main>
+    <footer>
+        <a class="backer" href="/">Back to homepage</a>
+    </footer>
+</body>
+</html>
