@@ -5,7 +5,7 @@ const helpFunctions = require("../helpers.js");
 const postData = require("../data/posts.js");
 
 router
-  .route('/')
+  .route('/posts')
   .get(async (req, res) => {
     //code here for GET
     if(req.session.user)
