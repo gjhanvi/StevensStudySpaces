@@ -1,0 +1,24 @@
+{{!--
+
+-If the user is not authenticaed and hits the endpoint 'GET /', you will render this view with a login form.
+-The form will contain two inputs, one for username and one for password.
+-The form will be used to submit a POST request to the '/login' route on the server and must have an 'id' of 'login-form'.
+-The input for the username must have a 'name' and 'id' of 'usernameInput'.
+-The input for the password must have 'name' and 'id' of 'passwordInput' and should be an input 'type' of 'password'.
+-You will also have a link on this page that links to '/register' and has the text "Click here to register!"
+
+Do not forget to use labels for your inputs! For the labels, you will use the method of using the 'for' attribute.
+You should have a label for both the username and password inputs referencing their id's in the for attribute of the label.
+
+--}}
+
+<p>{{error}}</p>
+<form action="/login" method="POST" id="login-form">
+    <label for="usernameInput">Username</label>
+    <input id="usernameInput" type="text" name="usernameInput" />
+    <label for="passwordInput">Password</label>
+    <input id="passwordInput" type="password" name="passwordInput"  />
+    <button type="submit">Sign in</button>
+</form>
+
+<a href="/register">Click here to register!</a>

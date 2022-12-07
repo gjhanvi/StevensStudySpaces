@@ -1,0 +1,27 @@
+{
+  "name": "stevensstudyspaces",
+  "version": "1.0.0",
+  "description": "A forum where users can review or share new study spots at Stevens. We seek to build a website where you can go and find the perfect study spot for you or your group.",
+  "main": "app.js",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.1",
+    "express": "^4.18.2",
+    "express-handlebars": "^6.0.6",
+    "express-session": "^1.17.3",
+    "mongodb": "^4.12.0"
+  },
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gjhanvi/StevensStudySpaces.git"
+  },
+  "author": "Susan McAloon, Zachary Zajack, Shreya Patel, Jhanvi Ganesh, Steven Truong",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gjhanvi/StevensStudySpaces/issues"
+  },
+  "homepage": "https://github.com/gjhanvi/StevensStudySpaces#readme"
+}
