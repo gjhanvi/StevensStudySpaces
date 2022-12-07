@@ -5,7 +5,7 @@ const helpFunctions = require("../helpers.js");
 const userData = require("../data/users.js");
 
 router
-  .route('/')
+  .route('/buildings')
   .get(async (req, res) => {
     //code here for GET
     if(req.session.user)
