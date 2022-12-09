@@ -5,9 +5,9 @@ const buildingRoutes = require("./building");
 
 const constructorMethod = (app) => {
   app.use('/', userRoutes);
-  app.use('/', postRoutes);
-  app.use('/', commentRoutes);
-  app.use('/', buildingRoutes);
+  app.use('/post', postRoutes);
+  app.use('/comment', commentRoutes);
+  app.use('/building', buildingRoutes);
   app.use('*', (req, res) => {
     res.sendStatus(404);
   });
