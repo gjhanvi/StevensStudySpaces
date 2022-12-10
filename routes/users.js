@@ -94,7 +94,7 @@ router
   .get(async (req, res) => {
     if(req.session.user)
     {
-      res.render('private', {title: "home", username:  req.session.user, date: new Date().toUTCString()}); // Needs to be whatever homepage it is and render that.
+      res.render('homepage', {title: "home", username:  req.session.user, date: new Date().toUTCString()}); // Needs to be whatever homepage it is and render that.
     }
     else
     {
