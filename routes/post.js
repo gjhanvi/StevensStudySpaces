@@ -11,7 +11,7 @@ router
     if(req.session.user)
     {
       //const postList = await postdata.getAllPosts();
-      //res.render('userLogin', {title: "Login"}); Need tp render a page that shows all the posts.
+      //res.render('userLogin', {title: "Login"}); Need to render a page that shows a good amount of posts.
     }
     else
     {
@@ -34,19 +34,16 @@ router
   .post(async (req, res) => {
     if(req.session.user)
     {
+      // buildingInput
+      // floorInput
+      // descInput
+      // noiseInput
+      // locationInput
+      // capacityInput
+      // nycInput
+      // foodInput
       //const postList = await postdata.addPost();
-      //res.render('userLogin', {title: "Login"}); Needs to add a new post
-    }
-    else
-    {
-      res.render('userLogin', {title: "Login"});
-    }
-  })
-  .delete(async (req, res) => {
-    if(req.session.user)
-    {
-      //const postList = await postdata.deletePost(CHANGEME);
-      //res.render('userLogin', {title: "Login"}); Needs to add a new post
+      //res.render('userLogin', {title: "Login"}); Render page with post
     }
     else
     {
@@ -54,4 +51,32 @@ router
     }
   })
 
+router
+  .route('/like')
+  .post(async (req, res) => {
+    if(req.session.user)
+    {
+      //check that user has not liked the post before
+      //const postList = await postdata.addLike();
+      //res.render('userLogin', {title: "Login"}); Needs to refresh the page
+    }
+    else
+    {
+      res.render('userLogin', {title: "Login"});
+    }
+  })
+router
+  .route('/dislike')
+  .post(async (req, res) => {
+    if(req.session.user)
+    {
+      //check that user has not disliked the post before
+      //const postList = await postdata.removeLike ();
+      //res.render('userLogin', {title: "Login"}); Needs to refresh the page
+    }
+    else
+    {
+      res.render('userLogin', {title: "Login"});
+    }
+  })
 module.exports = router ;
