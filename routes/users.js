@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const helpFunctions = require("../helpers.js");
 const userData = require("../data/users.js");
+const { ObjectId } = require("mongodb");
 
 router
   .route('/')
@@ -80,6 +81,7 @@ router
       else
       {
         req.session.user = req.body.usernameInput;
+        req.session.userId = temp;
         res.redirect('/home');
       }
     }
@@ -100,6 +102,21 @@ router
     {
       res.status(403).render('forbiddenAccess');
     }
+  })
+
+  router
+  .route("/home/:userId")
+  .get(async (req, res) => {
+    if (
+      !req.params.userId ||
+      helper.stringChecker(req.params.userId) ||
+      !ObjectId.isValid(req.params.userId)
+    ) {
+      // res.status(400).json({ error: "invalid id" });
+      // return null;
+    }
+      //const post = await postdata.getUserById(req.params.userId);
+      //res.render('userLogin', {title: "Login"}); Need to render a page that shows a good amount of posts.
   })
 
 router

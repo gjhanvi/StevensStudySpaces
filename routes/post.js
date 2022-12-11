@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const helpFunctions = require("../helpers.js");
 const postdata = require("../data/users.js");
+const { ObjectId } = require("mongodb");
 
 router
   .route('/')
@@ -18,6 +19,24 @@ router
       res.render('userLogin', {title: "Login"});
     }
   })
+
+  router
+  .route("/:postId")
+  .get(async (req, res) => {
+    if (
+      !req.params.postId ||
+      helper.stringChecker(req.params.postId) ||
+      !ObjectId.isValid(req.params.postId)
+    ) {
+      // res.status(400).json({ error: "invalid id" });
+      // return null;
+    }
+      //const post = await postdata.getPostByID(req.params.postId);
+      //res.render('userLogin', {title: "Login"}); Need to render a page that shows a good amount of posts.
+  })
+
+
+
 router
   .route("/new")
   .get(async (req, res) => 
