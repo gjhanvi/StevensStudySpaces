@@ -3,7 +3,8 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const helpFunctions = require("../helpers.js");
-const commentData = require("../data/comment.js");
+const commentData = require("../data/comments.js");
+const { ObjectId } = require("mongodb");
 
 router
   .route('/')
@@ -29,5 +30,16 @@ router
       res.render('userLogin', {title: "Login"});
     }
   })
-
-module.exports = router ;
+  .delete(async (req, res) => {
+    if(req.session.user)
+    {
+      //const temp = awaut commentData.createComment(X,Y,Z);
+      //res.render('userLogin', {title: "Login"}); Needs to render page of post with your comment visibly.
+    }
+    else
+    {
+      res.render('userLogin', {title: "Login"});
+    }
+  })
+  
+  module.exports = router ;
