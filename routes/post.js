@@ -13,7 +13,7 @@ router
       if(req.session.user)
       {
         //const postList = await postdata.getAllPosts();
-        //res.render('userLogin', {title: "Login"}); Need to render a page that shows a good amount of posts.
+        //res.render('posts', {post:postList, title: "Posts"}); Need to render a page that shows a good amount of posts.
       }
       else
       {
@@ -35,7 +35,7 @@ router
         // res.status(400).json({ error: "invalid id" });
       }
         //const post = await postdata.getPostByID(req.params.postId);
-        //res.render('userLogin', {title: "Login"}); Need to render a page that shows a good amount of posts.      
+        //res.render('posts', {post:post, title: "Post"}); Need to render a page that shows a good amount of posts.      
     } catch (error) {
       
     }
@@ -51,7 +51,7 @@ router
     try {
       if(req.session.user)
       {
-        //res.render('userLogin', {title: "Login"}); Need to render a page that shows the post form
+        //res.render('newPost', {title: "New Post"}); Need to render a page that shows the post form
       }
       else
       {
@@ -74,7 +74,7 @@ router
         // nycInput
         // foodInput
         //const postList = await postdata.addPost();
-        //res.render('userLogin', {title: "Login"}); Render page with post
+        //res.render('posts', {post: postlist, title: "Posts"}); Render page with post
       }
       else
       {
@@ -93,7 +93,7 @@ router
       {
         //check that user has not liked the post before
         //const postList = await postdata.addLike();
-        //res.render('userLogin', {title: "Login"}); Needs to refresh the page
+        //res.render('posts', {post: postlist, title: "Posts"}); refresh page
       }
       else
       {
@@ -111,7 +111,7 @@ router
       {
         //check that user has not disliked the post before
         //const postList = await postdata.removeLike ();
-        //res.render('userLogin', {title: "Login"}); Needs to refresh the page
+        //res.render('posts', {post: postlist, title: "Posts"}); refresh page
       }
       else
       {
