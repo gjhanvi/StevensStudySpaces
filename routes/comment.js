@@ -20,25 +20,34 @@ router
     }
   })
   .post(async (req, res) => {
-    if(req.session.user)
-    {
-      //const temp = awaut commentData.createComment(X,Y,Z);
-      //res.render('userLogin', {title: "Login"}); Needs to render page of post with your comment visibly.
+    try {
+      if(req.session.user)
+      {
+        //const temp = awaut commentData.createComment(X,Y,Z);
+        //res.render('userLogin', {title: "Login"}); Needs to render page of post with your comment visibly.
+      }
+      else
+      {
+        res.render('userLogin', {title: "Login"});
+      }   
+    } catch (error) {
+      
     }
-    else
-    {
-      res.render('userLogin', {title: "Login"});
-    }
+  
   })
   .delete(async (req, res) => {
-    if(req.session.user)
-    {
-      //const temp = awaut commentData.createComment(X,Y,Z);
-      //res.render('userLogin', {title: "Login"}); Needs to render page of post with your comment visibly.
-    }
-    else
-    {
-      res.render('userLogin', {title: "Login"});
+    try {
+      if(req.session.user)
+      {
+        //const temp = awaut commentData.createComment(X,Y,Z);
+        //res.render('userLogin', {title: "Login"}); Needs to render page of post with your comment visibly.
+      }
+      else
+      {
+        res.render('userLogin', {title: "Login"});
+      } 
+    } catch (error) {
+      
     }
   })
   
