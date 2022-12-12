@@ -35,7 +35,7 @@ router
       else {
         helpFunctions.stringChecker(req.body.usernameInput, "Username");
         helpFunctions.stringChecker(req.body.passwordInput, "Password");
-        temp = await userData.createUser(req.body.usernameInput, req.body.passwordInput);
+        let temp = await userData.createUser(req.body.usernameInput, req.body.passwordInput);
         if (temp.insertedUser !== true) {
           res.status(500).render('userRegister', { title: "Register", error: "Internal Server Error" }); // 500 error
         }

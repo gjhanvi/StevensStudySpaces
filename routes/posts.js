@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const helpFunctions = require("../helpers.js");
-const postdata = require("../data/users.js");
+const postdata = require("../data/posts.js");
 const { ObjectId } = require("mongodb");
 
 router
