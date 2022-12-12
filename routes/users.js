@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const helpFunctions = require("../helpers");
-const userData = require("../data/users");
+const bcrypt = require('bcrypt');
+const helpFunctions = require("../helpers.js");
+const userData = require("../data/users.js");
 const { ObjectId } = require("mongodb");
 
 router
@@ -33,9 +34,7 @@ router
       }
       else {
         helpFunctions.stringChecker(req.body.usernameInput, "Username");
-        helpFunctions.letternumberonly(req.body.usernameInput, "Username");
         helpFunctions.stringChecker(req.body.passwordInput, "Password");
-        helpFunctions.letternumberonly(req.body.passwordInput, "Password");
         temp = await userData.createUser(req.body.usernameInput, req.body.passwordInput);
         if (temp.insertedUser !== true) {
           res.status(500).render('userRegister', { title: "Register", error: "Internal Server Error" }); // 500 error
@@ -44,7 +43,6 @@ router
           res.redirect('/');
         }
       }
-
     } catch (e) {
       res.status(400).render('userRegister', { error: e }); // 400 error
     }
@@ -59,9 +57,7 @@ router
       }
       else {
         helpFunctions.stringChecker(req.body.usernameInput, "Username")
-        helpFunctions.letternumberonly(req.body.usernameInput, "Username")
         helpFunctions.stringChecker(req.body.passwordInput, "Password")
-        helpFunctions.letternumberonly(req.body.passwordInput, "Password")
         temp = await userData.checkUser(req.body.usernameInput, req.body.passwordInput)
         if (temp.authenticatedUser !== true) {
           res.status(400).render('userLogin', { title: "Login", error: "Invalid username or password" });
