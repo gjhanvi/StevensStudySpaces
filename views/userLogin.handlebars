@@ -11,7 +11,7 @@ Do not forget to use labels for your inputs! For the labels, you will use the me
 You should have a label for both the username and password inputs referencing their id's in the for attribute of the label.
 
 --}}
-
+<h1>{{title}}</h1>
 <p>{{error}}</p>
 <form action="/login" method="POST" id="login-form">
     <label for="usernameInput">Stevens Email</label>
@@ -20,5 +20,7 @@ You should have a label for both the username and password inputs referencing th
     <input id="passwordInput" type="password" name="passwordInput"/><br/>
     <button type="submit">Sign in</button>
 </form>
+
+<br>
 
 <a href="/register">Click here to register an account</a>
