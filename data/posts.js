@@ -2,7 +2,7 @@ const mongoCollections = require('../config/mongoCollections');
 const posts = mongoCollections.posts;
 const users = require('./users');
 const {ObjectId} = require('mongodb');
-//const validation = require('../validation');
+const helpers = require('../helpers');
 
 const getAllPosts = async () => {
     const postCollection = await posts();
@@ -19,12 +19,11 @@ const getPostById = async (postId) => {
 
     if (!post) throw 'Post not found';
     return post;
-
 }
 
 const addPost = async(
     userId, 
-    buildingId,
+    building,
     floor, 
     description, 
     noiseRating, 
@@ -36,18 +35,24 @@ const addPost = async(
     //likes, comments, and flags are also in the posts DB but will not be part of initial input
     //so these will need to be initialized to be empty
 ) => {
-    userId = helpers.checkId(userId, 'User ID');
-    buildingId = helpers.checkId(userId, 'Building ID');
-    floor = helpers.checkFloor(floor, buildingId);
-    description = helpers.checkDescription();
+    //userId = helpers.checkId(userId, 'User ID');  --> still need to do this
+    description = helpers.stringChecker(description, 'Post Description');
+    noiseRating = helpers.stringChecker(noiseRating, 'Noise rating');
     noiseRating = helpers.checkRating(noiseRating, 'noise');
+    locationRating = helpers.stringChecker(locationRating, 'Location rating');
     locationRating = helpers.checkRating(locationRating, 'location');
-    nycViewRating = helpers.checkRating(nycViewRating, 'view');
+    nycViewRating = helpers.stringChecker(nycViewRating, 'View rating');
+    nycViewRating = helpers.checkRating(nycViewRating, 'View');
+    foodNear = helpers.stringChecker(foodNear, 'Food input');
+    foodNear = helpers.checkFoodNear(foodNear);
+    studentCapacity = helpers.stringChecker(studentCapacity);
+    studentCapacity = helper.checkStudentCapacity(studentCapacity);
+
 
     const postCollection = await posts();
     let newPost = {
         userId: userId,
-        buildingId: buildingId,
+        building: building,
         floor: floor, 
         description: description, 
         noiseRating: noiseRating, 
@@ -74,7 +79,7 @@ const addPost = async(
 const removePost = async(postId) => {
     //postId is already being input as an objectId not a string
     //checkId function should check if valid object ID
-    postId = helpers.checkId(postId, 'Post ID');  
+    postId = helpers.checkId(postId, 'Post ID');  // --> still need to implement checkID
     const postCollection = await posts();
     const postToDelete = await getPostById(postId);
     const deletionInfo = await movieCollection.deleteOne({_id: postId});
@@ -86,29 +91,51 @@ const removePost = async(postId) => {
 
 }
 
-const addLike = async(postId, userId) => {
-    postId = helpers.checkId(postId, 'Post ID');
-    userId = helpers.checkId(userId, 'User ID');
+// const addLike = async(postId, userId) => {
+//     postId = helpers.checkId(postId, 'Post ID');
+//     userId = helpers.checkId(userId, 'User ID');
 
-    const postCollection = await posts();
-    const gotPost = await postCollection.findOne({_id: postId});
-    if (gotPost === null) throw `No post with id of ${postId}`;
+//     const postCollection = await posts();
+//     const gotPost = await postCollection.findOne({_id: postId});
+//     if (gotPost === null) throw `No post with id of ${postId}`;
 
-    let likes = gotPost.likes;
+//     let likes = gotPost.likes;
+//     let usersList = Object.keys(likes);
+//     for (i in usersList){
+//         if (usersList[i] === userId){
+//             if (likes.userId === false){ //user has already disliked post
+
+//             }else{ //user has already liked post
+                
+//             }
+//         }
+//     }
+    
+// }
+
+// const addDislike = async(postId, userId) => {
+//     postId = helpers.checkId(postId, 'Post ID');
+//     userId = helpers.checkId(userId, 'User ID');
+
+//     const postCollection = await posts();
+//     const gotPost = await postCollection.findOne({_id: postId});
+//     if (gotPost === null) throw `No post with id of ${postId}`;
+
+//     let likes = gotPost.likes;
+//     let usersList = Object.keys(likes);
+//     for (i in usersList){
+//         if (usersList[i] === userId){
+//             if (likes.userId === false){ //user has already disliked post
+
+//             }else{ //user has already liked post
+                
+//             }
+//         }
+//     }
     
     
-}
+// }
 
-const removeLike = async(postId, userId) => {
-    postId = helpers.checkId(postId, 'Post ID');
-    userId = helpers.checkId(userId, 'User ID');
-
-    const postCollection = await posts();
-    const gotPost = await postCollection.findOne({_id: postId});
-    if (gotPost === null) throw `No post with id of ${postId}`;
-
-    let likes = gotPost.likes;
-}
 
 const addFlag = async(postId, userId) => {
     //postId is already being input as an objectId not a string
@@ -141,4 +168,4 @@ const addFlag = async(postId, userId) => {
 }
 
 
-module.exports = {getAllPosts, getPostById, addPost, removePost, addLike, removeLike, addFlag};
+module.exports = {getAllPosts, getPostById, addPost, removePost, addLike, addFlag, addDislike};

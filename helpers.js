@@ -58,17 +58,26 @@ let passwordChecker = (string) =>
 }
 };
 
-let checkId = (id, field) => {
-  
+let checkFoodNear = (foodNear) => {
+  if (foodNear !== 'Yes' || foodNear !== 'No'){
+    throw 'Input for food nearby should only be "Yes" or "No"'
+  }
+  return foodNear;
 };
 
-let checkFloor = (floor, building) => {
-  //assuming we will need to check each floor/building input to make sure the floor is a valid number for that building
-  //gonna have to do some research for this 
+let checkStudentCapacity = (studentCapacity) => {
+  const validCapacity = ['0','1','2','3','4','5', '6','7','8','9','10','11',
+                       '12','13','14','15','16','17','18','19','20'];
+  if (!validCapacity.includes(studentCapacity)) throw 'Student capacity must be integer from 1 to 20';
+  return studentCapacity;
 };
+
 
 let checkRating = (rating, type) => { //type is either location, noise, or view
   //rating needs to be integer 0 to 5
+  const validRating = ['0','1','2','3','4','5'];
+  if (!validRating.includes(rating)) throw `Rating for ${type} must be integer number from 0 to 5`;
+  return rating;
 };
 
 let checkUsername = async (username) =>{
@@ -97,7 +106,7 @@ let checkUsername = async (username) =>{
   
   //create a length requirement for username
   if(tempUser.length < 4){
-    throw "username needs to be at least 4 charaters long";
+    throw "username needs to be at least 4 characters long";
   }
   if(username.includes(" ")){
     throw "username cannot inlude spaces";
@@ -131,14 +140,14 @@ let checkPassword = async (password) =>{
     throw "password cannot have spaces";
   }
   if(password.length <= 5){
-    throw "password needs to be at least 6 charaters long";
+    throw "password needs to be at least 6 characters long";
   }
   const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
   if (!specialChars.test(password)){
-    throw "password needs at least 1 special charater";
+    throw "password needs at least 1 special character";
   }
   if(!/[A-Z]/.test(password)){
-    throw "password needs at least 1 upper case charater";
+    throw "password needs at least 1 upper case character";
   }
   if(!/\d/.test(password)){
     throw "password needs at least 1 number";
@@ -147,5 +156,6 @@ let checkPassword = async (password) =>{
   return password;
 }
 
-  module.exports = {stringChecker,letternumberonly,letterSpaceNumber,letterSpacesOnly,letterOnly,passwordChecker,checkUsername,checkPassword};
+  module.exports = {stringChecker,letternumberonly,letterSpaceNumber,letterSpacesOnly,letterOnly,passwordChecker,checkUsername,checkPassword, checkRating,
+  checkFoodNear, checkStudentCapacity};
 
