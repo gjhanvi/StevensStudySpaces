@@ -3,7 +3,7 @@ const posts = mongoCollections.posts;
 const users = mongoCollections.users;
 const postData = require('./posts');
 const userData = require('./users');
-const {ObjectId} = require('mongodb');
+const { ObjectId } = require('mongodb');
 
 // add as subdoc to posts
 // add list by getUserById(userId) to add list of commentIds to user
@@ -26,22 +26,22 @@ const createComment = async (userId, postId, comment) => {
     const postCollection = await posts();
     var post = await postData.getPostById(postId);
 
-    const updatedInfoPost = await postCollection.updateOne({_id: ObjectId(postId)}, {$set: {comments: [...post.comments, newComment] }});
-    if(!updatedInfoPost.matchedCount === updatedInfoPost.modifiedCount) {
+    const updatedInfoPost = await postCollection.updateOne({ _id: ObjectId(postId) }, { $set: { comments: [...post.comments, newComment] } });
+    if (!updatedInfoPost.matchedCount === updatedInfoPost.modifiedCount) {
         throw 'update failed';
-    } 
+    }
 
     // add comment to user comments list
     const userCollection = await users();
     var user = await userData.getUserById(userId);
-    
+
     let commentList = user.comments;
     commentList = commentList.push(newComment._id.toString());
 
-    const updatedInfoUser = await userCollection.updateOne({_id: ObjectId(userId)}, {$set: {comments: commentList}});
-    if(!updatedInfoUser.matchedCount === updatedInfoUser.modifiedCount) {
+    const updatedInfoUser = await userCollection.updateOne({ _id: ObjectId(userId) }, { $set: { comments: commentList } });
+    if (!updatedInfoUser.matchedCount === updatedInfoUser.modifiedCount) {
         throw 'update failed';
-    } 
+    }
 
     return newComment;
 }
