@@ -2,7 +2,7 @@ const mongoCollections = require('../config/mongoCollections');
 const posts = mongoCollections.posts;
 const users = require('./users');
 const {ObjectId} = require('mongodb');
-//const validation = require('../validation');
+const helpers = require('../helpers');
 
 const getAllPosts = async () => {
     const postCollection = await posts();
@@ -19,7 +19,6 @@ const getPostById = async (postId) => {
 
     if (!post) throw 'Post not found';
     return post;
-
 }
 
 const addPost = async(
@@ -86,29 +85,51 @@ const removePost = async(postId) => {
 
 }
 
-const addLike = async(postId, userId) => {
-    postId = helpers.checkId(postId, 'Post ID');
-    userId = helpers.checkId(userId, 'User ID');
+// const addLike = async(postId, userId) => {
+//     postId = helpers.checkId(postId, 'Post ID');
+//     userId = helpers.checkId(userId, 'User ID');
 
-    const postCollection = await posts();
-    const gotPost = await postCollection.findOne({_id: postId});
-    if (gotPost === null) throw `No post with id of ${postId}`;
+//     const postCollection = await posts();
+//     const gotPost = await postCollection.findOne({_id: postId});
+//     if (gotPost === null) throw `No post with id of ${postId}`;
 
-    let likes = gotPost.likes;
+//     let likes = gotPost.likes;
+//     let usersList = Object.keys(likes);
+//     for (i in usersList){
+//         if (usersList[i] === userId){
+//             if (likes.userId === false){ //user has already disliked post
+
+//             }else{ //user has already liked post
+                
+//             }
+//         }
+//     }
+    
+// }
+
+// const addDislike = async(postId, userId) => {
+//     postId = helpers.checkId(postId, 'Post ID');
+//     userId = helpers.checkId(userId, 'User ID');
+
+//     const postCollection = await posts();
+//     const gotPost = await postCollection.findOne({_id: postId});
+//     if (gotPost === null) throw `No post with id of ${postId}`;
+
+//     let likes = gotPost.likes;
+//     let usersList = Object.keys(likes);
+//     for (i in usersList){
+//         if (usersList[i] === userId){
+//             if (likes.userId === false){ //user has already disliked post
+
+//             }else{ //user has already liked post
+                
+//             }
+//         }
+//     }
     
     
-}
+// }
 
-const removeLike = async(postId, userId) => {
-    postId = helpers.checkId(postId, 'Post ID');
-    userId = helpers.checkId(userId, 'User ID');
-
-    const postCollection = await posts();
-    const gotPost = await postCollection.findOne({_id: postId});
-    if (gotPost === null) throw `No post with id of ${postId}`;
-
-    let likes = gotPost.likes;
-}
 
 const addFlag = async(postId, userId) => {
     //postId is already being input as an objectId not a string
@@ -141,4 +162,4 @@ const addFlag = async(postId, userId) => {
 }
 
 
-module.exports = {getAllPosts, getPostById, addPost, removePost, addLike, removeLike, addFlag};
+module.exports = {getAllPosts, getPostById, addPost, removePost, addLike, addFlag, addDislike};
