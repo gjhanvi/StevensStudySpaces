@@ -81,7 +81,7 @@ let checkUsername = async (username) =>{
   username = stringChecker(username);
   //create a length requirement for username
   if(username.length < 4){
-    throw "username needs to be at least 4 charaters long";
+    throw "username needs to be at least 4 characters long";
   }
   //check if the numbers (if any are at the end of the username)
   if(/\d/.test(username)){
