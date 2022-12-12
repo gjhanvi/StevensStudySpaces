@@ -2,7 +2,7 @@ const mongoCollections = require('../config/mongoCollections');
 const posts = mongoCollections.posts;
 const users = require('./users');
 const {ObjectId} = require('mongodb');
-const validation = require('../validation');
+//const validation = require('../validation');
 
 const getAllPosts = async () => {
     const postCollection = await posts();

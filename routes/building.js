@@ -8,14 +8,12 @@ router
   .route('/buildings')
   .get(async (req, res) => {
     //code here for GET
-    if(req.session.user)
-    {
+    if (req.session.user) {
       //res.redirect('/protected');
     }
-    else
-    {
-      res.render('userLogin', {title: "Login"});
+    else {
+      res.render('userLogin', { title: "Login" });
     }
   })
 
-module.exports = router ;
+module.exports = router;

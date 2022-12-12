@@ -75,7 +75,7 @@ let checkUsername = async (username) =>{
   //check if username is a valid string
   username = username.trim();
   username = username.toLowerCase();
-  if(!username || !password){
+  if(!username){
     throw "username or password is missing";
   }
   username = stringChecker(username);
@@ -83,7 +83,6 @@ let checkUsername = async (username) =>{
   if(username.length < 4){
     throw "username needs to be at least 4 charaters long";
   }
-  username = letternumberonly(username);
   //check if the numbers (if any are at the end of the username)
   if(/\d/.test(username)){
     let numbers = false; 
