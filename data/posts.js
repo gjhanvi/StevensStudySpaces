@@ -168,4 +168,4 @@ const addFlag = async(postId, userId) => {
 }
 
 
-module.exports = {getAllPosts, getPostById, addPost, removePost, addLike, addFlag, addDislike};
+module.exports = {getAllPosts, getPostById, addPost, removePost, addFlag};
