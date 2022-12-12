@@ -42,10 +42,10 @@ let letterOnly = (string) => {
   }
 };
 
-let letternumberonly = (string) => {
+let letternumberonly = (string, nameofParam) => {
   if (/^[A-Za-z0-90]*$/.test(string)) {
   } else {
-    throw "string contains special chars or punc";
+    throw nameofParam + " contains special chars or punc";
   }
   return string;
 };
@@ -78,31 +78,50 @@ let checkUsername = async (username) =>{
   if(!username){
     throw "username or password is missing";
   }
-  username = stringChecker(username);
+  if(!username.includes("@stevens.edu")){
+    throw "username needs to be a stevens email id";
+  }
+
+  if(!username.endsWith("@stevens.edu")){
+    throw "@stevens.edu needs to be placed at the end of the username";
+  }
+  
+  // if(!username.endsWith("@stevens.edu")){
+  //   throw "@stevens.edu needs to be placed at the end of the username";
+  // }
+  if(!isNaN(username[0])){
+    throw "cannot contain number as the first char";
+  }
+  tempUser = username.substring(0,username.indexOf("@stevens.edu"));
+  //console.log(temp);
+  
   //create a length requirement for username
-  if(username.length < 4){
+  if(tempUser.length < 4){
     throw "username needs to be at least 4 charaters long";
   }
+  if(username.includes(" ")){
+    throw "username cannot inlude spaces";
+  }
+  tempUser=letternumberonly(tempUser, "username");
+  tempUser = stringChecker(tempUser);
   //check if the numbers (if any are at the end of the username)
-  if(/\d/.test(username)){
-    let numbers = false; 
+  if(/\d/.test(tempUser)){
     let numIndex= 0;
-    for(let i =0; i < username.length; i++){
-      if(!isNaN(username[i])){
-        numbers = true;
-        numIndex=username[i];
+    for(let i =0; i < tempUser.length; i++){
+      if(!isNaN(tempUser[i])){
+        numIndex=tempUser.indexOf(tempUser[i]);
         break;
       }
     }
     //checks for letters after the first number
-    for(i = numIndex; i< username.length;i++){
-      if(isNaN(username[i])){
-        throw " cant have letters after numbers in the username";
+    for(i = numIndex; i< tempUser.length;i++){
+      if(isNaN(tempUser[i])){
+        throw "cant have letters after numbers in the username";
       }
-    }}
+    }
+  }
 
-
-    return username;
+  return username;
 }
 
 
