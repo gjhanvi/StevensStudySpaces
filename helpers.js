@@ -62,6 +62,7 @@ let checkFoodNear = (foodNear) => {
   if (foodNear !== 'Yes' || foodNear !== 'No'){
     throw 'Input for food nearby should only be "Yes" or "No"'
   }
+  
   return foodNear;
 };
 
