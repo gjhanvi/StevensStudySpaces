@@ -24,8 +24,8 @@ const createUser = async (username, password) => {
 };
 
 const checkUser = async (username, password) => {
-  username = helper.checkUsername(username);
-  password = helper.checkPassword(password);
+  username = await helper.checkUsername(username);
+  password = await helper.checkPassword(password);
 
   const userCol = await users();
   const user = await userCol.findOne({ username: { '$regex': username, $options: 'i' } });
