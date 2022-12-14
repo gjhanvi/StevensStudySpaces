@@ -12,9 +12,26 @@
     <li>{{this.photo}}</li>
     <li>{{this.foodNear}}</li>
     <li>{{this.likes}}</li>
-    <li>{{this.comments}}</li
+    {{#each comments}}
+    <li>{{this.comment}}</li>
+    {{/each}}
     {{/each}}
 </ul>
 <p>{{postId}}</p>
+
+<form action="/posts/comment/{{postId}}" method="POST" id="comment-form">
+    <label for="commentInput">Leave Comment</label>
+    <input id="commentInput" type="text" name="commentInput"/><br/>
+    <button type="submit">Submit Comment</button>
+</form>
+
+<form action="/posts/dislike/{{postId}}" method="post">
+    <button name="dislike" value="dislike">dislike</button>
+</form>
+
+<form action="/posts/like/{{postId}}" method="post">
+    <button name="like" value="like">like</button>
+</form>
+
 
 <a href="/home">Return Home</a>
