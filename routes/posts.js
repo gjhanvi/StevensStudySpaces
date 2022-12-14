@@ -88,7 +88,6 @@ router
         res.render('userLogin', {title: "Login"});
       }
     } catch (error) {
-      
     }
   })
 
