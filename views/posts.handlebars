@@ -2,16 +2,19 @@
 
 <ul>
     {{#each post}}
-    <li>{{post.buildingInput}}</li>
+    <li>{{this.building}}</li>
+    <li>{{this.floor}}</li>
+    <li>{{this.description}}</li>
+    <li>{{this.noiseRating}}</li>
+    <li>{{this.locationRating}}</li>
+    <li>{{this.studentCapacity}}</li>
+    <li>{{this.nycViewRating}}</li>
+    <li>{{this.photo}}</li>
+    <li>{{this.foodNear}}</li>
+    <li>{{this.likes}}</li>
+    <li>{{this.comments}}</li>
+    <p>Post Break</p>
     {{/each}}
 </ul>
 
-{{!-- <section>
-  <h1>Posts</h1>
-  {{#each post}}  
-    <article class="post">
-      <h2><a href="/posts/{{_id}}">{{title}}</a></h2>
-      <p>{{body}}</p>
-    </article>
-  {{/each}}
-</section> --}}
+<a href="/home">Return Home</a>

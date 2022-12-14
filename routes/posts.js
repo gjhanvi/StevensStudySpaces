@@ -5,8 +5,6 @@ const helpFunctions = require("../helpers.js");
 const postdata = require("../data/posts.js");
 const { ObjectId } = require("mongodb");
 
-
-
 router
 .route('/new')
 .get(async (req, res) => 
@@ -62,7 +60,9 @@ router
         req.body.photoInput,
         req.body.foodInput
         );
-        res.render('posts', {post: post, description: req.body.descInput}); //Render page with post
+
+        console.log(post)
+        res.render('posts', {post: [post]}); //Render page with post
     }
     else
     {
@@ -81,7 +81,7 @@ router
       if(req.session.user)
       {
         const postList = await postdata.getAllPosts();
-        res.render('posts', {post:postList, title: "Posts"});// Need to render a page that shows a good amount of posts.
+        res.render('posts', {post: postList});
       }
       else
       {
