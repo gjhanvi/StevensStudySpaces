@@ -72,7 +72,7 @@ router
         }
         else {
           req.session.user = req.body.usernameInput;
-          req.session.userId = temp;
+          req.session.userId = temp.userId;
           res.redirect('/home');
         }
       }

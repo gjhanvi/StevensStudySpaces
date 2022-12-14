@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const helpFunctions = require("../helpers.js");
 const postdata = require("../data/posts.js");
+const commentData = require("../data/comments.js");
 const { ObjectId } = require("mongodb");
 
 router
@@ -88,7 +89,6 @@ router
         res.render('userLogin', {title: "Login"});
       }
     } catch (error) {
-      
     }
   })
 
@@ -107,7 +107,33 @@ router
           return null;
         }
         const post = await postdata.getPostById(req.params.postId)
-        res.render('singlePost', {post: [post],postId:req.params.postId });
+        console.log(post.comments)
+        res.render('singlePost', {post: [post],postId:req.params.postId, comments:post.comments});
+      }
+      else {
+        res.status(403).render('forbiddenAccess');
+      }
+    } catch (error) {
+      res.status(400).render('userLogin', { title: "Login", error: error }); // 400 error
+    }
+  })
+
+  router
+  .route("/comment/:postId")
+  .post(async (req, res) => {
+    try {
+      if (req.session.user) {
+        helpFunctions.stringChecker(req.params.postId)
+        if (
+          !req.params.postId ||
+          !ObjectId.isValid(req.params.postId)
+        ) {
+          res.status(400).redirect('/home');
+          return null;
+        }
+        helpFunctions.stringChecker(req.body.commentInput, "Username")
+        const post = await commentData.createComment(req.session.userId,req.params.postId,req.body.commentInput)
+        res.redirect('/posts/' +  req.params.postId);
       }
       else {
         res.status(403).render('forbiddenAccess');
@@ -118,41 +144,52 @@ router
   })
 
 
+  router
+  .route("/dislike/:postId")
+  .post(async (req, res) => {
+    try {
+      if (req.session.user) {
+        helpFunctions.stringChecker(req.params.postId)
+        if (
+          !req.params.postId ||
+          !ObjectId.isValid(req.params.postId)
+        ) {
+          res.status(400).redirect('/home');
+          return null;
+        }
+        //const post = await postData.addDislike(req.params.postId)
+        res.redirect('/posts/' +  req.params.postId);
+      }
+      else {
+        res.status(403).render('forbiddenAccess');
+      }
+    } catch (error) {
+      res.status(400).redirect('/home');
+    }
+  })
 
-router
-  .route('/like')
+  router
+  .route("/like/:postId")
   .post(async (req, res) => {
     try {
-      if(req.session.user)
-      {
-        //check that user has not liked the post before
-        //const postList = await postdata.addLike();
-        //res.render('posts', {post: postlist, title: "Posts"}); refresh page
+      if (req.session.user) {
+        helpFunctions.stringChecker(req.params.postId)
+        if (
+          !req.params.postId ||
+          !ObjectId.isValid(req.params.postId)
+        ) {
+          res.status(400).redirect('/home');
+          return null;
+        }
+        //const post = await postData.addLike(req.params.postId)
+        res.redirect('/posts/' + req.params.postId) ;
       }
-      else
-      {
-        res.render('userLogin', {title: "Login"});
-      } 
+      else {
+        res.status(403).render('forbiddenAccess');
+      }
     } catch (error) {
-      
+      res.status(400).redirect('/home');
     }
   })
-router
-  .route('/dislike')
-  .post(async (req, res) => {
-    try {
-      if(req.session.user)
-      {
-        //check that user has not disliked the post before
-        //const postList = await postdata.removeLike ();
-        //res.render('posts', {post: postlist, title: "Posts"}); refresh page
-      }
-      else
-      {
-        res.render('userLogin', {title: "Login"});
-      } 
-    } catch (error) {
-      
-    }
-  })
+
 module.exports = router ;

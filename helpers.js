@@ -1,6 +1,5 @@
 //You can add and export any helper functions you want here. If you aren't using any, then you can just leave this file as is.
 
-const { buildings } = require("./config/mongoCollections");
 
 let stringChecker = (string, field) => { //given a string and field where field is what we are testing ie name input. check if type is string, is empty, undefined, is all spaces
   if (typeof string !== "string") {
@@ -281,5 +280,5 @@ let checkValidFloor =(building, floorInput) =>
 }}
 
   module.exports = {stringChecker,letternumberonly,letterSpaceNumber,letterSpacesOnly,letterOnly,passwordChecker,checkId, checkUsername,checkPassword, checkRating,
-  checkFoodNear, checkStudentCapacity, checkName, checkValidFloor};
+  checkFoodNear, checkStudentCapacity, checkName, checkValidFloor,checkBuilding};
 

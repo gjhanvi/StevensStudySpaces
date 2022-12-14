@@ -43,7 +43,7 @@ const checkUser = async (username, password) => {
 
   comparison = await bcrypt.compare(password, user.password);
   if (comparison) {
-    return {authenticatedUser: true};
+    return {authenticatedUser: true, userId: user._id};
   } else {
     throw 'Either the username or password is invalid';
   }
