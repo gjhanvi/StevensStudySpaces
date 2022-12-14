@@ -31,7 +31,6 @@ const checkUser = async (username, password) => {
   const user = await userCol.findOne({ username: { '$regex': username, $options: 'i' } });
 
   if (user === null) {
-    console.log("failed here");
     throw 'Either the username or password is invalid';
   }
   let comparison = false;

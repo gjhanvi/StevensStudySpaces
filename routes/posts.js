@@ -12,8 +12,8 @@ router
     try {
       if(req.session.user)
       {
-        //const postList = await postdata.getAllPosts();
-        //res.render('posts', {post:postList, title: "Posts"}); Need to render a page that shows a good amount of posts.
+        const postList = await postdata.getAllPosts();
+        res.render('posts', {post:postList, title: "Posts"});// Need to render a page that shows a good amount of posts.
       }
       else
       {
@@ -43,8 +43,6 @@ router
 
   })
 
-
-
   router
   .route('/new')
   .get(async (req, res) => 
@@ -66,7 +64,6 @@ router
     try {
       if(req.session.user)
       {
-        console.log(req.body.foodInput);
         req.body.descInput = helpFunctions.stringChecker(req.body.descInput, 'Post Description');
         req.body.noiseInput = helpFunctions.stringChecker(req.body.noiseInput, 'Noise rating');
         req.body.noiseInput = helpFunctions.checkRating(req.body.noiseInput, 'noise');
@@ -101,7 +98,7 @@ router
           req.body.photoInput,
           req.body.foodInput
           );
-          res.render('posts', {post: post, title: "Posts"}); //Render page with post
+          res.render('posts', {post: post, description: req.body.descInput}); //Render page with post
       }
       else
       {
