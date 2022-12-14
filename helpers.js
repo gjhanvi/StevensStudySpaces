@@ -281,5 +281,5 @@ let checkValidFloor =(building, floorInput) =>
 }}
 
   module.exports = {stringChecker,letternumberonly,letterSpaceNumber,letterSpacesOnly,letterOnly,passwordChecker,checkId, checkUsername,checkPassword, checkRating,
-  checkFoodNear, checkStudentCapacity, checkName, checkValidFloor};
+  checkFoodNear, checkStudentCapacity, checkName, checkValidFloor,checkBuilding};
 
