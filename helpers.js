@@ -1,5 +1,6 @@
 //You can add and export any helper functions you want here. If you aren't using any, then you can just leave this file as is.
 
+
 let stringChecker = (string, field) => { //given a string and field where field is what we are testing ie name input. check if type is string, is empty, undefined, is all spaces
   if (typeof string !== "string") {
     throw field + " Not a string";
@@ -187,8 +188,97 @@ let checkPassword = async (password) =>{
   return password;
 }
 
+let checkBuilding = (building) =>
+{
+  let buildings = ["Babbio","Edwin","Library","GatewayNorth","GatewaySouth","Carnegie","Burchard","McLean","UCC","Morton","Pierce","Kidde","ABS","Howe" ];
+  if(!buildings.includes(building)){
+    throw "This is not a valid building";
+  }
+  return building;
 
+}
+
+let checkValidFloor =(building, floorInput) =>
+{
+  floorInput = stringChecker(floorInput, "floor input");
+  if (!parseInt(floorInput)){
+    throw "Coundn't convert the floor to a number";
+  }
+  let floor = parseInt(floorInput);
+  if (building === "Babbio"){
+    if(floor <0 || floor >5 ){
+        throw "The floor input for Babbio is incorrect it has 5 floors."
+    }
+  }
+  //VERIFY THE VALUE 
+  if (building === "Edwin"){
+    if(floor <0 || floor >3 ){
+        throw "The floor input for Edwin A Stevens is incorrect it has 3 floors."
+    }
+  if (building === "Library"){
+    if(floor <0 || floor >3 ){
+        throw "The floor input for Library is incorrect it  has 3 floors."
+    }
+  }
+  if (building === "GatewayNorth"){
+    if(floor <0 || floor >3 ){
+        throw "The floor input for Gateway North is incorrect it  has 3 floors."
+    }
+  }
+  if (building === "GatewaySouth"){
+    if(floor <0 || floor >4 ){
+        throw "The floor input for Gateway South is incorrect it  has 4 floors."
+    }
+  }
+  if (building === "Carnegie"){
+    if(floor <0 || floor >4 ){
+        throw "The floor input for Carnegie is incorrect it has 4 floors."
+    }
+  }
+  if (building === "Burchard"){
+    if(floor <0 || floor >7 ){
+        throw "The floor input for Burchard is incorrect it has 7 floors."
+    }
+  }
+  if (building === "McLean"){
+    if(floor <0 || floor >4 ){
+        throw "The floor input for McLean hall is incorrect it has 4 floors."
+    }
+  }
+  if (building === "UCC"){
+    if(floor <0 || floor >20 ){
+        throw "The floor input for University Center is incorrect it has 20 floors."
+    }
+  }
+  if (building === "Morton"){
+    if(floor <0 || floor >4 ){
+        throw "The floor input for Morton is incorrect it has 4 floors."
+    }
+  }
+  if (building === "Pierce"){
+    if(floor <0 || floor >4 ){
+        throw "The floor input for Pierce is incorrect it has 4 floors."
+    }
+  }
+  if (building === "Kidde"){
+    if(floor <0 || floor >4 ){
+        throw "The floor input for Kidde is incorrect it has 4 floors."
+    }
+  }
+ if (building === "ABS"){
+    if(floor <0 || floor >5 ){
+        throw "The floor input for ABS is incorrect it has 5 floors."
+    }
+  }
+  if (building === "Howe"){
+    if(floor <0 || floor >15 ){
+        throw "The floor input for Howe is incorrect it has 15 floors."
+    }
+  }
+  
+  return floorInput;
+}}
 
   module.exports = {stringChecker,letternumberonly,letterSpaceNumber,letterSpacesOnly,letterOnly,passwordChecker,checkId, checkUsername,checkPassword, checkRating,
-  checkFoodNear, checkStudentCapacity, checkName};
+  checkFoodNear, checkStudentCapacity, checkName, checkValidFloor,checkBuilding};
 
