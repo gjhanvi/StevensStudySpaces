@@ -22,7 +22,8 @@ const getPostById = async (postId) => {
 }
 
 const addPost = async(
-    userId, 
+    userId,
+    postTitle, 
     building,
     floor, 
     description, 
@@ -35,6 +36,7 @@ const addPost = async(
 ) => {
     userId = helpers.checkId(userId, 'User ID');  //--> still need to implement this in helper
     //STILL NEED TO CHECK PHOTO and building and floor
+    postTitle - helpers.stringChecker(postTitle, "Post Title");
     floor = helpers.checkValidFloor(building,floor);
     description = helpers.stringChecker(description, 'Post Description');
     noiseRating = helpers.stringChecker(noiseRating, 'Noise rating');
@@ -52,6 +54,7 @@ const addPost = async(
     const postCollection = await posts();
     let newPost = {
         userId: userId,
+        title: postTitle,
         building: building,
         floor: floor, 
         description: description, 
