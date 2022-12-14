@@ -97,19 +97,26 @@ router
   .route("/:postId")
   .get(async (req, res) => {
     try {
-      helpFunctions.stringChecker(req.params.postId,"PostId")
-      if (
-        !ObjectId.isValid(req.params.postId)
-      ) {
-        // res.status(400).json({ error: "invalid id" });
+      if (req.session.user) {
+        helpFunctions.stringChecker(req.params.postId)
+        if (
+          !req.params.postId ||
+          !ObjectId.isValid(req.params.postId)
+        ) {
+          res.status(400).redirect('/home');
+          return null;
+        }
+        const post = await postdata.getPostById(req.params.postId)
+        res.render('singlePost', {post: [post],postId:req.params.postId });
       }
-        //const post = await postdata.getPostByID(req.params.postId);
-        //res.render('posts', {post:post, title: "Post"}); Need to render a page that shows a good amount of posts.      
+      else {
+        res.status(403).render('forbiddenAccess');
+      }
     } catch (error) {
-      
+      res.status(400).render('userLogin', { title: "Login", error: error }); // 400 error
     }
-
   })
+
 
 
 router
