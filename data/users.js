@@ -4,9 +4,11 @@ const mongoCollections = require('../config/mongoCollections');
 const helper = require("../helpers.js");
 const users = mongoCollections.users;
 
-const createUser = async (username, password) => {
+const createUser = async (username, password, firstName, lastName) => {
   username = await helper.checkUsername(username);
   password = await helper.checkPassword(password);
+  firstName =  helper.checkName(firstName);
+  lastName = helper. checkName(lastName); 
 
   const userCol = await users();
   const user = await userCol.findOne({ username: { '$regex': username, $options: 'i' } });
@@ -14,6 +16,8 @@ const createUser = async (username, password) => {
 
   const hash = await bcrypt.hash(password, saltRounds);
   let newUser = {
+    firstName: firstName,
+    lastName: lastName,
     username: username.toLowerCase(),
     password: hash
   };

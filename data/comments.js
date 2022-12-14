@@ -21,6 +21,7 @@ const createComment = async (userId, postId, comment) => {
 
     let newComment = {
         _id: ObjectId(),
+        userId: userId,
         comment: comment
     };
     const postCollection = await posts();

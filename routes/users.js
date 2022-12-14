@@ -35,9 +35,15 @@ router
         res.redirect('/home');
       }
       else {
+        // add all error handling 
         helpFunctions.stringChecker(req.body.usernameInput, "Username");
         helpFunctions.stringChecker(req.body.passwordInput, "Password");
-        let temp = await userData.createUser(req.body.usernameInput, req.body.passwordInput);
+
+        req.body.firstNameInput = helpFunctions.checkName(req.body.firstNameInput);
+        req.body.lastNameInput = helpFunctions.checkName(req.body.lastNameInput);
+        // console.log(firstName);
+        // console.log(lastName);
+        let temp = await userData.createUser(req.body.usernameInput, req.body.passwordInput, req.body.firstNameInput, req.body.lastNameInput);
         if (temp.insertedUser !== true) {
           res.status(500).render('userRegister', { title: "Register", error: "Internal Server Error" }); // 500 error
         }

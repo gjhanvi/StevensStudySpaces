@@ -86,6 +86,31 @@ let checkId = (id, type) => {
   return id;
 }
 
+let checkName = (string) => { // check first and last names
+  if (typeof string !== "string") {
+    throw "First or last name not a string"
+  }
+  if (string.length == 0) {
+    throw "Empty";
+  }
+  if (string === undefined) {
+    throw "string is undefined";
+  }
+  string = string.trim();
+  if (!string) throw "must provide first or last name";
+  //if (typeof string !== "string") throw field + " not a stringstring";
+  // if (string.trim().length === 0) throw "empty/all spaces";
+  // test = string.replace(/^\s+|\s+$/g, "");
+  // if (test.length == 0) {
+  //   throw "All Spaces";
+  // }
+  if (/^[A-Za-z]*$/.test(string)) {
+  } else {
+    throw "First/Last name can only be letters";
+  }
+  return string;
+};
+
 let checkUsername = async (username) =>{
   //check if username is a valid string
   username = username.trim();
@@ -162,6 +187,8 @@ let checkPassword = async (password) =>{
   return password;
 }
 
+
+
   module.exports = {stringChecker,letternumberonly,letterSpaceNumber,letterSpacesOnly,letterOnly,passwordChecker,checkId, checkUsername,checkPassword, checkRating,
-  checkFoodNear, checkStudentCapacity};
+  checkFoodNear, checkStudentCapacity, checkName};
 
