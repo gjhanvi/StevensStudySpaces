@@ -36,11 +36,8 @@ const addPost = async(
 ) => {
     userId = helpers.checkId(userId, 'User ID');  //--> still need to implement this in helper
     //STILL NEED TO CHECK PHOTO and building and floor
-<<<<<<< HEAD
     postTitle - helpers.stringChecker(postTitle, "Post Title");
-=======
     floor = helpers.checkValidFloor(building,floor);
->>>>>>> a2181d1094564d609d21d84795223a3ad02d5fd7
     description = helpers.stringChecker(description, 'Post Description');
     noiseRating = helpers.stringChecker(noiseRating, 'Noise rating');
     noiseRating = helpers.checkRating(noiseRating, 'noise');
