@@ -1,6 +1,7 @@
 const mongoCollections = require('../config/mongoCollections');
 const posts = mongoCollections.posts;
-const users = require('./users');
+const users = mongoCollections.users;
+const userData = require('./users');
 const {ObjectId} = require('mongodb');
 const helpers = require('../helpers');
 
