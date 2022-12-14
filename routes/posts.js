@@ -24,6 +24,7 @@ router
     }
   })
 
+
   router
   .route("/:postId")
   .get(async (req, res) => {
@@ -51,7 +52,7 @@ router
     try {
       if(req.session.user)
       {
-        //res.render('newPost', {title: "New Post"}); Need to render a page that shows the post form
+        res.render('newPost', {title: "New Post"}); //Need to render a page that shows the post form
       }
       else
       {
@@ -65,6 +66,20 @@ router
     try {
       if(req.session.user)
       {
+        req.body.decInput = helpers.stringChecker(description, 'Post Description');
+        req.body.noiseInput = helpers.stringChecker(noiseRating, 'Noise rating');
+        req.body.noiseInput = helpers.checkRating(noiseRating, 'noise');
+        req.body.locationInput = helpers.stringChecker(locationRating, 'Location rating');
+        req.body.locationInput = helpers.checkRating(locationRating, 'location');
+        req.body.nycInput = helpers.stringChecker(nycViewRating, 'View rating');
+        req.body.nycInput = helpers.checkRating(nycViewRating, 'View');
+        req.body.foodInput = helpers.stringChecker(foodNear, 'Food input');
+        req.body.foodInput = helpers.checkFoodNear(foodNear);
+        req.body.capacityInput = helpers.stringChecker(studentCapacity);
+        req.body.capacityInput = helper.checkStudentCapacity(studentCapacity);
+        //still need to check photo
+        //still need to check req.session.userId
+        //still need to check building and floor
         // buildingInput
         // floorInput
         // descInput
@@ -73,15 +88,25 @@ router
         // capacityInput
         // nycInput
         // foodInput
-        //const postList = await postdata.addPost();
-        //res.render('posts', {post: postlist, title: "Posts"}); Render page with post
+        const post = await postdata.addPost(
+          req.session.userId,
+          req.body.buildingInput,
+          req.body.floorInput,
+          req.body.descInput,
+          req.body.noiseInput,
+          req.body.locationInput,
+          req.body.capacityInput,
+          req.body.nycInput,
+          req.body.foodInput
+          );
+          res.render('posts', {post: post, title: "Posts"}); //Render page with post
       }
       else
       {
         res.render('userLogin', {title: "Login"});
       } 
     } catch (error) {
-      
+        console.log(error);
     }
   })
 
