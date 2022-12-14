@@ -1,10 +1,22 @@
 const posts = require('./data/posts');
 const users = require('./data/users');
+const comments = require('./data/comments');
 const connection = require('./config/mongoConnection');
+//const { comments } = require('./data');
 
 async function main() {
     const db = await connection.dbConnection();
     await db.dropDatabase();
+
+    let userId;
+    try{
+        let user = await users.createUser("jhanvi1@stevens.edu", "Stevens-123!", "Jhanvi", "Ganesh");
+        userId = user._id;
+        console.log("user created");
+    }catch(e){
+        console.log(e);
+    }
+    //console.log(userId);
 
     let postId;
     try{
@@ -13,6 +25,14 @@ async function main() {
         postId = post._id;
         console.log('added new post');
         // console.log(post);
+    } catch(e){
+        console.log(e);
+    }
+    //console.log(postId);
+
+    try {
+        let comment = await comments.createComment(userId, postId);
+        console.log('comment added');
     }catch(e){
         console.log(e);
     }

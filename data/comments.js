@@ -1,8 +1,8 @@
 const mongoCollections = require('../config/mongoCollections');
 const posts = mongoCollections.posts;
-const users = mongoCollections.users;
+//const users = mongoCollections.users;
 const postData = require('./posts');
-const userData = require('./users');
+//const userData = require('./users');
 const { ObjectId } = require('mongodb');
 
 // add as subdoc to posts
@@ -33,16 +33,16 @@ const createComment = async (userId, postId, comment) => {
     }
 
     // add comment to user comments list
-    const userCollection = await users();
-    var user = await userData.getUserById(userId);
+    // const userCollection = await users();
+    // var user = await userData.getUserById(userId);
 
-    let commentList = user.comments;
-    commentList = commentList.push(newComment._id.toString());
+    // let commentList = user.comments;
+    // commentList = commentList.push(newComment._id.toString());
 
-    const updatedInfoUser = await userCollection.updateOne({ _id: ObjectId(userId) }, { $set: { comments: commentList } });
-    if (!updatedInfoUser.matchedCount === updatedInfoUser.modifiedCount) {
-        throw 'update failed';
-    }
+    // const updatedInfoUser = await userCollection.updateOne({ _id: ObjectId(userId) }, { $set: { comments: commentList } });
+    // if (!updatedInfoUser.matchedCount === updatedInfoUser.modifiedCount) {
+    //     throw 'update failed';
+    // }
 
     return newComment;
 }
