@@ -1,6 +1,6 @@
 //You can add and export any helper functions you want here. If you aren't using any, then you can just leave this file as is.
 
-let stringChecker = (string, field) => { //given a string and field where field is what we are testing ie name input. check if type is string, is empty, eundefined, is all spaces
+let stringChecker = (string, field) => { //given a string and field where field is what we are testing ie name input. check if type is string, is empty, undefined, is all spaces
   if (typeof string !== "string") {
     throw field + " Not a string";
   }
@@ -80,6 +80,12 @@ let checkRating = (rating, type) => { //type is either location, noise, or view
   return rating;
 };
 
+let checkId = (id, type) => {
+  //need to implement this!!
+  
+  return id;
+}
+
 let checkUsername = async (username) =>{
   //check if username is a valid string
   username = username.trim();
@@ -156,6 +162,6 @@ let checkPassword = async (password) =>{
   return password;
 }
 
-  module.exports = {stringChecker,letternumberonly,letterSpaceNumber,letterSpacesOnly,letterOnly,passwordChecker,checkUsername,checkPassword, checkRating,
+  module.exports = {stringChecker,letternumberonly,letterSpaceNumber,letterSpacesOnly,letterOnly,passwordChecker,checkId, checkUsername,checkPassword, checkRating,
   checkFoodNear, checkStudentCapacity};
 

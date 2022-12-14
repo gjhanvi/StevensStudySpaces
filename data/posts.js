@@ -12,11 +12,10 @@ const getAllPosts = async () => {
 }
 
 const getPostById = async (postId) => {
-    //postId will already be type objectId rather than string?
+    //postId is type string
     postId = helpers.checkId(postId, 'Post ID');
     const postCollection = await posts();
-    const post = await postCollection.findOne({_id: id});
-
+    const post = await postCollection.findOne({_id: ObjectId(postId)});
     if (!post) throw 'Post not found';
     return post;
 }
@@ -32,10 +31,10 @@ const addPost = async(
     nycViewRating, 
     photo, 
     foodNear
-    //likes, comments, and flags are also in the posts DB but will not be part of initial input
-    //so these will need to be initialized to be empty
 ) => {
-    //userId = helpers.checkId(userId, 'User ID');  --> still need to do this
+    //likes, comments, and flags are also in the posts DB but will not be part of initial input so these will need to be initialized to be empty
+    userId = helpers.checkId(userId, 'User ID');  //--> still need to implement this in helper
+    //STILL NEED TO CHECK PHOTO and building and floor
     description = helpers.stringChecker(description, 'Post Description');
     noiseRating = helpers.stringChecker(noiseRating, 'Noise rating');
     noiseRating = helpers.checkRating(noiseRating, 'noise');
@@ -44,9 +43,9 @@ const addPost = async(
     nycViewRating = helpers.stringChecker(nycViewRating, 'View rating');
     nycViewRating = helpers.checkRating(nycViewRating, 'View');
     foodNear = helpers.stringChecker(foodNear, 'Food input');
-    foodNear = helpers.checkFoodNear(foodNear);
-    studentCapacity = helpers.stringChecker(studentCapacity);
-    studentCapacity = helper.checkStudentCapacity(studentCapacity);
+    //foodNear = helpers.checkFoodNear(foodNear);
+    studentCapacity = helpers.stringChecker(studentCapacity, 'Capacity');
+    studentCapacity = helpers.checkStudentCapacity(studentCapacity);
 
 
     const postCollection = await posts();
@@ -82,7 +81,7 @@ const removePost = async(postId) => {
     postId = helpers.checkId(postId, 'Post ID');  // --> still need to implement checkID
     const postCollection = await posts();
     const postToDelete = await getPostById(postId);
-    const deletionInfo = await movieCollection.deleteOne({_id: postId});
+    const deletionInfo = await postCollection.deleteOne({_id: postId});
 
     if (deletionInfo.deletedCount === 0) {
         throw `Could not delete post with id of ${postId}`;
