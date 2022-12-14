@@ -6,6 +6,23 @@ const postdata = require("../data/posts.js");
 const { ObjectId } = require("mongodb");
 
 router
+  .route('/new')
+  .get(async (req, res) => 
+  {
+    try {
+      if(req.session.user)
+      {
+        res.render('newPost', {title: "New Post"}); //Need to render a page that shows the post form
+      }
+      else
+      {
+        res.render('userLogin', {title: "Login"});
+      } 
+    } catch (error) {
+      console.log("error");
+    }
+  })
+router
   .route('/')
   .get(async (req, res) => {
     //code here for GET
@@ -45,23 +62,7 @@ router
 
 
 
-  router
-  .route('/new')
-  .get(async (req, res) => 
-  {
-    try {
-      if(req.session.user)
-      {
-        res.render('newPost', {title: "New Post"}); //Need to render a page that shows the post form
-      }
-      else
-      {
-        res.render('userLogin', {title: "Login"});
-      } 
-    } catch (error) {
-      console.log("error");
-    }
-  })
+  
   .post(async (req, res) => {
     try {
       if(req.session.user)
