@@ -37,7 +37,6 @@ const checkUser = async (username, password) => {
   const user = await userCol.findOne({ username: { '$regex': username, $options: 'i' } });
 
   if (user === null) {
-    console.log("failed here");
     throw 'Either the username or password is invalid';
   }
   let comparison = false;
@@ -49,4 +48,14 @@ const checkUser = async (username, password) => {
     throw 'Either the username or password is invalid';
   }
 };
-module.exports = { createUser, checkUser };
+
+const getUserById = async (id) => {
+  id = id.trim();
+  const userCol = await users();
+  const theOne = await userCol.findOne({_id: ObjectId(id)});
+  if (theOne === null) throw 'There is no user with that ID';
+  return theOne;
+};
+
+
+module.exports = { createUser, checkUser, getUserById};
