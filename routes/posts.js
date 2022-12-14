@@ -45,8 +45,8 @@ router
 
 
 
-router
-  .route("/new")
+  router
+  .route('/new')
   .get(async (req, res) => 
   {
     try {
@@ -59,24 +59,25 @@ router
         res.render('userLogin', {title: "Login"});
       } 
     } catch (error) {
-      
+      console.log("error");
     }
   })
   .post(async (req, res) => {
     try {
       if(req.session.user)
       {
-        req.body.decInput = helpers.stringChecker(description, 'Post Description');
-        req.body.noiseInput = helpers.stringChecker(noiseRating, 'Noise rating');
-        req.body.noiseInput = helpers.checkRating(noiseRating, 'noise');
-        req.body.locationInput = helpers.stringChecker(locationRating, 'Location rating');
-        req.body.locationInput = helpers.checkRating(locationRating, 'location');
-        req.body.nycInput = helpers.stringChecker(nycViewRating, 'View rating');
-        req.body.nycInput = helpers.checkRating(nycViewRating, 'View');
-        req.body.foodInput = helpers.stringChecker(foodNear, 'Food input');
-        req.body.foodInput = helpers.checkFoodNear(foodNear);
-        req.body.capacityInput = helpers.stringChecker(studentCapacity);
-        req.body.capacityInput = helper.checkStudentCapacity(studentCapacity);
+        console.log(req.body.foodInput);
+        req.body.descInput = helpFunctions.stringChecker(req.body.descInput, 'Post Description');
+        req.body.noiseInput = helpFunctions.stringChecker(req.body.noiseInput, 'Noise rating');
+        req.body.noiseInput = helpFunctions.checkRating(req.body.noiseInput, 'noise');
+        req.body.locationInput = helpFunctions.stringChecker(req.body.locationInput, 'Location rating');
+        req.body.locationInput = helpFunctions.checkRating(req.body.locationInput, 'location');
+        req.body.nycInput = helpFunctions.stringChecker(req.body.nycInput, 'View rating');
+        req.body.nycInput = helpFunctions.checkRating(req.body.nycInput, 'View');
+        req.body.foodInput = helpFunctions.stringChecker(req.body.foodInput, 'Food input');
+        //req.body.foodInput = helpFunctions.checkFoodNear(req.body.foodInput);
+        req.body.capacityInput = helpFunctions.stringChecker(req.body.capacityInput, 'Capacity');
+        req.body.capacityInput = helpFunctions.checkStudentCapacity(req.body.capacityInput);
         //still need to check photo
         //still need to check req.session.userId
         //still need to check building and floor
@@ -97,6 +98,7 @@ router
           req.body.locationInput,
           req.body.capacityInput,
           req.body.nycInput,
+          req.body.photoInput,
           req.body.foodInput
           );
           res.render('posts', {post: post, title: "Posts"}); //Render page with post
@@ -106,7 +108,7 @@ router
         res.render('userLogin', {title: "Login"});
       } 
     } catch (error) {
-        console.log(error);
+        res.render('newPost',{title: "New Post", error: error} );
     }
   })
 

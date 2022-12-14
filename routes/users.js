@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt');
 const helpFunctions = require("../helpers.js");
 const userData = require("../data/users.js");
 const { ObjectId } = require("mongodb");
+const postdata = require("../data/posts.js");
+
 
 router
   .route('/')
@@ -77,8 +79,8 @@ router
   .route('/home')
   .get(async (req, res) => {
     if (req.session.user) {
-      //res.render('homepage', { title: "home", username: req.session.user, date: new Date().toUTCString() }); // Needs to be whatever homepage it is and render that.
-      res.render('newPost', {title: "New Post"});
+      res.render('homepage', { title: "home", username: req.session.user, date: new Date().toUTCString() }); // Needs to be whatever homepage it is and render that.
+      //res.render('newPost', {title: "New Post"});
     }
     else {
       res.status(403).render('forbiddenAccess');
@@ -96,5 +98,6 @@ router
 
     }
   });
+
 
 module.exports = router;
