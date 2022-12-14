@@ -36,6 +36,7 @@ const addPost = async(
     //likes, comments, and flags are also in the posts DB but will not be part of initial input so these will need to be initialized to be empty
     userId = helpers.checkId(userId, 'User ID');  //--> still need to implement this in helper
     //STILL NEED TO CHECK PHOTO and building and floor
+    floor = helpers.checkValidFloor(building,floor);
     description = helpers.stringChecker(description, 'Post Description');
     noiseRating = helpers.stringChecker(noiseRating, 'Noise rating');
     noiseRating = helpers.checkRating(noiseRating, 'noise');
