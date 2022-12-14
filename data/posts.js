@@ -22,7 +22,8 @@ const getPostById = async (postId) => {
 }
 
 const addPost = async(
-    userId, 
+    userId,
+    postTitle, 
     building,
     floor, 
     description, 
@@ -36,6 +37,7 @@ const addPost = async(
     //likes, comments, and flags are also in the posts DB but will not be part of initial input so these will need to be initialized to be empty
     userId = helpers.checkId(userId, 'User ID');  //--> still need to implement this in helper
     //STILL NEED TO CHECK PHOTO and building and floor
+    postTitle - helpers.stringChecker(postTitle, "Post Title");
     description = helpers.stringChecker(description, 'Post Description');
     noiseRating = helpers.stringChecker(noiseRating, 'Noise rating');
     noiseRating = helpers.checkRating(noiseRating, 'noise');
@@ -52,6 +54,7 @@ const addPost = async(
     const postCollection = await posts();
     let newPost = {
         userId: userId,
+        title: postTitle,
         building: building,
         floor: floor, 
         description: description, 
