@@ -1,7 +1,13 @@
 
 <h1>{{title}}</h1>
 <p>{{error}}</p>
+
 <form action="/posts/new" method="POST" id="newpost-form">
+
+    <label for="titleInput">Title</label>
+    <input id="titleInput" type="text" name="titleInput"/>
+    <br>
+
       <label for="buildingInput">Building</label>
       <select name="buildingInput" id="buildingInput">
         <option value="Babbio">Babbio</option>
@@ -19,11 +25,6 @@
         <option value="ABS">ABS</option>
         <option value="Howe">Howe</option>
       </select>
-    <br>
-
-    <label for="titleInput">Title</label>
-    <input id="titleInput" type="text" name="titleInput"/>
-    <br>
 
     <label for="floorInput">Floor</label>
     <input id="floorInput" type="text" name="floorInput"/>
