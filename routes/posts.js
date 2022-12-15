@@ -108,6 +108,9 @@ router
           return null;
         }
         const post = await postdata.getPostById(req.params.postId)
+        //const checkUserFlag = await postdata.getPostById(req.params.postId)
+        //const totalLikes/Dislikes = await postdata.getPostById(req.params.postId)
+        //const ifuserLiked/Disliked = await postdata.getPostById(req.params.postId)
         res.render('singlePost', {post: [post],postId:req.params.postId });
       }
       else {
@@ -217,6 +220,44 @@ router
       }
     } catch (error) {
       res.redirect('/posts/' + req.params.postId) ;
+    }
+  })
+
+  router
+  .route("/building")
+  .post(async (req, res) => {
+    try {
+      if (req.session.user) {
+        let postlist;
+        if(req.body.ratingInput == "Any")
+        {
+          if(req.body.buildingInput == "All")
+          {
+           postlist = postdata.getAllPosts()
+          }
+          else
+          {
+          postlist = postdata.getPostByBuidling(req.body.buildingInput)
+          }
+        }
+        else
+        {
+          helpFunctions.checkRating(req.body.ratingInput, "Noise")
+        }
+        if(req.body.buildingInput == "All") 
+        {
+         postlist = postdata.getPostByRating(req.body.ratingInput)
+        }
+        else if (req.body.ratingInput != "Any")
+        {
+           postList = await postdata.getPostByRatingBuilding(req.body.ratingInput,req.body.buildingInput);
+        }
+
+        res.render('posts', {post: postList});
+      }
+    } catch (error) {
+      console.log(error)
+      res.redirect('/posts/' +  req.params.postId);
     }
   })
 
