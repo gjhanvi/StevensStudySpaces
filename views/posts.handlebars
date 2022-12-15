@@ -4,21 +4,26 @@
   <a href="/posts/new">New Post</a>
   <a href="/posts">All Posts</a>
 </div>
-<ul>
+<h1>All Posts</h1>
+
+<ul >
+
     {{#each post}}
-    <h3 id = "eachPost">Thanks for your post! Click here to see your post.</h3>
+    <div class ="divBorder">
     <a href="/posts/{{this._id}}">{{this.title}}</a>
-    <li id = "eachPost">Building: {{this.building}}</li>
-    <li id = "eachPost">Floor: {{this.floor}}</li>
-    <li id = "eachPost">Description of Study Spot: {{this.description}}</li>
-    <li id = "eachPost">Noise Rating: {{this.noiseRating}}</li>
-    <li id = "eachPost">Location Rating: {{this.locationRating}}</li>
-    <li id = "eachPost">Student Capacity: {{this.studentCapacity}}</li>
-    <li id = "eachPost">Does it have a view of NYC? {{this.nycViewRating}}</li>
-    <li id = "eachPost">{{this.photo}}</li>
-    <li id = "eachPost">Is there food nearby? {{this.foodNear}}</li>
-    <p id = "eachPost">Post Break</p>
+    <p class ="eachPost">Building: {{this.building}}</p> 
+    <p class = "eachPost">Floor: {{this.floor}} </p>
+    <p class ="eachPost">Description of Study Spot: {{this.description}}</p>
+    <p class ="eachPost">Noise Rating: {{this.noiseRating}}</p>
+    <p class ="eachPost">Location Rating: {{this.locationRating}}</p>
+    <p class ="eachPost">Student Capacity: {{this.studentCapacity}}</p>
+    <p class ="eachPost">Rating of NYC View: {{this.nycViewRating}}</p>
+    <p>{{this.photo}}</p>
+    <p class ="eachPost">Is there food nearby? {{this.foodNear}}</p>
+    </div>
     {{/each}}
 </ul>
+
+
 
 <a href="/home">Return Home</a>
