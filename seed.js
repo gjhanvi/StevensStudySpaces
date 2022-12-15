@@ -70,12 +70,19 @@ async function main() {
         console.log(e);
     }
 
-    // try{ //adding like to a post
-    //     let addLike = await posts.addLike(postId, userId);
-    //     console.log(addLike);
-    // }catch(e){
-    //     console.log(e);
-    // }
+    try{ //adding like to a post
+        let addLike = await posts.addLike("639b98fdeca0fc87d5884d44", 'randomUser');
+        console.log('after like is added')
+        console.log(addLike);
+    }catch(e){
+        console.log(e);
+    }
+    try{
+        let checklike = await posts.checkUserLiked(postId, userId);
+        console.log(checklike);
+    }catch(e){
+        console.log(e);
+    }
     // try{// adding dislike to same post
     //     let addLike = await posts.addDislike(postId, userId);
     //     console.log(addLike);
@@ -83,12 +90,12 @@ async function main() {
     //     console.log(e);
     // }
 
-    try{
-        let ans = await posts.checkUserFlagged(postId,'randomUser' );
-        console.log(ans);
-    }catch(e){
-            console.log(e);
-        }
+    // try{
+    //     let ans = await posts.checkUserFlagged(postId,'randomUser' );
+    //     console.log(ans);
+    // }catch(e){
+    //         console.log(e);
+    //     }
     
 
 
