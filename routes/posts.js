@@ -17,7 +17,7 @@ router
     }
     else
     {
-      res.render('userLogin', {title: "Login"});
+      res.redirect('/');
     } 
   } catch (error) {
     console.log("error");
@@ -68,7 +68,7 @@ router
     }
     else
     {
-      res.render('userLogin', {title: "Login"});
+      res.redirect('/');
     } 
   } catch (error) {
       res.render('newPost',{title: "New Post", error: error} );
@@ -87,7 +87,7 @@ router
       }
       else
       {
-        res.render('userLogin', {title: "Login"});
+        res.redirect('/');
       }
     } catch (error) {
     }
