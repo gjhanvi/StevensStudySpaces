@@ -57,15 +57,40 @@ async function main() {
     try{
         let postList = await posts.getAllPosts();
         console.log('showing all posts:');
-        console.log(postList);
+        //console.log(postList);
     }catch(e){
         console.log(e);
     }
 
-    try{
-        let addFlag = await posts.addFlag(postId,'UserId');
-        console.log(`Adding flag to post with id of ${postId}.`);
-        console.log(addFlag);
+    // try{
+    //     let addFlag = await posts.addFlag(postId,'UserId');
+    //     console.log(`Adding flag to post with id of ${postId}.`);
+    //     //console.log(addFlag);
+    // }catch(e){
+    //     console.log(e);
+    // }
+
+    try{ //adding like to a post
+        let addLike = await posts.addLike(postId, userId);
+        console.log(addLike);
+    }catch(e){
+        console.log(e);
+    }
+    try{// adding dislike to same post
+        let addLike = await posts.addDislike(postId, userId);
+        console.log(addLike);
+    }catch(e){
+        console.log(e);
+    }
+    try{ //adding like to a post
+        let addLike = await posts.addLike(postId, userId);
+        console.log(addLike);
+    }catch(e){
+        console.log(e);
+    }
+    try{ //adding like to a post
+        let addLike = await posts.addLike(postId, userId);
+        console.log(addLike);
     }catch(e){
         console.log(e);
     }
