@@ -98,7 +98,6 @@ const addLike = async(postId, userId) => {
     postId = helpers.checkId(postId, 'Post ID');
     userId = helpers.checkId(userId, 'User ID');
     userId = userId.toString();
-
     const postCollection = await posts();
     const gotPost = await postCollection.findOne({_id: ObjectId(postId)});
     if (gotPost === null) throw `No post with id of ${postId}`;
@@ -189,8 +188,42 @@ const addDislike = async(postId, userId) => {
     let updatedPost = getPostById(postId);
     return updatedPost;
     
-    
 }
+
+const checkUserLiked = async(postId, userId) => {
+    postId = helpers.checkId(postId, 'Post ID');
+    userId = helpers.checkId(userId, 'User ID');
+    
+
+    const post = await getPostById(postId);
+    let likes = post.likes;
+    let usersList = [];
+    for (elem in likes){
+        usersList.push(Object.keys(likes[elem])[0]);
+    }
+    if (!usersList.includes(userId)){
+        return 2; //user has not liked/disliked
+    }else{
+        for (i in likes){
+            let currentId = Object.keys(likes[i])[0];
+            let currentValue = Object.values(likes[i])[0];
+        }if (currentId === userId){
+            if (currentValue === true){ //user already liked
+                return 0; //user liked
+            }
+        }else{
+            return 1; //user disliked
+        }
+}
+}
+
+// const countLikes = async(postId) => {
+
+// }
+
+// const countDislikes = async(postId) => {
+    
+// }
 
 
 const addFlag = async(postId, userId) => {
@@ -291,4 +324,4 @@ const getPostByRatingBuilding = async (rating,buidling) => {
     return posts;
 }
 
-module.exports = {getAllPosts, getPostById, addPost, removePost, addFlag, addLike, addDislike,checkUserFlagged, getPostByBuidling,getPostByRating,getPostByRatingBuilding};
+module.exports = {getAllPosts, getPostById, addPost, removePost, addFlag, addLike, addDislike,checkUserFlagged, checkUserLiked, getPostByBuidling,getPostByRating,getPostByRatingBuilding};
