@@ -130,7 +130,7 @@ const addLike = async(postId, userId) => {
         likes.push(obj);
      }
     const updatedInfo = await postCollection.updateOne(
-        {_id: postId},
+        {_id: ObjectId(postId)},
         {$set: {likes: likes}}
     );
     if (updatedInfo.modifiedCount === 0) {

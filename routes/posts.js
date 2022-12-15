@@ -63,7 +63,7 @@ router
         req.body.foodInput
         );
 
-        console.log(post)
+        //console.log(post)
         res.render('posts', {post: [post]}); //Render page with post
     }
     else
@@ -139,7 +139,7 @@ router
         res.status(403).render('forbiddenAccess');
       }
     } catch (error) {
-      res.status(400).render('userLogin', { title: "Login", error: error }); // 400 error
+      res.redirect('/posts/' +  req.params.postId);
     }
   })
 
@@ -150,16 +150,16 @@ router
     try {
       if (req.session.user) {
         helpFunctions.stringChecker(req.params.postId)
-        // if (
-        //   !req.params.postId ||
-        //   !ObjectId.isValid(req.params.postId)
-        // ) {
-        //   res.status(400).redirect('/home');
-        //   return null;
-        // }
-        console.log(req.params.postId + " " +req.session.userId)
+        if (
+          !req.params.postId ||
+          !ObjectId.isValid(req.params.postId)
+        ) {
+          res.status(400).redirect('/home');
+          return null;
+        }
+       // console.log(req.params.postId + " " +req.session.userId)
         const post = await postdata.addDislike(req.params.postId,req.session.userId)
-        console.log(post)
+        //console.log(post)
         res.redirect('/posts/' +  req.params.postId);
       }
       else {
@@ -167,7 +167,7 @@ router
       }
     } catch (error) {
       console.log(error)
-      res.status(400).redirect('/home');
+      res.redirect('/posts/' +  req.params.postId);
     }
   })
 
@@ -185,13 +185,38 @@ router
            return null;
          }
         const post = await postdata.addLike(req.params.postId,req.session.userId)
+        //console.log(post)
         res.redirect('/posts/' + req.params.postId) ;
       }
       else {
         res.status(403).render('forbiddenAccess');
       }
     } catch (error) {
-      res.status(400).redirect('/home');
+      res.redirect('/posts/' +  req.params.postId);
+    }
+  })
+
+  router
+  .route("/flag/:postId")
+  .post(async (req, res) => {
+    try {
+      if (req.session.user) {
+        helpFunctions.stringChecker(req.params.postId,req.session.userId)
+         if (
+           !req.params.postId ||
+           !ObjectId.isValid(req.params.postId)
+         ) {
+           res.status(400).redirect('/home');
+           return null;
+         }
+        const post = await postdata.addFlag(req.params.postId,req.session.userId)
+        res.redirect('/posts/' + req.params.postId) ;
+      }
+      else {
+        res.status(403).render('forbiddenAccess');
+      }
+    } catch (error) {
+      res.redirect('/posts/' + req.params.postId) ;
     }
   })
 
