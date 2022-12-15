@@ -56,7 +56,11 @@ a {
 }
 
 
+#eachPost {
+    align-content: center;
+    align-items: center;
 
+}
 
 input.floorInput {
     align-content: center;

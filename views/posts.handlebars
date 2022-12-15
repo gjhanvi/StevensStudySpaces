@@ -6,17 +6,18 @@
 </div>
 <ul>
     {{#each post}}
-    <li> <a href="/posts/{{this._id}}">{{this.title}}</a></li>
-    <li>{{this.building}}</li>
-    <li>{{this.floor}}</li>
-    <li>{{this.description}}</li>
-    <li>{{this.noiseRating}}</li>
-    <li>{{this.locationRating}}</li>
-    <li>{{this.studentCapacity}}</li>
-    <li>{{this.nycViewRating}}</li>
-    <li>{{this.photo}}</li>
-    <li>{{this.foodNear}}</li>
-    <p>Post Break</p>
+    <h3 id = "eachPost">Thanks for your post! Click here to see your post.</h3>
+    <a href="/posts/{{this._id}}">{{this.title}}</a>
+    <li id = "eachPost">Building: {{this.building}}</li>
+    <li id = "eachPost">Floor: {{this.floor}}</li>
+    <li id = "eachPost">Description of Study Spot: {{this.description}}</li>
+    <li id = "eachPost">Noise Rating: {{this.noiseRating}}</li>
+    <li id = "eachPost">Location Rating: {{this.locationRating}}</li>
+    <li id = "eachPost">Student Capacity: {{this.studentCapacity}}</li>
+    <li id = "eachPost">Does it have a view of NYC? {{this.nycViewRating}}</li>
+    <li id = "eachPost">{{this.photo}}</li>
+    <li id = "eachPost">Is there food nearby? {{this.foodNear}}</li>
+    <p id = "eachPost">Post Break</p>
     {{/each}}
 </ul>
 
