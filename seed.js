@@ -71,7 +71,8 @@ async function main() {
     }
 
     try{ //adding like to a post
-        let addLike = await posts.addLike(postId, userId);
+        let addLike = await posts.addLike("639b98fdeca0fc87d5884d44", 'randomUser');
+        console.log('after like is added')
         console.log(addLike);
     }catch(e){
         console.log(e);
