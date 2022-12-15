@@ -207,12 +207,13 @@ const checkUserLiked = async(postId, userId) => {
         for (i in likes){
             let currentId = Object.keys(likes[i])[0];
             let currentValue = Object.values(likes[i])[0];
-        }if (currentId === userId){
-            if (currentValue === true){ //user already liked
-                return 0; //user liked
+            if (currentId === userId){
+                if (currentValue === true){ //user already liked
+                    return 0; //user liked
+                }
+            }else{
+                return 1; //user disliked
             }
-        }else{
-            return 1; //user disliked
         }
 }
 }
