@@ -194,12 +194,10 @@ const addDislike = async(postId, userId) => {
 
 
 const addFlag = async(postId, userId) => {
-    //postId is already being input as an objectId not a string
-    //checkId function should check if valid object ID
-
     //need to check if user has already flagged the posts
     postId = helpers.checkId(postId, 'Post ID');
     userId = helpers.checkId(userId, 'User ID');
+    
     const postCollection = await posts();
     const gotPost = await postCollection.findOne({_id: ObjectId(postId)});
     if (gotPost === null) throw `No post with id of ${postId}`;
@@ -218,10 +216,29 @@ const addFlag = async(postId, userId) => {
       if (updatedInfo.modifiedCount === 0) {
         throw 'Could not add flag to post successfully';
       }
-    let updatedPost = getPostById(postId);
+    let updatedPost = await getPostById(postId);
     return updatedPost;
 
 }
 
+const checkUserFlagged = async(postId, userId) => {
+    postId = helpers.checkId(postId, 'Post ID');
+    userId = helpers.checkId(userId, 'User ID');
+    postId = postId.toString();
 
-module.exports = {getAllPosts, getPostById, addPost, removePost, addFlag, addLike, addDislike};
+    let post = await getPostById(postId);
+    let flagList = post.flags;
+    for (i in flagList){
+        if (flagList.includes(userId)){
+            return true;
+        }
+    }
+    return false;
+}
+
+//if user flagged
+// total likes/dislikes
+//if they liked/disliked
+
+
+module.exports = {getAllPosts, getPostById, addPost, removePost, addFlag, addLike, addDislike, checkUserFlagged};

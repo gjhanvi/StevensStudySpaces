@@ -62,38 +62,34 @@ async function main() {
         console.log(e);
     }
 
-    // try{
-    //     let addFlag = await posts.addFlag(postId,'UserId');
-    //     console.log(`Adding flag to post with id of ${postId}.`);
-    //     //console.log(addFlag);
+    try{
+        let addFlag = await posts.addFlag(postId,'randomUser');
+        console.log(`Adding flag to post with id of ${postId}.`);
+        console.log(addFlag);
+    }catch(e){
+        console.log(e);
+    }
+
+    // try{ //adding like to a post
+    //     let addLike = await posts.addLike(postId, userId);
+    //     console.log(addLike);
+    // }catch(e){
+    //     console.log(e);
+    // }
+    // try{// adding dislike to same post
+    //     let addLike = await posts.addDislike(postId, userId);
+    //     console.log(addLike);
     // }catch(e){
     //     console.log(e);
     // }
 
-    try{ //adding like to a post
-        let addLike = await posts.addLike(postId, userId);
-        console.log(addLike);
+    try{
+        let ans = await posts.checkUserFlagged(postId,'randomUser' );
+        console.log(ans);
     }catch(e){
-        console.log(e);
-    }
-    try{// adding dislike to same post
-        let addLike = await posts.addDislike(postId, userId);
-        console.log(addLike);
-    }catch(e){
-        console.log(e);
-    }
-    try{ //adding like to a post
-        let addLike = await posts.addLike(postId, userId);
-        console.log(addLike);
-    }catch(e){
-        console.log(e);
-    }
-    try{ //adding like to a post
-        let addLike = await posts.addLike(postId, userId);
-        console.log(addLike);
-    }catch(e){
-        console.log(e);
-    }
+            console.log(e);
+        }
+    
 
 
 
