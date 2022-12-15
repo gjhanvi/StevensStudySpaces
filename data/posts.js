@@ -94,105 +94,50 @@ const removePost = async(postId) => {
 
 }
 
-const addLike = async(postId, userId) => {
-    postId = helpers.checkId(postId, 'Post ID');
-    userId = helpers.checkId(userId, 'User ID');
-    userId = userId.toString();
+// const addLike = async(postId, userId) => {
+//     postId = helpers.checkId(postId, 'Post ID');
+//     userId = helpers.checkId(userId, 'User ID');
 
-    const postCollection = await posts();
-    const gotPost = await postCollection.findOne({_id: postId});
-    if (gotPost === null) throw `No post with id of ${postId}`;
+//     const postCollection = await posts();
+//     const gotPost = await postCollection.findOne({_id: postId});
+//     if (gotPost === null) throw `No post with id of ${postId}`;
 
-    let likes = gotPost.likes;
-    let usersList = [];
-    for (elem in likes){
-        usersList.push(Object.keys(likes[elem])[0]);
-    }
-    if (usersList.includes(userId)){
-        for (i in likes){
-            let currentId = Object.keys(likes[i])[0];
-            let currentValue = Object.values(likes[i])[0];
-            if (currentId === userId){
-                if (currentValue === false){ //user already disliked
-                    Object.keys(likes[i]).forEach(function(key){
-                        likes[i][key] = true;
-                    })
-                    break;
-                }else{ //nothing to change 
-                    let currentPost = getPostById(postId);
-                    return currentPost;
-                }
-            }
-        }
-    }
-     else{
-        let obj = {};
-        obj[userId] = true;
-        likes.push(obj);
-     }
-    const updatedInfo = await postCollection.updateOne(
-        {_id: postId},
-        {$set: {likes: likes}}
-    );
-    if (updatedInfo.modifiedCount === 0) {
-        throw 'Could not add like to post successfully';
-    }
+//     let likes = gotPost.likes;
+//     let usersList = Object.keys(likes);
+//     for (i in usersList){
+//         if (usersList[i] === userId){
+//             if (likes.userId === false){ //user has already disliked post
 
-    let updatedPost = getPostById(postId);
-    return updatedPost;
+//             }else{ //user has already liked post
+                
+//             }
+//         }
+//     }
     
-}
+// }
 
-const addDislike = async(postId, userId) => {
-    postId = helpers.checkId(postId, 'Post ID');
-    userId = helpers.checkId(userId, 'User ID');
-    userId = userId.toString();
+// const addDislike = async(postId, userId) => {
+//     postId = helpers.checkId(postId, 'Post ID');
+//     userId = helpers.checkId(userId, 'User ID');
 
+//     const postCollection = await posts();
+//     const gotPost = await postCollection.findOne({_id: postId});
+//     if (gotPost === null) throw `No post with id of ${postId}`;
 
-    const postCollection = await posts();
-    const gotPost = await postCollection.findOne({_id: postId});
-    if (gotPost === null) throw `No post with id of ${postId}`;
+//     let likes = gotPost.likes;
+//     let usersList = Object.keys(likes);
+//     for (i in usersList){
+//         if (usersList[i] === userId){
+//             if (likes.userId === false){ //user has already disliked post
 
-    let likes = gotPost.likes;
-    let usersList = [];
-    for (elem in likes){
-        usersList.push(Object.keys(likes[elem])[0]);
-    }
-    if (usersList.includes(userId)){
-        for (i in likes){
-            let currentId = Object.keys(likes[i])[0];
-            let currentValue = Object.values(likes[i])[0];
-            if (currentId === userId){
-                if (currentValue === true){ //user already liked
-                    Object.keys(likes[i]).forEach(function(key){
-                        likes[i][key] = false;
-                    })
-                    break;
-                }else{ //nothing to change
-                    let currentPost = getPostById(postId);
-                    return currentPost;
-                }
-            }
-        }
-    }
-     else{
-        let obj = {};
-        obj[userId] = false;
-        likes.push(obj);
-     }
-    const updatedInfo = await postCollection.updateOne(
-        {_id: postId},
-        {$set: {likes: likes}}
-    );
-    if (updatedInfo.modifiedCount === 0) {
-        throw 'Could not add dislike to post successfully';
-    }
-
-    let updatedPost = getPostById(postId);
-    return updatedPost;
+//             }else{ //user has already liked post
+                
+//             }
+//         }
+//     }
     
     
-}
+// }
 
 
 const addFlag = async(postId, userId) => {
@@ -226,4 +171,4 @@ const addFlag = async(postId, userId) => {
 }
 
 
-module.exports = {getAllPosts, getPostById, addPost, removePost, addFlag, addLike, addDislike};
+module.exports = {getAllPosts, getPostById, addPost, removePost, addFlag};
