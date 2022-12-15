@@ -63,7 +63,7 @@ router
         req.body.foodInput
         );
 
-        console.log(post)
+        //console.log(post)
         res.render('posts', {post: [post]}); //Render page with post
     }
     else
@@ -108,6 +108,9 @@ router
           return null;
         }
         const post = await postdata.getPostById(req.params.postId)
+        //const checkUserFlag = await postdata.getPostById(req.params.postId)
+        //const totalLikes/Dislikes = await postdata.getPostById(req.params.postId)
+        //const ifuserLiked/Disliked = await postdata.getPostById(req.params.postId)
         res.render('singlePost', {post: [post],postId:req.params.postId });
       }
       else {
@@ -139,7 +142,7 @@ router
         res.status(403).render('forbiddenAccess');
       }
     } catch (error) {
-      res.status(400).render('userLogin', { title: "Login", error: error }); // 400 error
+      res.redirect('/posts/' +  req.params.postId);
     }
   })
 
@@ -150,16 +153,16 @@ router
     try {
       if (req.session.user) {
         helpFunctions.stringChecker(req.params.postId)
-        // if (
-        //   !req.params.postId ||
-        //   !ObjectId.isValid(req.params.postId)
-        // ) {
-        //   res.status(400).redirect('/home');
-        //   return null;
-        // }
-        console.log(req.params.postId + " " +req.session.userId)
+        if (
+          !req.params.postId ||
+          !ObjectId.isValid(req.params.postId)
+        ) {
+          res.status(400).redirect('/home');
+          return null;
+        }
+       // console.log(req.params.postId + " " +req.session.userId)
         const post = await postdata.addDislike(req.params.postId,req.session.userId)
-        console.log(post)
+        //console.log(post)
         res.redirect('/posts/' +  req.params.postId);
       }
       else {
@@ -167,7 +170,7 @@ router
       }
     } catch (error) {
       console.log(error)
-      res.status(400).redirect('/home');
+      res.redirect('/posts/' +  req.params.postId);
     }
   })
 
@@ -185,13 +188,76 @@ router
            return null;
          }
         const post = await postdata.addLike(req.params.postId,req.session.userId)
+        //console.log(post)
         res.redirect('/posts/' + req.params.postId) ;
       }
       else {
         res.status(403).render('forbiddenAccess');
       }
     } catch (error) {
-      res.status(400).redirect('/home');
+      res.redirect('/posts/' +  req.params.postId);
+    }
+  })
+
+  router
+  .route("/flag/:postId")
+  .post(async (req, res) => {
+    try {
+      if (req.session.user) {
+        helpFunctions.stringChecker(req.params.postId,req.session.userId)
+         if (
+           !req.params.postId ||
+           !ObjectId.isValid(req.params.postId)
+         ) {
+           res.status(400).redirect('/home');
+           return null;
+         }
+        const post = await postdata.addFlag(req.params.postId,req.session.userId)
+        res.redirect('/posts/' + req.params.postId) ;
+      }
+      else {
+        res.status(403).render('forbiddenAccess');
+      }
+    } catch (error) {
+      res.redirect('/posts/' + req.params.postId) ;
+    }
+  })
+
+  router
+  .route("/building")
+  .post(async (req, res) => {
+    try {
+      if (req.session.user) {
+        let postlist;
+        if(req.body.ratingInput == "Any")
+        {
+          if(req.body.buildingInput == "All")
+          {
+           postlist = postdata.getAllPosts()
+          }
+          else
+          {
+          postlist = postdata.getPostByBuidling(req.body.buildingInput)
+          }
+        }
+        else
+        {
+          helpFunctions.checkRating(req.body.ratingInput, "Noise")
+        }
+        if(req.body.buildingInput == "All") 
+        {
+         postlist = postdata.getPostByRating(req.body.ratingInput)
+        }
+        else if (req.body.ratingInput != "Any")
+        {
+           postList = await postdata.getPostByRatingBuilding(req.body.ratingInput,req.body.buildingInput);
+        }
+
+        res.render('posts', {post: postList});
+      }
+    } catch (error) {
+      console.log(error)
+      res.redirect('/posts/' +  req.params.postId);
     }
   })
 

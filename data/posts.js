@@ -98,9 +98,8 @@ const addLike = async(postId, userId) => {
     postId = helpers.checkId(postId, 'Post ID');
     userId = helpers.checkId(userId, 'User ID');
     userId = userId.toString();
-
     const postCollection = await posts();
-    const gotPost = await postCollection.findOne({_id: postId});
+    const gotPost = await postCollection.findOne({_id: ObjectId(postId)});
     if (gotPost === null) throw `No post with id of ${postId}`;
 
     let likes = gotPost.likes;
@@ -119,8 +118,7 @@ const addLike = async(postId, userId) => {
                     })
                     break;
                 }else{ //nothing to change 
-                    let currentPost = getPostById(postId);
-                    return currentPost;
+                    likes.splice(i,1);
                 }
             }
         }
@@ -131,7 +129,7 @@ const addLike = async(postId, userId) => {
         likes.push(obj);
      }
     const updatedInfo = await postCollection.updateOne(
-        {_id: postId},
+        {_id: ObjectId(postId)},
         {$set: {likes: likes}}
     );
     if (updatedInfo.modifiedCount === 0) {
@@ -150,7 +148,7 @@ const addDislike = async(postId, userId) => {
 
 
     const postCollection = await posts();
-    const gotPost = await postCollection.findOne({_id: postId});
+    const gotPost = await postCollection.findOne({_id: ObjectId(postId)});
     if (gotPost === null) throw `No post with id of ${postId}`;
 
     let likes = gotPost.likes;
@@ -169,8 +167,7 @@ const addDislike = async(postId, userId) => {
                     })
                     break;
                 }else{ //nothing to change
-                    let currentPost = getPostById(postId);
-                    return currentPost;
+                    likes.splice(i,1);
                 }
             }
         }
@@ -181,7 +178,7 @@ const addDislike = async(postId, userId) => {
         likes.push(obj);
      }
     const updatedInfo = await postCollection.updateOne(
-        {_id: postId},
+        {_id: ObjectId(postId)},
         {$set: {likes: likes}}
     );
     if (updatedInfo.modifiedCount === 0) {
@@ -191,8 +188,57 @@ const addDislike = async(postId, userId) => {
     let updatedPost = getPostById(postId);
     return updatedPost;
     
-    
 }
+
+const checkUserLiked = async(postId, userId) => {
+    postId = helpers.checkId(postId, 'Post ID');
+    userId = helpers.checkId(userId, 'User ID');
+    
+
+    const post = await getPostById(postId);
+    let likes = post.likes;
+    let usersList = [];
+    for (elem in likes){
+        usersList.push(Object.keys(likes[elem])[0]);
+    }
+    if (!usersList.includes(userId)){
+        return 2; //user has not liked/disliked
+    }else{
+        for (i in likes){
+            let currentId = Object.keys(likes[i])[0];
+            let currentValue = Object.values(likes[i])[0];
+            if (currentId === userId){
+                if (currentValue === true){ //user already liked
+                    return 0; //user liked
+                }
+            }else{
+                return 1; //user disliked
+            }
+        }
+}
+}
+
+const countLikes = async(postId) => {
+    postId = helpers.checkId(postId, 'Post ID');
+    const post = await getPostById(postId);
+    let likes = post.likes;
+    let likeCount = 0;
+    let dislikeCount = 0;
+    for (elem in likes){
+        if (Object.hasOwnProperty(key)){
+            if (elem[key] === true){
+                likeCount++;
+            }else{
+                dislikeCount++;
+            }
+        }
+    }
+    return {numLikes: likeCount, numDisliked: dislikeCount};
+}
+
+// const countDislikes = async(postId) => {
+    
+// }
 
 
 const addFlag = async(postId, userId) => {
@@ -203,7 +249,7 @@ const addFlag = async(postId, userId) => {
     postId = helpers.checkId(postId, 'Post ID');
     userId = helpers.checkId(userId, 'User ID');
     const postCollection = await posts();
-    const gotPost = await postCollection.findOne({_id: postId});
+    const gotPost = await postCollection.findOne({_id: ObjectId(postId)});
     if (gotPost === null) throw `No post with id of ${postId}`;
     
     let flagList = gotPost.flags;
@@ -214,7 +260,7 @@ const addFlag = async(postId, userId) => {
     }
     flagList.push(userId);
     const updatedInfo = await postCollection.updateOne(
-        {_id: postId},
+        {_id: ObjectId(postId)},
         {$set: {flags: flagList}}
       );
       if (updatedInfo.modifiedCount === 0) {
@@ -225,5 +271,72 @@ const addFlag = async(postId, userId) => {
 
 }
 
+const checkUserFlagged = async(postId, userId) => {
+    postId = helpers.checkId(postId, 'Post ID');
+    userId = helpers.checkId(userId, 'User ID');
+    postId = postId.toString();
 
-module.exports = {getAllPosts, getPostById, addPost, removePost, addFlag, addLike, addDislike};
+    let post = await getPostById(postId);
+    let flagList = post.flags;
+    for (i in flagList){
+        if (flagList.includes(userId)){
+            return true;
+        }
+    }
+    return false;
+}
+
+const getPostByBuidling = async (buidling) => {
+    //postId is type string
+    postId = helpers.checkBuilding(buidling, 'building');
+    const postlist = await getAllPosts();
+    let posts = []
+    postlist.forEach(element => {
+        if(element.building == buidling)
+        {
+            posts.push(element)
+        }
+    });
+    return posts;
+}
+
+const getPostByRating = async (rating) => {
+    //postId is type string
+    postId = helpers.checkRating(rating, 'noise');
+    const postlist = await getAllPosts();
+    let posts = []
+    postlist.forEach(element => {
+        if(element.noiseRating <= parseInt(rating))
+        {
+            posts.push(element)
+        }
+    });
+    return posts;
+}
+
+const getPostByRatingBuilding = async (rating,buidling) => {
+    //postId is type string
+    const postlist = await getAllPosts();
+
+    postId = helpers.checkBuilding(buidling, 'building');
+    let temp = []
+    postlist.forEach(element => {
+        if(element.building == buidling)
+        {
+            temp.push(element)
+        }
+    })
+    let posts = []
+    temp.forEach(element => {
+        if(element.noiseRating <= parseInt(rating))
+        {
+            posts.push(element)
+        }
+    });
+;
+
+
+    return posts;
+}
+
+module.exports = {getAllPosts, getPostById, addPost, removePost, addFlag, addLike, addDislike,checkUserFlagged, checkUserLiked, getPostByBuidling,getPostByRating,getPostByRatingBuilding, countLikes};
