@@ -51,6 +51,7 @@ router
       // foodInput
       const post = await postdata.addPost(
         req.session.userId,
+        req.body.titleInput,
         req.body.buildingInput,
         req.body.floorInput,
         req.body.descInput,
@@ -166,6 +167,7 @@ router
       res.status(400).redirect('/home');
     }
   })
+
   router
   .route("/like/:postId")
   .post(async (req, res) => {
