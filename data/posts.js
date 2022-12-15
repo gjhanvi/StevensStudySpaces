@@ -218,9 +218,23 @@ const checkUserLiked = async(postId, userId) => {
 }
 }
 
-// const countLikes = async(postId) => {
-
-// }
+const countLikes = async(postId) => {
+    postId = helpers.checkId(postId, 'Post ID');
+    const post = await getPostById(postId);
+    let likes = post.likes;
+    let likeCount = 0;
+    let dislikeCount = 0;
+    for (elem in likes){
+        if (Object.hasOwnProperty(key)){
+            if (elem[key] === true){
+                likeCount++;
+            }else{
+                dislikeCount++;
+            }
+        }
+    }
+    return {numLikes: likeCount, numDisliked: dislikeCount};
+}
 
 // const countDislikes = async(postId) => {
     
@@ -325,4 +339,4 @@ const getPostByRatingBuilding = async (rating,buidling) => {
     return posts;
 }
 
-module.exports = {getAllPosts, getPostById, addPost, removePost, addFlag, addLike, addDislike,checkUserFlagged, checkUserLiked, getPostByBuidling,getPostByRating,getPostByRatingBuilding};
+module.exports = {getAllPosts, getPostById, addPost, removePost, addFlag, addLike, addDislike,checkUserFlagged, checkUserLiked, getPostByBuidling,getPostByRating,getPostByRatingBuilding, countLikes};
