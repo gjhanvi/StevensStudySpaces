@@ -1,0 +1,65 @@
+p.mainhead{
+    font-size: 2rem;
+    color: rgb(42, 30, 30);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+p {
+    align-items: center;
+    justify-content: center;
+    display: block;
+    text-align: center;
+}
+body {
+    background: rgb(156, 197, 216);
+    font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+    font-size: 15pt;
+    
+}
+main {
+    max-width: 75%;
+    margin: auto;
+    background-color: lightgray;
+    border-style: solid;
+    border-width: .25ch;
+    border-color: grey;
+    
+}
+header {
+    border-style: solid;
+    border-width: .25ch;
+    border-color: lightgrey;
+}
+h1 {
+    font-size: 1.5rem;
+    color:rgb(64, 64, 83);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+form{
+    align-items: center;
+    justify-content: center;
+    display: block;
+    text-align: center;
+   
+}
+a {
+    align-items: center;
+    justify-content: center;
+    display: block;
+    text-align: center;
+
+}
+
+
+
+
+input.floorInput {
+    align-content: center;
+    align-items: center;
+    color: pink;
+}
