@@ -4,7 +4,7 @@
 const express = require("express");
 const session = require('express-session')
 const configRoutes = require("./routes");
-
+const static = express.static(__dirname + "/public");
 // We create our express isntance:
 const app = express();
 const exphbs = require("express-handlebars");
@@ -13,7 +13,7 @@ app.set("view engine", "handlebars");
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }))
-
+app.use("/public", static);
 
 // Middlewares:
 
