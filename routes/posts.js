@@ -150,20 +150,23 @@ router
     try {
       if (req.session.user) {
         helpFunctions.stringChecker(req.params.postId)
-        if (
-          !req.params.postId ||
-          !ObjectId.isValid(req.params.postId)
-        ) {
-          res.status(400).redirect('/home');
-          return null;
-        }
-        //const post = await postData.addDislike(req.params.postId)
+        // if (
+        //   !req.params.postId ||
+        //   !ObjectId.isValid(req.params.postId)
+        // ) {
+        //   res.status(400).redirect('/home');
+        //   return null;
+        // }
+        console.log(req.params.postId + " " +req.session.userId)
+        const post = await postdata.addDislike(req.params.postId,req.session.userId)
+        console.log(post)
         res.redirect('/posts/' +  req.params.postId);
       }
       else {
         res.status(403).render('forbiddenAccess');
       }
     } catch (error) {
+      console.log(error)
       res.status(400).redirect('/home');
     }
   })
@@ -173,15 +176,15 @@ router
   .post(async (req, res) => {
     try {
       if (req.session.user) {
-        helpFunctions.stringChecker(req.params.postId)
-        if (
-          !req.params.postId ||
-          !ObjectId.isValid(req.params.postId)
-        ) {
-          res.status(400).redirect('/home');
-          return null;
-        }
-        //const post = await postData.addLike(req.params.postId)
+        helpFunctions.stringChecker(req.params.postId,req.session.userId)
+         if (
+           !req.params.postId ||
+           !ObjectId.isValid(req.params.postId)
+         ) {
+           res.status(400).redirect('/home');
+           return null;
+         }
+        const post = await postdata.addLike(req.params.postId,req.session.userId)
         res.redirect('/posts/' + req.params.postId) ;
       }
       else {
