@@ -25,8 +25,8 @@ const createUser = async (username, password, firstName, lastName) => {
   const insertInfo = await userCol.insertOne(newUser);
   if (!insertInfo.acknowledged || !insertInfo.insertedId)
     throw 'Could not add user';
-  //return { insertedUser: true };
-  return newUser;
+  return { insertedUser: true };
+  //return newUser;
 };
 
 const checkUser = async (username, password) => {
