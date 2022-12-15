@@ -100,7 +100,7 @@ const addLike = async(postId, userId) => {
     userId = userId.toString();
 
     const postCollection = await posts();
-    const gotPost = await postCollection.findOne({_id: postId});
+    const gotPost = await postCollection.findOne({_id: ObjectId(postId)});
     if (gotPost === null) throw `No post with id of ${postId}`;
 
     let likes = gotPost.likes;
@@ -150,7 +150,7 @@ const addDislike = async(postId, userId) => {
 
 
     const postCollection = await posts();
-    const gotPost = await postCollection.findOne({_id: postId});
+    const gotPost = await postCollection.findOne({_id: ObjectId(postId)});
     if (gotPost === null) throw `No post with id of ${postId}`;
 
     let likes = gotPost.likes;
