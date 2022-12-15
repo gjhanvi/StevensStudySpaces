@@ -2,6 +2,11 @@
 <h1>{{title}}</h1>
 <p>{{error}}</p>
 
+        <div class="form-group hidden" id="error-container">
+            <div class="alert alert-danger text-goes-here">
+            </div>
+          </div>
+
 <form action="/posts/new" method="POST" id="newpost-form">
 
     <label for="titleInput">Title</label>
