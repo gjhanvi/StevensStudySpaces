@@ -51,6 +51,7 @@ router
       // foodInput
       const post = await postdata.addPost(
         req.session.userId,
+        req.body.titleInput,
         req.body.buildingInput,
         req.body.floorInput,
         req.body.descInput,
@@ -107,8 +108,7 @@ router
           return null;
         }
         const post = await postdata.getPostById(req.params.postId)
-        console.log(post.comments)
-        res.render('singlePost', {post: [post],postId:req.params.postId, comments:post.comments});
+        res.render('singlePost', {post: [post],postId:req.params.postId });
       }
       else {
         res.status(403).render('forbiddenAccess');

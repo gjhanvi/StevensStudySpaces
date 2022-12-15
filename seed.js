@@ -20,7 +20,7 @@ async function main() {
 
     let postId;
     try{
-        let post = await posts.addPost('ObjectId(23234)', 'Tester', '1', 'I am testing',
+        let post = await posts.addPost('ObjectId(23234)', "Title", 'Building', '1', 'I am testing',
         '1', '3', '11', '4', 'randomPhoto', 'Yes');
         postId = post._id;
         console.log('added new post');
@@ -31,7 +31,7 @@ async function main() {
     //console.log(postId);
 
     try {
-        let comment = await comments.createComment(userId, postId);
+        let comment = await comments.createComment(userId, postId, "slayyyyy");
         console.log('comment added');
     }catch(e){
         console.log(e);
