@@ -194,10 +194,12 @@ const addDislike = async(postId, userId) => {
 
 
 const addFlag = async(postId, userId) => {
+    //postId is already being input as an objectId not a string
+    //checkId function should check if valid object ID
+
     //need to check if user has already flagged the posts
     postId = helpers.checkId(postId, 'Post ID');
     userId = helpers.checkId(userId, 'User ID');
-    
     const postCollection = await posts();
     const gotPost = await postCollection.findOne({_id: ObjectId(postId)});
     if (gotPost === null) throw `No post with id of ${postId}`;
@@ -216,7 +218,7 @@ const addFlag = async(postId, userId) => {
       if (updatedInfo.modifiedCount === 0) {
         throw 'Could not add flag to post successfully';
       }
-    let updatedPost = await getPostById(postId);
+    let updatedPost = getPostById(postId);
     return updatedPost;
 
 }
@@ -236,9 +238,57 @@ const checkUserFlagged = async(postId, userId) => {
     return false;
 }
 
-//if user flagged
-// total likes/dislikes
-//if they liked/disliked
+const getPostByBuidling = async (buidling) => {
+    //postId is type string
+    postId = helpers.checkBuilding(buidling, 'building');
+    const postlist = await getAllPosts();
+    let posts = []
+    postlist.forEach(element => {
+        if(element.building == buidling)
+        {
+            posts.push(element)
+        }
+    });
+    return posts;
+}
+
+const getPostByRating = async (rating) => {
+    //postId is type string
+    postId = helpers.checkRating(rating, 'noise');
+    const postlist = await getAllPosts();
+    let posts = []
+    postlist.forEach(element => {
+        if(element.noiseRating <= parseInt(rating))
+        {
+            posts.push(element)
+        }
+    });
+    return posts;
+}
+
+const getPostByRatingBuilding = async (rating,buidling) => {
+    //postId is type string
+    const postlist = await getAllPosts();
+
+    postId = helpers.checkBuilding(buidling, 'building');
+    let temp = []
+    postlist.forEach(element => {
+        if(element.building == buidling)
+        {
+            temp.push(element)
+        }
+    })
+    let posts = []
+    temp.forEach(element => {
+        if(element.noiseRating <= parseInt(rating))
+        {
+            posts.push(element)
+        }
+    });
+;
 
 
-module.exports = {getAllPosts, getPostById, addPost, removePost, addFlag, addLike, addDislike, checkUserFlagged};
+    return posts;
+}
+
+module.exports = {getAllPosts, getPostById, addPost, removePost, addFlag, addLike, addDislike,checkUserFlagged, getPostByBuidling,getPostByRating,getPostByRatingBuilding};
