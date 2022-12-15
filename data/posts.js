@@ -119,8 +119,7 @@ const addLike = async(postId, userId) => {
                     })
                     break;
                 }else{ //nothing to change 
-                    let currentPost = getPostById(postId);
-                    return currentPost;
+                    likes.splice(i,1);
                 }
             }
         }
@@ -169,8 +168,7 @@ const addDislike = async(postId, userId) => {
                     })
                     break;
                 }else{ //nothing to change
-                    let currentPost = getPostById(postId);
-                    return currentPost;
+                    likes.splice(i,1);
                 }
             }
         }
