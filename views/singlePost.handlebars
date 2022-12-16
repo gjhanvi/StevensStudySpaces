@@ -98,6 +98,10 @@
         $.ajax({
             type: "POST",
             url: "flag/{{postId}}",
+            data: {
+                comments: comment,
+                reason: reason
+            },
             success: () => alert("Post flagged for spam."),
             error: (xhr) => alert("Error: " + xhr.responseJSON.error)
         });

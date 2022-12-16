@@ -242,20 +242,18 @@ router
            res.status(400).redirect('/home');
            return null;
          }
-        var alreadyFlagged = postdata.checkUserFlagged(req.params.postId,req.session.userId)
-        if(alreadyFlagged) {
-          res.status(400);
-          res.send({ error: "User already flagged" })
-          return;
-        }
-        await postdata.addFlag(req.params.postId,req.session.userId)
+        await postdata.addFlag(req.params.postId,
+          req.session.userId,
+          req.body.reason,
+          req.body.comments
+        )
         res.redirect('/posts/' + req.params.postId) ;
       }
       else {
         res.status(403).render('forbiddenAccess');
       }
     } catch (error) {
-      res.redirect('/posts/' + req.params.postId) ;
+      res.status(400).send({ error: error });
     }
   })
 
