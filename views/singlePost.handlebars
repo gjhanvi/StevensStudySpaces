@@ -66,16 +66,15 @@
 <button name="flag" value="flag" onclick="flagPost()">flag</button>
 
 <form action="/posts/delete/{{postId}}" method="post">
-    <button name="delete" value="delete">delete</button>
+    <button name="delete" {{text2}} value="delete">delete</button>
 </form>
 
 <a href="/home">Return Home</a>
 
 <form ref='uploadForm' encType="multipart/form-data" class="" action="/upload" method="post">
-    <input type="text" name="fileName" value=""><br>
     <input type="hidden" name="id" value="{{postId}}">
-    <input type="file" name="file" value=""><br>
-    <input type="submit" name="" value="upload!">
+    <input type="{{text1}}" name="file" value=""><br>
+    <input type="{{text}}" name="" value="upload!">
 </form>
 
 <script>

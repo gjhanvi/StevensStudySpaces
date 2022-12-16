@@ -139,7 +139,17 @@ router
         {
           totalMessage = (checkTotalLikes.numLikes - checkTotalLikes.numDisliked) +  " Likes"
         }
-        res.render('singlePost', {post: [post],title:post.title,postId:req.params.postId, likeMessage:likeMessage, flagged:checkUserFlag, totalLikes: totalMessage});
+        let temp = await postdata.checkIds(req.params.postId,req.session.userId)
+        let text = 'submit'
+        let text1 = 'file'
+        let text2 = ''
+        if(!temp)
+        {
+          text = 'hidden'
+          text1 = 'hidden'
+          text2 = 'hidden'
+        }
+        res.render('singlePost', {text2:text2,text:text,text1:text1,post: [post],title:post.title,postId:req.params.postId, likeMessage:likeMessage, flagged:checkUserFlag, totalLikes: totalMessage});
       }
       else {
         res.status(403).render('forbiddenAccess');
