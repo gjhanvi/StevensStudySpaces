@@ -148,12 +148,14 @@ router
         }
         //console.log(post.photo)
         let text = "text"
+        let text1 = 'submit'
         const bool = await postdata.checkIds(req.params.postId, req.params.userId)
         if(!bool)
         {
           text = 'hidden'
+          text1 ='hidden'
         }
-        res.render('singlePost', {text:text,post: [post],title:post.title,postId:req.params.postId, likeMessage:likeMessage, flagged:flagged, totalLikes: totalMessage});
+        res.render('singlePost', {post: [post],title:post.title,postId:req.params.postId, likeMessage:likeMessage, flagged:flagged, totalLikes: totalMessage});
       }
       else {
         res.status(403).render('forbiddenAccess');
