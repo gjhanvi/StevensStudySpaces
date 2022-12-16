@@ -62,7 +62,7 @@ const addPost = async(
         locationRating: locationRating, 
         studentCapacity: studentCapacity, 
         nycViewRating: nycViewRating, 
-        photo: photo, 
+        photo: "/images/index.png", 
         foodNear: foodNear,
         likes: [],
         flags: [],
