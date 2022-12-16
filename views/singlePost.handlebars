@@ -1,38 +1,38 @@
 <div class="topnav">
-  <a class="active" href="/home">Home</a>
-  <a href="/posts/new">New Post</a>
-  <a href="/posts">All Posts</a>
+    <a class="active" href="/home">Home</a>
+    <a href="/posts/new">New Post</a>
+    <a href="/posts">All Posts</a>
 </div>
 
-<p class = "postTitle">{{title}}</p>
+<p class="postTitle">{{title}}</p>
 
 
-    {{#each post}}
-    <p class = "postName">{{this.name}}'s Post</p>
-    <p class = "building">Building: {{this.building}}</p>
-    <p class = "floor">Floor: {{this.floor}}</p>
-    <p class = "floor">{{this.description}}</p>
-    <p class = "noiseRating">Noise Rating: {{this.noiseRating}}</p>
-    <p class = "locationRating">Location Rating: {{this.locationRating}}</p>
-    <p class = "studentCapacity">Student Capacity: {{this.studentCapacity}}</p>
-    <p class = "nycViewRating">NYC View Rating: {{this.nycViewRating}}</p>
-    <p class = "foodNearby">Is there food nearby? {{this.foodNear}}</p>
-    <img src="{{this.photo}}" height="300px" width="500px">
+{{#each post}}
+<p class="postName">{{this.name}}'s Post</p>
+<p class="building">Building: {{this.building}}</p>
+<p class="floor">Floor: {{this.floor}}</p>
+<p class="floor">{{this.description}}</p>
+<p class="noiseRating">Noise Rating: {{this.noiseRating}}</p>
+<p class="locationRating">Location Rating: {{this.locationRating}}</p>
+<p class="studentCapacity">Student Capacity: {{this.studentCapacity}}</p>
+<p class="nycViewRating">NYC View Rating: {{this.nycViewRating}}</p>
+<p class="foodNearby">Is there food nearby? {{this.foodNear}}</p>
+<img src="{{this.photo}}" height="300" width="500" alt = "post image">
 
-    <p>{{flagged}}</p>
-    <p>{{likeMessage}}</p>
-    <p>{{totalLikes}}</p>
+<p>{{flagged}}</p>
+<p>{{likeMessage}}</p>
+<p>{{totalLikes}}</p>
 
-    {{#each comments}}
-    <p class = 'comments'>{{this.name}}: {{this.comment}}</p>
-    {{/each}}
-    {{/each}}
+{{#each comments}}
+<p class='comments'>{{this.name}}: {{this.comment}}</p>
+{{/each}}
+{{/each}}
 
 
 
 <form action="/posts/comment/{{postId}}" method="POST" id="comment-form">
     <label for="commentInput">Leave Comment</label>
-    <input id="commentInput" type="text" name="commentInput"/><br/>
+    <input id="commentInput" type="text" name="commentInput" /><br />
     <button type="submit">Submit Comment</button>
 </form>
 
@@ -54,9 +54,9 @@
 </form>
 
 
-<form ref='uploadForm' encType="multipart/form-data" class="" action="/upload" method="post">
-      <input type="hidden" name="id" value="{{postId}}">
-      <input type="file" name="file" accept="image/*" value=""><br>
-      <input type="submit" name="" value="upload!">
+<form encType="multipart/form-data" class="" action="/upload" method="post">
+    <input type="hidden" name="id" value="{{postId}}">
+    <input type="file" name="file" accept="image/*"><br>
+    <input type="submit" name="upload" value="upload!">
 </form>
 <a href="/home">Return Home</a>
