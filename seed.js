@@ -64,7 +64,11 @@ async function main() {
     //CREATING POSTS
     let libraryThirdId = '';
     try{
+<<<<<<< HEAD
         let post = await posts.addPost(susanId, 'The Best Study Spot EVER', 'Library', '3', 
+=======
+        let post = await posts.addPost(susanId, 'The Best Study Spot EVER', 'S.C. Williams Library', '3', 
+>>>>>>> 95ce4d058a359b3194f6937cd09adc7362ec7d3e
         'The third floor of the library is my favorite study space at Stevens. There is no talking on this floor so you get the best studying done. This spot is more for solo studying so if you want to meet with a group, maybe try somewhere else. I wish I knew about this earlier!',
         '1', '5', '4', '1', 'Yes');
         libraryThirdId = post._id.toString();

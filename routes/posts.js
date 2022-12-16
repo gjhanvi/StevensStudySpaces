@@ -234,6 +234,37 @@ router
   })
 
   router
+  .route("/delete/:postId")
+  .post(async (req, res) => {
+    try {
+      if (req.session.user) {
+        helpFunctions.stringChecker(req.params.postId,req.session.userId)
+         if (
+           !req.params.postId ||
+           !ObjectId.isValid(req.params.postId)
+         ) {
+           res.status(400).redirect('/home');
+           return null;
+         }
+         let bool = await postdata.checkIds(req.params.postId,req.session.userId)
+         console.log(bool)
+         if(bool)
+         {
+          const post = await postdata.removePost(req.params.postId)
+          res.redirect('/posts/') ;
+         }
+        res.redirect('/posts/') ;
+      }
+      else {
+        res.status(403).render('forbiddenAccess');
+      }
+    } catch (error) {
+      console.log(error)
+      res.redirect('/posts/' +  req.params.postId);
+    }
+  })
+
+  router
   .route("/flag/:postId")
   .post(async (req, res) => {
     try {
