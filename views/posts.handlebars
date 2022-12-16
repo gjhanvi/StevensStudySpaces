@@ -50,8 +50,11 @@
     <p class ="eachPost">Location Rating: {{this.locationRating}}</p>
     <p class ="eachPost">Student Capacity: {{this.studentCapacity}}</p>
     <p class ="eachPost">Rating of NYC View: {{this.nycViewRating}}</p>
-    <img src="{{this.photo}}" height="300px" width="500px">
     <p class ="eachPost">Is there food nearby? {{this.foodNear}}</p>
+    <div class="fitPhoto">
+    <img src="{{this.photo}}">
+    </div>
+    
     </div>
     {{/each}}
 </ul>
