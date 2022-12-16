@@ -37,8 +37,8 @@ app.post('/upload', function(req, res) {
    let id = req.body.id;
    //console.log(id)
    //need a function that checks that userid is the same post id
-   let temp = postdata.linkPhoto(id,'/images/' + fileName + '.jpg')
-   uploadFile.mv(__dirname + '/images/' + fileName + '.jpg', function(err) {
+   let temp = postdata.linkPhoto(id,'/images/' + id + '.jpg')
+   uploadFile.mv(__dirname + '/images/' + id + '.jpg', function(err) {
     if (err)
     res.status(500).redirect("/home")
    });
