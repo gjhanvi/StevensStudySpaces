@@ -81,7 +81,7 @@ router
       if(req.session.user)
       {
         const postList = await postdata.getAllPosts();
-        res.render('posts', {post: postList, header: "All Posts"});
+        res.render('posts', {post: postList, header: "All Posts", title:"Posts"});
       }
       else
       {
@@ -107,9 +107,7 @@ router
         }
         const post = await postdata.getPostById(req.params.postId)
         const checkUserFlag = await postdata.checkUserFlagged(req.params.postId,req.session.userId)
-        let flagged = "";
         const checkUserLiked = await postdata.checkUserLiked(req.params.postId, req.session.userId)
-        //console.log(checkUserLiked)
         //0 Liked
         //1 Disliked 
         //2 Neither
@@ -122,10 +120,6 @@ router
         else if(checkUserLiked == 1)
         {
           likeMessage = "You disliked this post!"
-        }
-        if(checkUserFlag)
-        {
-          flagged = "You flagged this post"
         }
         //const totalLikes/Dislikes = await postdata.getPostById(req.params.postId)
         //console.log(post.title)
@@ -144,8 +138,17 @@ router
         {
           totalMessage = (checkTotalLikes.numLikes - checkTotalLikes.numDisliked) +  " Likes"
         }
-        //console.log(post.photo)
-        res.render('singlePost', {post: [post],title:post.title,postId:req.params.postId, likeMessage:likeMessage, flagged:flagged, totalLikes: totalMessage});
+        let temp = await postdata.checkIds(req.params.postId,req.session.userId)
+        let text = 'submit'
+        let text1 = 'file'
+        let text2 = ''
+        if(!temp)
+        {
+          text = 'hidden'
+          text1 = 'hidden'
+          text2 = 'hidden'
+        }
+        res.render('singlePost', {text2:text2,text:text,text1:text1,post: [post],title:post.title,postId:req.params.postId, likeMessage:likeMessage, flagged:checkUserFlag, totalLikes: totalMessage});
       }
       else {
         res.status(403).render('forbiddenAccess');
@@ -237,14 +240,6 @@ router
   .post(async (req, res) => {
     try {
       if (req.session.user) {
-        helpFunctions.stringChecker(req.params.postId,req.session.userId)
-         if (
-           !req.params.postId ||
-           !ObjectId.isValid(req.params.postId)
-         ) {
-           res.status(400).redirect('/home');
-           return null;
-         }
          let bool = await postdata.checkIds(req.params.postId,req.session.userId)
          console.log(bool)
          if(bool)
@@ -252,7 +247,9 @@ router
           const post = await postdata.removePost(req.params.postId)
           res.redirect('/posts/') ;
          }
-        res.redirect('/posts/') ;
+        else{
+          res.redirect('/posts/'+req.params.postId) ;
+        }
       }
       else {
         res.status(403).render('forbiddenAccess');
@@ -276,14 +273,18 @@ router
            res.status(400).redirect('/home');
            return null;
          }
-        const post = await postdata.addFlag(req.params.postId,req.session.userId)
+        await postdata.addFlag(req.params.postId,
+          req.session.userId,
+          req.body.reason,
+          req.body.comments
+        )
         res.redirect('/posts/' + req.params.postId) ;
       }
       else {
         res.status(403).render('forbiddenAccess');
       }
     } catch (error) {
-      res.redirect('/posts/' + req.params.postId) ;
+      res.status(400).send({ error: error });
     }
   })
 
