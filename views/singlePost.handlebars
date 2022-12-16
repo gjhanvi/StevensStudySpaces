@@ -44,6 +44,15 @@
     <button name="like" value="like">like</button>
 </form>
 
+<form action="/posts/flag/{{postId}}" method="post">
+    <button name="flag" {{text}} value="flag">flag</button>
+</form>
+
+
+<form action="/posts/delete/{{postId}}" method="post">
+    <button name="delete" {{text}} value="delete">delete</button>
+</form>
+
 
 <form ref='uploadForm' encType="multipart/form-data" class="" action="/upload" method="post">
       <input type="hidden" name="id" value="{{postId}}">

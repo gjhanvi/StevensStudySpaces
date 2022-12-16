@@ -147,7 +147,13 @@ router
           totalMessage = (checkTotalLikes.numLikes - checkTotalLikes.numDisliked) +  " Likes"
         }
         //console.log(post.photo)
-        res.render('singlePost', {post: [post],title:post.title,postId:req.params.postId, likeMessage:likeMessage, flagged:flagged, totalLikes: totalMessage});
+        let text = "text"
+        const bool = await postdata.checkIds(req.params.postId, req.params.userId)
+        if(!bool)
+        {
+          text = 'hidden'
+        }
+        res.render('singlePost', {text:text,post: [post],title:post.title,postId:req.params.postId, likeMessage:likeMessage, flagged:flagged, totalLikes: totalMessage});
       }
       else {
         res.status(403).render('forbiddenAccess');
@@ -257,6 +263,40 @@ router
       res.redirect('/posts/' + req.params.postId) ;
     }
   })
+
+  router
+  .route("/delete/:postId")
+  .post(async (req, res) => {
+    try {
+      if (req.session.user) {
+        helpFunctions.stringChecker(req.params.postId,req.session.userId)
+         if (
+           !req.params.postId ||
+           !ObjectId.isValid(req.params.postId)
+         ) {
+           res.status(400).redirect('/home');
+           return null;
+         }
+         const bool = await postdata.checkIds(req.params.postId, req.params.userId)
+         if(!bool)
+         {
+          res.redirect('/posts/') ;
+         }
+         else
+         {
+        const post = await postdata.removePost(req.params.postId)
+
+        res.redirect('/posts/') ;
+         }
+      }
+      else {
+        res.status(403).render('forbiddenAccess');
+      }
+    } catch (error) {
+      res.redirect('/posts/' + req.params.postId) ;
+    }
+  })
+
 
   router
   .route("/building")
