@@ -36,7 +36,6 @@ router
       req.body.nycInput = helpFunctions.stringChecker(req.body.nycInput, 'View rating');
       req.body.nycInput = helpFunctions.checkRating(req.body.nycInput, 'View');
       req.body.foodInput = helpFunctions.stringChecker(req.body.foodInput, 'Food input');
-      //req.body.foodInput = helpFunctions.checkFoodNear(req.body.foodInput);
       req.body.capacityInput = helpFunctions.stringChecker(req.body.capacityInput, 'Capacity');
       req.body.capacityInput = helpFunctions.checkStudentCapacity(req.body.capacityInput);
       //still need to check req.session.userId
