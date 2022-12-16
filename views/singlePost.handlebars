@@ -4,7 +4,10 @@
   <a href="/posts">All Posts</a>
 </div>
 
-
+<p>{{title}}</p>
+<p>{{flagged}}</p>
+<p>{{likeMessage}}</p>
+<p>{{totalLikes}}</p>
 <ul>
     {{#each post}}
     <li>{{this.building}}</li>
@@ -14,9 +17,8 @@
     <li>{{this.locationRating}}</li>
     <li>{{this.studentCapacity}}</li>
     <li>{{this.nycViewRating}}</li>
-    <li>{{this.photo}}</li>
+    <img src="{{this.photo}}" height="300px" width="500px">
     <li>{{this.foodNear}}</li>
-    <li>{{this.likes}}</li>
     {{#each comments}}
     <li>{{this.comment}}</li>
     {{/each}}
@@ -41,3 +43,10 @@
 
 
 <a href="/home">Return Home</a>
+
+<form ref='uploadForm' encType="multipart/form-data" class="" action="/upload" method="post">
+      <input type="text" name="fileName" value=""><br>
+      <input type="hidden" name="id" value="{{postId}}">
+      <input type="file" name="file" value=""><br>
+      <input type="submit" name="" value="upload!">
+</form>
