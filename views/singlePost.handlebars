@@ -30,16 +30,16 @@
 <p>{{title}}</p>
 <p>{{likeMessage}}</p>
 <p>{{totalLikes}}</p>
-<ul>
+<ul class="post">
     {{#each post}}
     {{this.name}}
-    <li>{{this.building}}</li>
-    <li>{{this.floor}}</li>
-    <li>{{this.description}}</li>
-    <li>{{this.noiseRating}}</li>
-    <li>{{this.locationRating}}</li>
-    <li>{{this.studentCapacity}}</li>
-    <li>{{this.nycViewRating}}</li>
+    <li class="building">Building: {{this.building}}</li>
+    <li class="floor">Floor: {{this.floor}}</li>
+    <li class="desc">{{this.description}}</li>
+    <li class="noiser">Noise Rating: {{this.noiseRating}}</li>
+    <li class="locr">Location Rating: {{this.locationRating}}</li>
+    <li class="cap">Capacity: {{this.studentCapacity}}</li>
+    <li class="viewr">View Rating: {{this.nycViewRating}}</li>
     <img src="{{this.photo}}" height="300px" width="500px">
     <li>{{this.foodNear}}</li>
     {{#each comments}}

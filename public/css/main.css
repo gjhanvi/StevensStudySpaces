@@ -163,3 +163,8 @@ input.floorInput {
     text-decoration: none;
     cursor: pointer;
   }
+
+  ul.post {
+    list-style: none;
+    margin: 10px 200px;
+  }
