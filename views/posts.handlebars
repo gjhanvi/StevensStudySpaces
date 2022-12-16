@@ -38,7 +38,6 @@
 
 <h1>{{header}}</h1>
 
-<ul >
 
     {{#each post}}
     <div class ="divBorder">
@@ -52,12 +51,11 @@
     <p class ="eachPost">Rating of NYC View: {{this.nycViewRating}}</p>
     <p class ="eachPost">Is there food nearby? {{this.foodNear}}</p>
     <div class="fitPhoto">
-    <img src="{{this.photo}}">
+    <img src="{{this.photo}}" alt ="userPhotos">
     </div>
     
     </div>
     {{/each}}
-</ul>
 
 
 
