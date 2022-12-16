@@ -31,7 +31,7 @@ const addPost = async(
     locationRating, 
     studentCapacity, 
     nycViewRating, 
-    photo, 
+    //photo, 
     foodNear
 ) => {
     userId = helpers.checkId(userId, 'User ID');  //--> still need to implement this in helper
@@ -45,7 +45,7 @@ const addPost = async(
     locationRating = helpers.checkRating(locationRating, 'location');
     nycViewRating = helpers.stringChecker(nycViewRating, 'View rating');
     nycViewRating = helpers.checkRating(nycViewRating, 'View');
-    foodNear = helpers.stringChecker(foodNear, 'Food input');
+    //foodNear = helpers.stringChecker(foodNear, 'Food input');
     //foodNear = helpers.checkFoodNear(foodNear);
     studentCapacity = helpers.stringChecker(studentCapacity, 'Capacity');
     studentCapacity = helpers.checkStudentCapacity(studentCapacity);
@@ -98,8 +98,9 @@ const addLike = async(postId, userId) => {
     postId = helpers.checkId(postId, 'Post ID');
     userId = helpers.checkId(userId, 'User ID');
     userId = userId.toString();
+
     const postCollection = await posts();
-    const gotPost = await postCollection.findOne({_id: ObjectId(postId)});
+    const gotPost = await postCollection.findOne({_id: postId});
     if (gotPost === null) throw `No post with id of ${postId}`;
 
     let likes = gotPost.likes;
@@ -118,7 +119,8 @@ const addLike = async(postId, userId) => {
                     })
                     break;
                 }else{ //nothing to change 
-                    likes.splice(i,1);
+                    let currentPost = getPostById(postId);
+                    return currentPost;
                 }
             }
         }
@@ -129,7 +131,7 @@ const addLike = async(postId, userId) => {
         likes.push(obj);
      }
     const updatedInfo = await postCollection.updateOne(
-        {_id: ObjectId(postId)},
+        {_id: postId},
         {$set: {likes: likes}}
     );
     if (updatedInfo.modifiedCount === 0) {
@@ -252,7 +254,7 @@ const addFlag = async(postId, userId) => {
     postId = helpers.checkId(postId, 'Post ID');
     userId = helpers.checkId(userId, 'User ID');
     const postCollection = await posts();
-    const gotPost = await postCollection.findOne({_id: ObjectId(postId)});
+    const gotPost = await postCollection.findOne({_id: postId});
     if (gotPost === null) throw `No post with id of ${postId}`;
     
     let flagList = gotPost.flags;
@@ -263,7 +265,7 @@ const addFlag = async(postId, userId) => {
     }
     flagList.push(userId);
     const updatedInfo = await postCollection.updateOne(
-        {_id: ObjectId(postId)},
+        {_id: postId},
         {$set: {flags: flagList}}
       );
       if (updatedInfo.modifiedCount === 0) {
@@ -273,12 +275,12 @@ const addFlag = async(postId, userId) => {
     return updatedPost;
 
 }
-
+  
 const checkUserFlagged = async(postId, userId) => {
+
     postId = helpers.checkId(postId, 'Post ID');
     userId = helpers.checkId(userId, 'User ID');
     postId = postId.toString();
-
     let post = await getPostById(postId);
     let flagList = post.flags;
     for (i in flagList){

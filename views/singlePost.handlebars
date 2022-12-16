@@ -40,15 +40,13 @@
     <button name="like" value="like">like</button>
 </form>
 
-<form action="/posts/flag/{{postId}}" method="post">
-    <button name="flag" value="flag">flag</button>
-</form>
+
 
 <a href="/home">Return Home</a>
 
 <form ref='uploadForm' encType="multipart/form-data" class="" action="/upload" method="post">
       <input type="text" name="fileName" value=""><br>
       <input type="hidden" name="id" value="{{postId}}">
-      <input type="file" name="file" value=""><br>
+      <input type="file" name="file" accept="image/*" value=""><br>
       <input type="submit" name="" value="upload!">
 </form>

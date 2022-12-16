@@ -4,34 +4,11 @@
   <a href="/posts/new">New Post</a>
   <a href="/posts">All Posts</a>
 </div>
-<h1>All Posts</h1>
-
-<ul >
-
-    {{#each post}}
-    <div class ="divBorder">
-    <a href="/posts/{{this._id}}">{{this.title}}</a>
-    <p class ="eachPost">Building: {{this.building}}</p> 
-    <p class = "eachPost">Floor: {{this.floor}} </p>
-    <p class ="eachPost">Description of Study Spot: {{this.description}}</p>
-    <p class ="eachPost">Noise Rating: {{this.noiseRating}}</p>
-    <p class ="eachPost">Location Rating: {{this.locationRating}}</p>
-    <p class ="eachPost">Student Capacity: {{this.studentCapacity}}</p>
-    <p class ="eachPost">Rating of NYC View: {{this.nycViewRating}}</p>
-    <img src="{{this.photo}}" height="300px" width="500px">
-    <p class ="eachPost">Is there food nearby? {{this.foodNear}}</p>
-    </div>
-    {{/each}}
-</ul>
-
-
-
-
-<a href="/home">Return Home</a>
 
 <form action="/posts/building" method="POST" id="newpost-form">
       <label for="buildingInput">Building</label>
       <select name="buildingInput" id="buildingInput">
+        <option value="All">All</option>
         <option value="Babbio">Babbio</option>
         <option value="Edwin">Edwin A. Stevens Hall</option>
         <option value="Library">S.C. Williams Library</option>
@@ -46,17 +23,44 @@
         <option value="Kidde">Kidde</option>
         <option value="ABS">ABS</option>
         <option value="Howe">Howe</option>
-        <option value="All">All</option>
       </select>
-       <label for="ratingInput">Noise Rating</label>
+       <label for="ratingInput">Maximum Noise Rating</label>
       <select name="ratingInput" id="ratingInput">
+        <option value="Any">Any</option>
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
         <option value="4">4</option>
         <option value="5">5</option>
-        <option value="Any">Any</option>
       </select>
        <button type="submit">Search</button>
 </form>
+
+<h1>{{header}}</h1>
+
+<ul >
+
+    {{#each post}}
+    <div class ="divBorder">
+    <a href="/posts/{{this._id}}">{{this.title}}</a>
+    <p class ="eachPost">Building: {{this.building}}</p> 
+    <p class = "eachPost">Floor: {{this.floor}} </p>
+    <p class ="eachPost">Description of Study Spot: {{this.description}}</p>
+    <p class ="eachPost">Noise Rating: {{this.noiseRating}}</p>
+    <p class ="eachPost">Location Rating: {{this.locationRating}}</p>
+    <p class ="eachPost">Student Capacity: {{this.studentCapacity}}</p>
+    <p class ="eachPost">Rating of NYC View: {{this.nycViewRating}}</p>
+    <p class ="eachPost">Is there food nearby? {{this.foodNear}}</p>
+    <div class="fitPhoto">
+    <img src="{{this.photo}}">
+    </div>
+    
+    </div>
+    {{/each}}
+</ul>
+
+
+
+
+<a href="/home">Return Home</a>
 

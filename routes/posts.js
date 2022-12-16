@@ -38,7 +38,6 @@ router
       //req.body.foodInput = helpFunctions.checkFoodNear(req.body.foodInput);
       req.body.capacityInput = helpFunctions.stringChecker(req.body.capacityInput, 'Capacity');
       req.body.capacityInput = helpFunctions.checkStudentCapacity(req.body.capacityInput);
-      //still need to check photo
       //still need to check req.session.userId
       //still need to check building and floor
       // buildingInput
@@ -59,12 +58,11 @@ router
         req.body.locationInput,
         req.body.capacityInput,
         req.body.nycInput,
-        req.body.photoInput,
+        //req.body.photoInput,
         req.body.foodInput
         );
-
         //console.log(post)
-        res.render('posts', {post: [post]}); //Render page with post
+        res.render('posts', {post: [post], header: 'Post Uploaded!'}); //Render page with post
     }
     else
     {
@@ -83,7 +81,7 @@ router
       if(req.session.user)
       {
         const postList = await postdata.getAllPosts();
-        res.render('posts', {post: postList});
+        res.render('posts', {post: postList, header: "All Posts"});
       }
       else
       {
@@ -178,7 +176,7 @@ router
         res.status(403).render('forbiddenAccess');
       }
     } catch (error) {
-      res.redirect('/posts/' +  req.params.postId);
+      res.status(400).render('userLogin', { title: "Login", error: error }); // 400 error
     }
   })
 
@@ -189,16 +187,16 @@ router
     try {
       if (req.session.user) {
         helpFunctions.stringChecker(req.params.postId)
-        if (
-          !req.params.postId ||
-          !ObjectId.isValid(req.params.postId)
-        ) {
-          res.status(400).redirect('/home');
-          return null;
-        }
-       // console.log(req.params.postId + " " +req.session.userId)
+        // if (
+        //   !req.params.postId ||
+        //   !ObjectId.isValid(req.params.postId)
+        // ) {
+        //   res.status(400).redirect('/home');
+        //   return null;
+        // }
+        console.log(req.params.postId + " " +req.session.userId)
         const post = await postdata.addDislike(req.params.postId,req.session.userId)
-        //console.log(post)
+        console.log(post)
         res.redirect('/posts/' +  req.params.postId);
       }
       else {
@@ -206,7 +204,7 @@ router
       }
     } catch (error) {
       console.log(error)
-      res.redirect('/posts/' +  req.params.postId);
+      res.status(400).redirect('/home');
     }
   })
 
@@ -224,7 +222,6 @@ router
            return null;
          }
         const post = await postdata.addLike(req.params.postId,req.session.userId)
-        //console.log(post)
         res.redirect('/posts/' + req.params.postId) ;
       }
       else {
@@ -272,17 +269,17 @@ router
         else if(req.body.ratingInput == "Any")
         {
           postlist = await postdata.getPostByBuidling(req.body.buildingInput)
-          res.render('posts', {post: postlist});
+          res.render('posts', {post: postlist, header: req.body.buildingInput});
         }
         else if(req.body.buildingInput == "All") 
         {
          postlist = await postdata.getPostByRating(req.body.ratingInput)
-         res.render('posts', {post: postlist});
+         res.render('posts', {post: postlist, header: `Study Spaces with Maximum Noise Rating of ${req.body.ratingInput}`});
         }
         else
         {
           postlist = await postdata.getPostByRatingBuilding(req.body.ratingInput,req.body.buildingInput);
-          res.render('posts', {post: postlist});
+          res.render('posts', {post: postlist, header: `Spots in ${req.body.buildingInput} with Maximum Noise Rating of ${req.body.ratingInput}`});
         }
   
       }
