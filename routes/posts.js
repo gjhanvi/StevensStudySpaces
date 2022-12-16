@@ -83,7 +83,7 @@ router
       if(req.session.user)
       {
         const postList = await postdata.getAllPosts();
-        res.render('posts', {post: postList, header: "All Posts"});
+        res.render('posts', {post: postList, header: "All Posts", tite:"All Posts"});
       }
       else
       {
