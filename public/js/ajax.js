@@ -7,9 +7,8 @@
     
     commentForm.addEventListener('submit', (event) => {
         event.preventDefault();
-        // var currentLink = $(this);
-        let url = document.URL;
-        var currentId = url.data('postId');
+        var currentLink = $(this);
+        var currentId = currentLink.data('postId');
 
         //var newComment = $('#new-comment');
         const comment = newComment.value;

@@ -4,7 +4,39 @@
   <a href="/posts/new">New Post</a>
   <a href="/posts">All Posts</a>
 </div>
-<h1>All Posts</h1>
+
+<form action="/posts/building" method="POST" id="newpost-form">
+      <label for="buildingInput">Building</label>
+      <select name="buildingInput" id="buildingInput">
+        <option value="All">All</option>
+        <option value="Babbio">Babbio</option>
+        <option value="Edwin">Edwin A. Stevens Hall</option>
+        <option value="Library">S.C. Williams Library</option>
+        <option value="GatewayNorth">Gateway North</option>
+        <option value="GatewaySouth">Gateway South</option>
+        <option value="Carnegie">Carnegie</option>
+        <option value="Burchard">Burchard</option>
+        <option value="McLean">McLean Hall</option>
+        <option value="UCC">University Center</option>
+        <option value="Morton">Morton</option>
+        <option value="Pierce">Pierce</option>
+        <option value="Kidde">Kidde</option>
+        <option value="ABS">ABS</option>
+        <option value="Howe">Howe</option>
+      </select>
+       <label for="ratingInput">Maximum Noise Rating</label>
+      <select name="ratingInput" id="ratingInput">
+        <option value="Any">Any</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+       <button type="submit">Search</button>
+</form>
+
+<h1>{{header}}</h1>
 
 <ul >
 
@@ -28,35 +60,4 @@
 
 
 <a href="/home">Return Home</a>
-
-<form action="/posts/building" method="POST" id="newpost-form">
-      <label for="buildingInput">Building</label>
-      <select name="buildingInput" id="buildingInput">
-        <option value="Babbio">Babbio</option>
-        <option value="Edwin">Edwin A. Stevens Hall</option>
-        <option value="Library">S.C. Williams Library</option>
-        <option value="GatewayNorth">Gateway North</option>
-        <option value="GatewaySouth">Gateway South</option>
-        <option value="Carnegie">Carnegie</option>
-        <option value="Burchard">Burchard</option>
-        <option value="McLean">McLean Hall</option>
-        <option value="UCC">University Center</option>
-        <option value="Morton">Morton</option>
-        <option value="Pierce">Pierce</option>
-        <option value="Kidde">Kidde</option>
-        <option value="ABS">ABS</option>
-        <option value="Howe">Howe</option>
-        <option value="All">All</option>
-      </select>
-       <label for="ratingInput">Noise Rating</label>
-      <select name="ratingInput" id="ratingInput">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="Any">Any</option>
-      </select>
-       <button type="submit">Search</button>
-</form>
 
