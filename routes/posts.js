@@ -28,6 +28,7 @@ router
   try {
     if(req.session.user)
     {
+
       req.body.descInput = helpFunctions.stringChecker(xss(req.body.descInput), 'Post Description');
       req.body.noiseInput = helpFunctions.stringChecker(xss(req.body.noiseInput), 'Noise rating');
       req.body.noiseInput = helpFunctions.checkRating(xss(req.body.noiseInput), 'noise');

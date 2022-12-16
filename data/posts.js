@@ -321,7 +321,6 @@ const getPostByRating = async (rating) => {
 }
 
 const getPostByRatingBuilding = async (rating,buidling) => {
-    //postId is type string
     const postlist = await getAllPosts();
 
     postId = helpers.checkBuilding(buidling, 'building');
