@@ -101,7 +101,7 @@ const addLike = async(postId, userId) => {
     userId = userId.toString();
 
     const postCollection = await posts();
-    const gotPost = await postCollection.findOne({_id: postId});
+    const gotPost = await postCollection.findOne({_id: ObjectId(postId)});
     if (gotPost === null) throw `No post with id of ${postId}`;
 
     let likes = gotPost.likes;
@@ -119,9 +119,8 @@ const addLike = async(postId, userId) => {
                         likes[i][key] = true;
                     })
                     break;
-                }else{ //nothing to change 
-                    let currentPost = getPostById(postId);
-                    return currentPost;
+                }else{ //remove
+                    likes.splice(i,1);
                 }
             }
         }
@@ -132,7 +131,7 @@ const addLike = async(postId, userId) => {
         likes.push(obj);
      }
     const updatedInfo = await postCollection.updateOne(
-        {_id: postId},
+        {_id: ObjectId(postId)},
         {$set: {likes: likes}}
     );
     if (updatedInfo.modifiedCount === 0) {
@@ -169,7 +168,7 @@ const addDislike = async(postId, userId) => {
                         likes[i][key] = false;
                     })
                     break;
-                }else{ //nothing to change
+                }else{ //remove
                     likes.splice(i,1);
                 }
             }
@@ -254,9 +253,7 @@ const addFlag = async(postId, userId) => {
     //need to check if user has already flagged the posts
     postId = helpers.checkId(postId, 'Post ID');
     userId = helpers.checkId(userId, 'User ID');
-    const postCollection = await posts();
-    const gotPost = await postCollection.findOne({_id: postId});
-    if (gotPost === null) throw `No post with id of ${postId}`;
+    const gotPost = await getPostById(postId);
     
     let flagList = gotPost.flags;
     for (i in flagList){
@@ -265,8 +262,9 @@ const addFlag = async(postId, userId) => {
         }
     }
     flagList.push(userId);
+    const postCollection = await posts();
     const updatedInfo = await postCollection.updateOne(
-        {_id: postId},
+        {_id: ObjectId(postId)},
         {$set: {flags: flagList}}
       );
       if (updatedInfo.modifiedCount === 0) {

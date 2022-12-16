@@ -20,7 +20,6 @@ const createComment = async (userId, postId, comment) => {
     }
     let user = await userData.getUserById(userId)
     let string = user.firstName + " "+user.lastName
-    console.log(string)
     let newComment = {
         _id: ObjectId(),
         userId: userId,
