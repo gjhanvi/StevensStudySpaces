@@ -146,6 +146,7 @@ router
         {
           totalMessage = (checkTotalLikes.numLikes - checkTotalLikes.numDisliked) +  " Likes"
         }
+        console.log(post.photo)
         res.render('singlePost', {post: [post],title:post.title,postId:req.params.postId, likeMessage:likeMessage, flagged:flagged, totalLikes: totalMessage});
       }
       else {
