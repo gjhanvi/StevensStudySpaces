@@ -49,7 +49,9 @@ router
           res.status(500).render('userRegister', { title: "Register", error: "Internal Server Error" }); // 500 error
         }
         else {
-          res.redirect('/');
+          req.session.user = req.body.usernameInput;
+          req.session.userId = temp.userId;
+          res.redirect('/home');
         }
       }
     } catch (e) {
