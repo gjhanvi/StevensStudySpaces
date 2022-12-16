@@ -32,6 +32,7 @@
 <p>{{totalLikes}}</p>
 <ul>
     {{#each post}}
+    {{this.name}}
     <li>{{this.building}}</li>
     <li>{{this.floor}}</li>
     <li>{{this.description}}</li>
@@ -42,7 +43,7 @@
     <img src="{{this.photo}}" height="300px" width="500px">
     <li>{{this.foodNear}}</li>
     {{#each comments}}
-    <li>{{this.comment}}</li>
+    <li>{{this.name}} {{this.comment}}</li>
     {{/each}}
     {{/each}}
 </ul>
@@ -63,6 +64,10 @@
 </form>
 
 <button name="flag" value="flag" onclick="flagPost()">flag</button>
+
+<form action="/posts/delete/{{postId}}" method="post">
+    <button name="delete" value="delete">delete</button>
+</form>
 
 <a href="/home">Return Home</a>
 

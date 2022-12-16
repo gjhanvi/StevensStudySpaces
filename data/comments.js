@@ -2,7 +2,7 @@ const mongoCollections = require('../config/mongoCollections');
 const posts = mongoCollections.posts;
 //const users = mongoCollections.users;
 const postData = require('./posts');
-//const userData = require('./users');
+const userData = require('./users');
 const { ObjectId } = require('mongodb');
 
 // add as subdoc to posts
@@ -18,10 +18,12 @@ const createComment = async (userId, postId, comment) => {
     if (typeof comment !== 'string' || comment.trim().length === 0) {
         throw 'comment must be non-empty string';
     }
-
+    let user = await userData.getUserById(userId)
+    let string = user.firstName + " "+user.lastName
     let newComment = {
         _id: ObjectId(),
         userId: userId,
+        name: string,
         comment: comment
     };
     const postCollection = await posts();

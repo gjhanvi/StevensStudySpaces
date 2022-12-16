@@ -3,6 +3,7 @@ const saltRounds = 10;
 const mongoCollections = require('../config/mongoCollections');
 const helper = require("../helpers.js");
 const users = mongoCollections.users;
+const { ObjectId } = require('mongodb');
 
 const createUser = async (username, password, firstName, lastName) => {
   username = await helper.checkUsername(username);
@@ -25,7 +26,7 @@ const createUser = async (username, password, firstName, lastName) => {
   const insertInfo = await userCol.insertOne(newUser);
   if (!insertInfo.acknowledged || !insertInfo.insertedId)
     throw 'Could not add user';
-  return { insertedUser: true };
+  return { insertedUser: true, userId: insertInfo.insertedId};
   //return newUser;
 };
 

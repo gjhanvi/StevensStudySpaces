@@ -31,7 +31,7 @@ const addPost = async(
     locationRating, 
     studentCapacity, 
     nycViewRating, 
-    photo, 
+    //photo, 
     foodNear
 ) => {
     userId = helpers.checkId(userId, 'User ID');  //--> still need to implement this in helper
@@ -45,12 +45,12 @@ const addPost = async(
     locationRating = helpers.checkRating(locationRating, 'location');
     nycViewRating = helpers.stringChecker(nycViewRating, 'View rating');
     nycViewRating = helpers.checkRating(nycViewRating, 'View');
-    foodNear = helpers.stringChecker(foodNear, 'Food input');
+    //foodNear = helpers.stringChecker(foodNear, 'Food input');
     //foodNear = helpers.checkFoodNear(foodNear);
     studentCapacity = helpers.stringChecker(studentCapacity, 'Capacity');
     studentCapacity = helpers.checkStudentCapacity(studentCapacity);
-
-
+    let user = await userData.getUserById(userId)
+    let string = user.firstName +" " + user.lastName
     const postCollection = await posts();
     let newPost = {
         userId: userId,
@@ -66,7 +66,8 @@ const addPost = async(
         foodNear: foodNear,
         likes: [],
         flags: [],
-        comments: []
+        comments: [],
+        name: string
     }
 
     const insertInfo = await postCollection.insertOne(newPost);
@@ -84,8 +85,8 @@ const removePost = async(postId) => {
     //checkId function should check if valid object ID
     postId = helpers.checkId(postId, 'Post ID');  // --> still need to implement checkID
     const postCollection = await posts();
-    const postToDelete = await getPostById(postId);
-    const deletionInfo = await postCollection.deleteOne({_id: postId});
+    const postToDelete = await getPostById(ObjectId(postId));
+    const deletionInfo = await postCollection.deleteOne({_id: ObjectId(postId)});
 
     if (deletionInfo.deletedCount === 0) {
         throw `Could not delete post with id of ${postId}`;
@@ -98,6 +99,7 @@ const addLike = async(postId, userId) => {
     postId = helpers.checkId(postId, 'Post ID');
     userId = helpers.checkId(userId, 'User ID');
     userId = userId.toString();
+
     const postCollection = await posts();
     const gotPost = await postCollection.findOne({_id: ObjectId(postId)});
     if (gotPost === null) throw `No post with id of ${postId}`;
@@ -117,7 +119,7 @@ const addLike = async(postId, userId) => {
                         likes[i][key] = true;
                     })
                     break;
-                }else{ //nothing to change 
+                }else{ //remove
                     likes.splice(i,1);
                 }
             }
@@ -166,7 +168,7 @@ const addDislike = async(postId, userId) => {
                         likes[i][key] = false;
                     })
                     break;
-                }else{ //nothing to change
+                }else{ //remove
                     likes.splice(i,1);
                 }
             }
@@ -251,9 +253,7 @@ const addFlag = async(postId, userId, reason, comments) => {
     //need to check if user has already flagged the posts
     postId = helpers.checkId(postId, 'Post ID');
     userId = helpers.checkId(userId, 'User ID');
-    const postCollection = await posts();
-    const gotPost = await postCollection.findOne({_id: ObjectId(postId)});
-    if (gotPost === null) throw `No post with id of ${postId}`;
+    const gotPost = await getPostById(postId);
     
     let flagList = gotPost.flags;
     for (i in flagList){
@@ -262,6 +262,7 @@ const addFlag = async(postId, userId, reason, comments) => {
         }
     }
     flagList.push({user: userId, reason: reason, comments: comments});
+    const postCollection = await posts();
     const updatedInfo = await postCollection.updateOne(
         {_id: ObjectId(postId)},
         {$set: {flags: flagList}}
@@ -273,12 +274,12 @@ const addFlag = async(postId, userId, reason, comments) => {
     return updatedPost;
 
 }
-
+  
 const checkUserFlagged = async(postId, userId) => {
+
     postId = helpers.checkId(postId, 'Post ID');
     userId = helpers.checkId(userId, 'User ID');
     postId = postId.toString();
-
     let post = await getPostById(postId);
     let flagList = post.flags;
     for (i in flagList){
@@ -318,7 +319,6 @@ const getPostByRating = async (rating) => {
 }
 
 const getPostByRatingBuilding = async (rating,buidling) => {
-    //postId is type string
     const postlist = await getAllPosts();
 
     postId = helpers.checkBuilding(buidling, 'building');

@@ -257,7 +257,7 @@ if (staticForm) {
       for (const [key, value] of formData) {
         output.push(`${value}`);
       }
-      let errNumber;
+
       console.log(output)
       stringChecker(output[0], 'Title');
       stringChecker(output[1], 'Building');
