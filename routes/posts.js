@@ -29,6 +29,7 @@ router
     {
       req.body.descInput = helpFunctions.stringChecker(req.body.descInput, 'Post Description');
       req.body.noiseInput = helpFunctions.stringChecker(req.body.noiseInput, 'Noise rating');
+      helpFunctions.checkValidFloor(req.body.buildingInput, req.body.floorInput);
       req.body.noiseInput = helpFunctions.checkRating(req.body.noiseInput, 'noise');
       req.body.locationInput = helpFunctions.stringChecker(req.body.locationInput, 'Location rating');
       req.body.locationInput = helpFunctions.checkRating(req.body.locationInput, 'location');
