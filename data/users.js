@@ -21,7 +21,6 @@ const createUser = async (username, password, firstName, lastName) => {
     lastName: lastName,
     username: username.toLowerCase(),
     password: hash,
-    comments: []
   };
   const insertInfo = await userCol.insertOne(newUser);
   if (!insertInfo.acknowledged || !insertInfo.insertedId)
@@ -59,4 +58,4 @@ const getUserById = async (id) => {
 };
 
 
-module.exports = { createUser, checkUser, getUserById};
+module.exports = {createUser, checkUser, getUserById};
