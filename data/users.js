@@ -21,11 +21,12 @@ const createUser = async (username, password, firstName, lastName) => {
     lastName: lastName,
     username: username.toLowerCase(),
     password: hash,
+    comments: []
   };
   const insertInfo = await userCol.insertOne(newUser);
   if (!insertInfo.acknowledged || !insertInfo.insertedId)
     throw 'Could not add user';
-  return { insertedUser: true };
+  return { insertedUser: true, userId: insertInfo.insertedId};
   //return newUser;
 };
 
@@ -58,4 +59,4 @@ const getUserById = async (id) => {
 };
 
 
-module.exports = {createUser, checkUser, getUserById};
+module.exports = { createUser, checkUser, getUserById};

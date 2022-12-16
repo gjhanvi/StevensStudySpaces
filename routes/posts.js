@@ -5,7 +5,6 @@ const helpFunctions = require("../helpers.js");
 const postdata = require("../data/posts.js");
 const commentData = require("../data/comments.js");
 const { ObjectId } = require("mongodb");
-const xss = require('xss');
 
 router
 .route('/new')
@@ -28,18 +27,18 @@ router
   try {
     if(req.session.user)
     {
-
-      req.body.descInput = helpFunctions.stringChecker(xss(req.body.descInput), 'Post Description');
-      req.body.noiseInput = helpFunctions.stringChecker(xss(req.body.noiseInput), 'Noise rating');
-      req.body.noiseInput = helpFunctions.checkRating(xss(req.body.noiseInput), 'noise');
-      req.body.locationInput = helpFunctions.stringChecker(xss(req.body.locationInput), 'Location rating');
-      req.body.locationInput = helpFunctions.checkRating(xss(req.body.locationInput), 'location');
-      req.body.nycInput = helpFunctions.stringChecker(xss(req.body.nycInput), 'View rating');
-      req.body.nycInput = helpFunctions.checkRating(xss(req.body.nycInput), 'View');
-      req.body.foodInput = helpFunctions.stringChecker(xss(req.body.foodInput), 'Food input');
+      req.body.descInput = helpFunctions.stringChecker(req.body.descInput, 'Post Description');
+      req.body.noiseInput = helpFunctions.stringChecker(req.body.noiseInput, 'Noise rating');
+      helpFunctions.checkValidFloor(req.body.buildingInput, req.body.floorInput);
+      req.body.noiseInput = helpFunctions.checkRating(req.body.noiseInput, 'noise');
+      req.body.locationInput = helpFunctions.stringChecker(req.body.locationInput, 'Location rating');
+      req.body.locationInput = helpFunctions.checkRating(req.body.locationInput, 'location');
+      req.body.nycInput = helpFunctions.stringChecker(req.body.nycInput, 'View rating');
+      req.body.nycInput = helpFunctions.checkRating(req.body.nycInput, 'View');
+      req.body.foodInput = helpFunctions.stringChecker(req.body.foodInput, 'Food input');
       //req.body.foodInput = helpFunctions.checkFoodNear(req.body.foodInput);
-      req.body.capacityInput = helpFunctions.stringChecker(xss(req.body.capacityInput), 'Capacity');
-      req.body.capacityInput = helpFunctions.checkStudentCapacity(xss(req.body.capacityInput));
+      req.body.capacityInput = helpFunctions.stringChecker(req.body.capacityInput, 'Capacity');
+      req.body.capacityInput = helpFunctions.checkStudentCapacity(req.body.capacityInput);
       //still need to check req.session.userId
       //still need to check building and floor
       // buildingInput
@@ -83,7 +82,7 @@ router
       if(req.session.user)
       {
         const postList = await postdata.getAllPosts();
-        res.render('posts', {post: postList, header: "All Posts", title:"All Posts"});
+        res.render('posts', {post: postList, header: "All Posts"});
       }
       else
       {
@@ -147,14 +146,6 @@ router
           totalMessage = (checkTotalLikes.numLikes - checkTotalLikes.numDisliked) +  " Likes"
         }
         //console.log(post.photo)
-        let text = "text"
-        let text1 = 'submit'
-        const bool = await postdata.checkIds(req.params.postId, req.params.userId)
-        if(!bool)
-        {
-          text = 'hidden'
-          text1 ='hidden'
-        }
         res.render('singlePost', {post: [post],title:post.title,postId:req.params.postId, likeMessage:likeMessage, flagged:flagged, totalLikes: totalMessage});
       }
       else {
@@ -178,8 +169,8 @@ router
           res.status(400).redirect('/home');
           return null;
         }
-        helpFunctions.stringChecker(xss(req.body.commentInput), "Username")
-        const post = await commentData.createComment(req.session.userId,req.params.postId,xss(req.body.commentInput))
+        helpFunctions.stringChecker(req.body.commentInput, "Username")
+        const post = await commentData.createComment(req.session.userId,req.params.postId,req.body.commentInput)
         res.redirect('/posts/' +  req.params.postId);
       }
       else {
@@ -243,6 +234,37 @@ router
   })
 
   router
+  .route("/delete/:postId")
+  .post(async (req, res) => {
+    try {
+      if (req.session.user) {
+        helpFunctions.stringChecker(req.params.postId,req.session.userId)
+         if (
+           !req.params.postId ||
+           !ObjectId.isValid(req.params.postId)
+         ) {
+           res.status(400).redirect('/home');
+           return null;
+         }
+         let bool = await postdata.checkIds(req.params.postId,req.session.userId)
+         console.log(bool)
+         if(bool)
+         {
+          const post = await postdata.removePost(req.params.postId)
+          res.redirect('/posts/') ;
+         }
+        res.redirect('/posts/') ;
+      }
+      else {
+        res.status(403).render('forbiddenAccess');
+      }
+    } catch (error) {
+      console.log(error)
+      res.redirect('/posts/' +  req.params.postId);
+    }
+  })
+
+  router
   .route("/flag/:postId")
   .post(async (req, res) => {
     try {
@@ -267,63 +289,29 @@ router
   })
 
   router
-  .route("/delete/:postId")
-  .post(async (req, res) => {
-    try {
-      if (req.session.user) {
-        helpFunctions.stringChecker(req.params.postId,req.session.userId)
-         if (
-           !req.params.postId ||
-           !ObjectId.isValid(req.params.postId)
-         ) {
-           res.status(400).redirect('/home');
-           return null;
-         }
-         const bool = await postdata.checkIds(req.params.postId, req.params.userId)
-         if(!bool)
-         {
-          res.redirect('/posts/') ;
-         }
-         else
-         {
-        const post = await postdata.removePost(req.params.postId)
-
-        res.redirect('/posts/') ;
-         }
-      }
-      else {
-        res.status(403).render('forbiddenAccess');
-      }
-    } catch (error) {
-      res.redirect('/posts/' + req.params.postId) ;
-    }
-  })
-
-
-  router
   .route("/building")
   .post(async (req, res) => {
     try {
       if (req.session.user) {
         let postlist;
-        if(xss(req.body.ratingInput) == "Any" && xss(req.body.buildingInput) == "All")
+        if(req.body.ratingInput == "Any" && req.body.buildingInput == "All")
         {
           res.redirect('/posts/');
         }
-        else if(xss(req.body.ratingInput) == "Any")
+        else if(req.body.ratingInput == "Any")
         {
-          postlist = await postdata.getPostByBuidling(xss(req.body.buildingInput))
-          res.render('posts', {post: postlist, header: xss(req.body.buildingInput)});
+          postlist = await postdata.getPostByBuidling(req.body.buildingInput)
+          res.render('posts', {post: postlist, header: req.body.buildingInput});
         }
-        else if(xss(req.body.buildingInput)== "All") 
+        else if(req.body.buildingInput == "All") 
         {
-         postlist = await postdata.getPostByRating(xss(req.body.ratingInput))
-         res.render('posts', {post: postlist, header: `Study Spaces with Maximum Noise Rating of ${xss(req.body.ratingInput)}`});
+         postlist = await postdata.getPostByRating(req.body.ratingInput)
+         res.render('posts', {post: postlist, header: `Study Spaces with Maximum Noise Rating of ${req.body.ratingInput}`});
         }
         else
         {
-          postlist = await postdata.getPostByRatingBuilding(xss(req.body.ratingInput),xss(req.body.buildingInput));
-          res.render('posts', {post: postlist, header: `Spots in ${xss(req.body.buildingInput)} with Maximum Noise Rating of ${xss(req.body.ratingInput)}`});
+          postlist = await postdata.getPostByRatingBuilding(req.body.ratingInput,req.body.buildingInput);
+          res.render('posts', {post: postlist, header: `Spots in ${req.body.buildingInput} with Maximum Noise Rating of ${req.body.ratingInput}`});
         }
   
       }
