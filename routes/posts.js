@@ -5,6 +5,7 @@ const helpFunctions = require("../helpers.js");
 const postdata = require("../data/posts.js");
 const commentData = require("../data/comments.js");
 const { ObjectId } = require("mongodb");
+const xss = require('xss');
 
 router
 .route('/new')
@@ -27,18 +28,18 @@ router
   try {
     if(req.session.user)
     {
-      req.body.descInput = helpFunctions.stringChecker(req.body.descInput, 'Post Description');
-      req.body.noiseInput = helpFunctions.stringChecker(req.body.noiseInput, 'Noise rating');
-      helpFunctions.checkValidFloor(req.body.buildingInput, req.body.floorInput);
-      req.body.noiseInput = helpFunctions.checkRating(req.body.noiseInput, 'noise');
-      req.body.locationInput = helpFunctions.stringChecker(req.body.locationInput, 'Location rating');
-      req.body.locationInput = helpFunctions.checkRating(req.body.locationInput, 'location');
-      req.body.nycInput = helpFunctions.stringChecker(req.body.nycInput, 'View rating');
-      req.body.nycInput = helpFunctions.checkRating(req.body.nycInput, 'View');
-      req.body.foodInput = helpFunctions.stringChecker(req.body.foodInput, 'Food input');
+      req.body.descInput = helpFunctions.stringChecker(xss(req.body.descInput), 'Post Description');
+      req.body.noiseInput = helpFunctions.stringChecker(xss(req.body.noiseInput), 'Noise rating');
+      helpFunctions.checkValidFloor(xss(req.body.buildingInput), xss(req.body.floorInput));
+      req.body.noiseInput = helpFunctions.checkRating(xss(req.body.noiseInput, 'noise'));
+      req.body.locationInput = helpFunctions.stringChecker(xss(req.body.locationInput), 'Location rating');
+      req.body.locationInput = helpFunctions.checkRating(xss(req.body.locationInput), 'location');
+      req.body.nycInput = helpFunctions.stringChecker(xss(req.body.nycInput), 'View rating');
+      req.body.nycInput = helpFunctions.checkRating(xss(req.body.nycInput), 'View');
+      req.body.foodInput = helpFunctions.stringChecker(xss(req.body.foodInput), 'Food input');
       //req.body.foodInput = helpFunctions.checkFoodNear(req.body.foodInput);
-      req.body.capacityInput = helpFunctions.stringChecker(req.body.capacityInput, 'Capacity');
-      req.body.capacityInput = helpFunctions.checkStudentCapacity(req.body.capacityInput);
+      req.body.capacityInput = helpFunctions.stringChecker(xss(req.body.capacityInput), 'Capacity');
+      req.body.capacityInput = helpFunctions.checkStudentCapacity(xss(req.body.capacityInput));
       //still need to check req.session.userId
       //still need to check building and floor
       // buildingInput
@@ -172,8 +173,8 @@ router
           res.status(400).redirect('/home');
           return null;
         }
-        helpFunctions.stringChecker(req.body.commentInput, "Username")
-        const post = await commentData.createComment(req.session.userId,req.params.postId,req.body.commentInput)
+        helpFunctions.stringChecker(xss(req.body.commentInput), "Username")
+        const post = await commentData.createComment(req.session.userId,req.params.postId,xss(req.body.commentInput))
         res.redirect('/posts/' +  req.params.postId);
       }
       else {
@@ -295,24 +296,24 @@ router
     try {
       if (req.session.user) {
         let postlist;
-        if(req.body.ratingInput == "Any" && req.body.buildingInput == "All")
+        if(xss(req.body.ratingInput) == "Any" && xss(req.body.buildingInput) == "All")
         {
           res.redirect('/posts/');
         }
-        else if(req.body.ratingInput == "Any")
+        else if(xss(req.body.ratingInput) == "Any")
         {
-          postlist = await postdata.getPostByBuidling(req.body.buildingInput)
-          res.render('posts', {post: postlist, header: req.body.buildingInput});
+          postlist = await postdata.getPostByBuidling(xss(req.body.buildingInput))
+          res.render('posts', {post: postlist, header: xss(req.body.buildingInput)});
         }
-        else if(req.body.buildingInput == "All") 
+        else if(xss(req.body.buildingInput) == "All") 
         {
-         postlist = await postdata.getPostByRating(req.body.ratingInput)
-         res.render('posts', {post: postlist, header: `Study Spaces with Maximum Noise Rating of ${req.body.ratingInput}`});
+         postlist = await postdata.getPostByRating(xss(req.body.ratingInput))
+         res.render('posts', {post: postlist, header: `Study Spaces with Maximum Noise Rating of ${xss(req.body.ratingInput)}`});
         }
         else
         {
-          postlist = await postdata.getPostByRatingBuilding(req.body.ratingInput,req.body.buildingInput);
-          res.render('posts', {post: postlist, header: `Spots in ${req.body.buildingInput} with Maximum Noise Rating of ${req.body.ratingInput}`});
+          postlist = await postdata.getPostByRatingBuilding(xss(req.body.ratingInput),xss(req.body.buildingInput));
+          res.render('posts', {post: postlist, header: `Spots in ${req.body.buildingInput} with Maximum Noise Rating of ${xss(req.body.ratingInput)}`});
         }
   
       }else{
