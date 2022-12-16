@@ -31,13 +31,13 @@ const addPost = async(
     locationRating, 
     studentCapacity, 
     nycViewRating, 
-    photo, 
+    //photo, 
     foodNear
 ) => {
     userId = helpers.checkId(userId, 'User ID');  //--> still need to implement this in helper
     //STILL NEED TO CHECK PHOTO and building and floor
     postTitle = helpers.stringChecker(postTitle, "Post Title");
-    floor = helpers.checkValidFloor(building,floor);
+    helpers.checkValidFloor(building,floor);
     description = helpers.stringChecker(description, 'Post Description');
     noiseRating = helpers.stringChecker(noiseRating, 'Noise rating');
     noiseRating = helpers.checkRating(noiseRating, 'noise');
@@ -45,7 +45,7 @@ const addPost = async(
     locationRating = helpers.checkRating(locationRating, 'location');
     nycViewRating = helpers.stringChecker(nycViewRating, 'View rating');
     nycViewRating = helpers.checkRating(nycViewRating, 'View');
-    foodNear = helpers.stringChecker(foodNear, 'Food input');
+    //foodNear = helpers.stringChecker(foodNear, 'Food input');
     //foodNear = helpers.checkFoodNear(foodNear);
     studentCapacity = helpers.stringChecker(studentCapacity, 'Capacity');
     studentCapacity = helpers.checkStudentCapacity(studentCapacity);
@@ -353,4 +353,16 @@ const linkPhoto = async (postId,fileName) => {
       );
 }
 
-module.exports = {getAllPosts, getPostById, addPost, removePost, addFlag, addLike, addDislike,checkUserFlagged, checkUserLiked, getPostByBuidling,getPostByRating,getPostByRatingBuilding, countLikes,linkPhoto};
+const checkIds = async (postId, userId) => {
+    postId = helpers.checkId(postId, 'Post ID');
+    const post = await getPostById(postId);
+    console.log(post);
+    console.log(post.userId);
+    if (post.userId === userId) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+module.exports = {getAllPosts, getPostById, addPost, removePost, addFlag, addLike, addDislike,checkUserFlagged, checkUserLiked, getPostByBuidling,getPostByRating,getPostByRatingBuilding, countLikes,linkPhoto, checkIds};
