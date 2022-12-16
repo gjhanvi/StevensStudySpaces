@@ -283,6 +283,8 @@ router
           res.render('posts', {post: postlist, header: `Spots in ${req.body.buildingInput} with Maximum Noise Rating of ${req.body.ratingInput}`});
         }
   
+      }else{
+        res.redirect('/');
       }
     } catch (error) {
       console.log(error)
