@@ -62,7 +62,6 @@ router
         //req.body.photoInput,
         req.body.foodInput
         );
-
         //console.log(post)
         res.render('posts', {post: [post], header: 'Post Uploaded!'}); //Render page with post
     }
@@ -146,7 +145,7 @@ router
         {
           totalMessage = (checkTotalLikes.numLikes - checkTotalLikes.numDisliked) +  " Likes"
         }
-        console.log(post.photo)
+        //console.log(post.photo)
         res.render('singlePost', {post: [post],title:post.title,postId:req.params.postId, likeMessage:likeMessage, flagged:flagged, totalLikes: totalMessage});
       }
       else {
@@ -178,7 +177,7 @@ router
         res.status(403).render('forbiddenAccess');
       }
     } catch (error) {
-      res.redirect('/posts/' +  req.params.postId);
+      res.status(400).render('userLogin', { title: "Login", error: error }); // 400 error
     }
   })
 
@@ -189,16 +188,16 @@ router
     try {
       if (req.session.user) {
         helpFunctions.stringChecker(req.params.postId)
-        if (
-          !req.params.postId ||
-          !ObjectId.isValid(req.params.postId)
-        ) {
-          res.status(400).redirect('/home');
-          return null;
-        }
-       // console.log(req.params.postId + " " +req.session.userId)
+        // if (
+        //   !req.params.postId ||
+        //   !ObjectId.isValid(req.params.postId)
+        // ) {
+        //   res.status(400).redirect('/home');
+        //   return null;
+        // }
+        console.log(req.params.postId + " " +req.session.userId)
         const post = await postdata.addDislike(req.params.postId,req.session.userId)
-        //console.log(post)
+        console.log(post)
         res.redirect('/posts/' +  req.params.postId);
       }
       else {
@@ -206,7 +205,7 @@ router
       }
     } catch (error) {
       console.log(error)
-      res.redirect('/posts/' +  req.params.postId);
+      res.status(400).redirect('/home');
     }
   })
 
@@ -224,7 +223,6 @@ router
            return null;
          }
         const post = await postdata.addLike(req.params.postId,req.session.userId)
-        //console.log(post)
         res.redirect('/posts/' + req.params.postId) ;
       }
       else {

@@ -49,8 +49,8 @@ const addPost = async(
     //foodNear = helpers.checkFoodNear(foodNear);
     studentCapacity = helpers.stringChecker(studentCapacity, 'Capacity');
     studentCapacity = helpers.checkStudentCapacity(studentCapacity);
-
-
+    let user = await userData.getUserById(userId)
+    let string = user.firstName +" " + user.lastName
     const postCollection = await posts();
     let newPost = {
         userId: userId,
@@ -66,7 +66,8 @@ const addPost = async(
         foodNear: foodNear,
         likes: [],
         flags: [],
-        comments: []
+        comments: [],
+        name: string
     }
 
     const insertInfo = await postCollection.insertOne(newPost);
@@ -98,8 +99,9 @@ const addLike = async(postId, userId) => {
     postId = helpers.checkId(postId, 'Post ID');
     userId = helpers.checkId(userId, 'User ID');
     userId = userId.toString();
+
     const postCollection = await posts();
-    const gotPost = await postCollection.findOne({_id: ObjectId(postId)});
+    const gotPost = await postCollection.findOne({_id: postId});
     if (gotPost === null) throw `No post with id of ${postId}`;
 
     let likes = gotPost.likes;
@@ -118,7 +120,8 @@ const addLike = async(postId, userId) => {
                     })
                     break;
                 }else{ //nothing to change 
-                    likes.splice(i,1);
+                    let currentPost = getPostById(postId);
+                    return currentPost;
                 }
             }
         }
@@ -129,7 +132,7 @@ const addLike = async(postId, userId) => {
         likes.push(obj);
      }
     const updatedInfo = await postCollection.updateOne(
-        {_id: ObjectId(postId)},
+        {_id: postId},
         {$set: {likes: likes}}
     );
     if (updatedInfo.modifiedCount === 0) {
@@ -252,7 +255,7 @@ const addFlag = async(postId, userId) => {
     postId = helpers.checkId(postId, 'Post ID');
     userId = helpers.checkId(userId, 'User ID');
     const postCollection = await posts();
-    const gotPost = await postCollection.findOne({_id: ObjectId(postId)});
+    const gotPost = await postCollection.findOne({_id: postId});
     if (gotPost === null) throw `No post with id of ${postId}`;
     
     let flagList = gotPost.flags;
@@ -263,7 +266,7 @@ const addFlag = async(postId, userId) => {
     }
     flagList.push(userId);
     const updatedInfo = await postCollection.updateOne(
-        {_id: ObjectId(postId)},
+        {_id: postId},
         {$set: {flags: flagList}}
       );
       if (updatedInfo.modifiedCount === 0) {
@@ -273,12 +276,12 @@ const addFlag = async(postId, userId) => {
     return updatedPost;
 
 }
-
+  
 const checkUserFlagged = async(postId, userId) => {
+
     postId = helpers.checkId(postId, 'Post ID');
     userId = helpers.checkId(userId, 'User ID');
     postId = postId.toString();
-
     let post = await getPostById(postId);
     let flagList = post.flags;
     for (i in flagList){
