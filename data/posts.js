@@ -85,8 +85,8 @@ const removePost = async(postId) => {
     //checkId function should check if valid object ID
     postId = helpers.checkId(postId, 'Post ID');  // --> still need to implement checkID
     const postCollection = await posts();
-    const postToDelete = await getPostById(postId);
-    const deletionInfo = await postCollection.deleteOne({_id: postId});
+    const postToDelete = await getPostById(ObjectId(postId));
+    const deletionInfo = await postCollection.deleteOne({_id: ObjectId(postId)});
 
     if (deletionInfo.deletedCount === 0) {
         throw `Could not delete post with id of ${postId}`;

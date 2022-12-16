@@ -82,7 +82,7 @@ router
       if(req.session.user)
       {
         const postList = await postdata.getAllPosts();
-        res.render('posts', {post: postList, header: "All Posts"});
+        res.render('posts', {post: postList, header: "All Posts", title:"Posts"});
       }
       else
       {
@@ -238,14 +238,6 @@ router
   .post(async (req, res) => {
     try {
       if (req.session.user) {
-        helpFunctions.stringChecker(req.params.postId,req.session.userId)
-         if (
-           !req.params.postId ||
-           !ObjectId.isValid(req.params.postId)
-         ) {
-           res.status(400).redirect('/home');
-           return null;
-         }
          let bool = await postdata.checkIds(req.params.postId,req.session.userId)
          console.log(bool)
          if(bool)
@@ -253,7 +245,9 @@ router
           const post = await postdata.removePost(req.params.postId)
           res.redirect('/posts/') ;
          }
-        res.redirect('/posts/') ;
+        else{
+          res.redirect('/posts/'+req.params.postId) ;
+        }
       }
       else {
         res.status(403).render('forbiddenAccess');
