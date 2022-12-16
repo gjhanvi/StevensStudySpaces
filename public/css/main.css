@@ -6,20 +6,6 @@ p.mainhead{
     justify-content: center;
     
 }
-p.comments{
-    display:flex;
-    justify-content: left; 
-}
-p.postTitle {
-    font-size: 2rem;
-    color: rgb(42, 30, 30);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-style: solid;
-    border-radius: 3ch;
-
-}
 img {
     max-width: 100%;
     max-height: 100%;
@@ -60,7 +46,7 @@ p {
 }
 body {
     background: #8bd2b8;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Georgia, Cambria, "Times New Roman", Times, serif;
     font-size: 15pt;
     
 }
@@ -110,18 +96,6 @@ input.floorInput {
     align-content: center;
     align-items: center;
     color: pink;
-}
-
-form {
-    margin: 10px 250px;
-}
-
-input {
-    float: right;
-}
-
-label {
-    float: left;
 }
 
 .topnav {
