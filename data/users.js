@@ -3,6 +3,7 @@ const saltRounds = 10;
 const mongoCollections = require('../config/mongoCollections');
 const helper = require("../helpers.js");
 const users = mongoCollections.users;
+const { ObjectId } = require('mongodb');
 
 const createUser = async (username, password, firstName, lastName) => {
   username = await helper.checkUsername(username);
