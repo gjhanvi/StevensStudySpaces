@@ -50,13 +50,13 @@
 
 
 <form action="/posts/delete/{{postId}}" method="post">
-    <button name="delete" {{text}} value="delete">delete</button>
+    <button name="delete" value="delete">delete</button>
 </form>
 
 
 <form encType="multipart/form-data" class="" action="/upload" method="post">
     <input type="hidden" name="id" value="{{postId}}">
     <input type="file" name="file" accept="image/*"><br>
-    <input type="submit" name="upload" value="upload!">
+    <input type="{{text1}}" name="upload" value="upload!">
 </form>
 <a href="/home">Return Home</a>
