@@ -49,8 +49,8 @@ const addPost = async(
     //foodNear = helpers.checkFoodNear(foodNear);
     studentCapacity = helpers.stringChecker(studentCapacity, 'Capacity');
     studentCapacity = helpers.checkStudentCapacity(studentCapacity);
-
-
+    let user = await userData.getUserById(userId)
+    let string = user.firstName +" " + user.lastName
     const postCollection = await posts();
     let newPost = {
         userId: userId,
@@ -66,7 +66,8 @@ const addPost = async(
         foodNear: foodNear,
         likes: [],
         flags: [],
-        comments: []
+        comments: [],
+        name: string
     }
 
     const insertInfo = await postCollection.insertOne(newPost);
