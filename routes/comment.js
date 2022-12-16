@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const helpFunctions = require("../helpers.js");
 const commentData = require("../data/comments.js");
 const { ObjectId } = require("mongodb");
+const xss = require('xss');
 router
   .route('/')
   .get(async (req, res) => {
