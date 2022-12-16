@@ -6,6 +6,20 @@ p.mainhead{
     justify-content: center;
     
 }
+p.comments{
+    display:flex;
+    justify-content: left; 
+}
+p.postTitle {
+    font-size: 2rem;
+    color: rgb(42, 30, 30);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-style: solid;
+    border-radius: 3ch;
+
+}
 img {
     max-width: 100%;
     max-height: 100%;
