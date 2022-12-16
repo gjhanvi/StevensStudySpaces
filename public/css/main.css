@@ -60,7 +60,7 @@ p {
 }
 body {
     background: #8bd2b8;
-    font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 15pt;
     
 }
@@ -110,6 +110,18 @@ input.floorInput {
     align-content: center;
     align-items: center;
     color: pink;
+}
+
+form {
+    margin: 10px 250px;
+}
+
+input {
+    float: right;
+}
+
+label {
+    float: left;
 }
 
 .topnav {

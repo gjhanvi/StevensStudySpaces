@@ -5,6 +5,7 @@ const helpFunctions = require("../helpers.js");
 const userData = require("../data/users.js");
 const { ObjectId } = require("mongodb");
 const postdata = require("../data/posts.js");
+const xss = require('xss');
 
 
 router
@@ -36,19 +37,21 @@ router
       }
       else {
         // add all error handling 
-        helpFunctions.stringChecker(req.body.usernameInput, "Username");
-        helpFunctions.stringChecker(req.body.passwordInput, "Password");
+        helpFunctions.stringChecker(xss(req.body.usernameInput), "Username");
+        helpFunctions.stringChecker(xss(req.body.passwordInput), "Password");
 
-        req.body.firstNameInput = helpFunctions.checkName(req.body.firstNameInput);
-        req.body.lastNameInput = helpFunctions.checkName(req.body.lastNameInput);
+        req.body.firstNameInput = helpFunctions.checkName(xss(req.body.firstNameInput));
+        req.body.lastNameInput = helpFunctions.checkName(xss(req.body.lastNameInput));
         // console.log(firstName);
         // console.log(lastName);
-        let temp = await userData.createUser(req.body.usernameInput, req.body.passwordInput, req.body.firstNameInput, req.body.lastNameInput);
+        let temp = await userData.createUser(xss(req.body.usernameInput), xss(req.body.passwordInput), xss(req.body.firstNameInput), xss(req.body.lastNameInput));
         if (temp.insertedUser !== true) {
           res.status(500).render('userRegister', { title: "Register", error: "Internal Server Error" }); // 500 error
         }
         else {
-          res.redirect('/');
+          req.session.user = req.body.usernameInput;
+          req.session.userId = temp.userId;
+          res.redirect('/home');
         }
       }
     } catch (e) {
@@ -64,14 +67,14 @@ router
         res.redirect('/home', { title: "home" });
       }
       else {
-        helpFunctions.stringChecker(req.body.usernameInput, "Username")
-        helpFunctions.stringChecker(req.body.passwordInput, "Password")
-        temp = await userData.checkUser(req.body.usernameInput, req.body.passwordInput)
+        helpFunctions.stringChecker(xss(req.body.usernameInput), "Username")
+        helpFunctions.stringChecker(xss(req.body.passwordInput), "Password")
+        temp = await userData.checkUser(xss(req.body.usernameInput), xss(req.body.passwordInput))
         if (temp.authenticatedUser !== true) {
           res.status(400).render('userLogin', { title: "Login", error: "Invalid username or password" });
         }
         else {
-          req.session.user = req.body.usernameInput;
+          req.session.user = xss(req.body.usernameInput);
           req.session.userId = temp.userId;
           res.redirect('/home');
         }
