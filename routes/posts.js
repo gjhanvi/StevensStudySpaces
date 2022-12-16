@@ -108,10 +108,45 @@ router
           return null;
         }
         const post = await postdata.getPostById(req.params.postId)
-        //const checkUserFlag = await postdata.getPostById(req.params.postId)
+        const checkUserFlag = await postdata.checkUserFlagged(req.params.postId,req.session.userId)
+        let flagged = "";
+        const checkUserLiked = await postdata.checkUserLiked(req.params.postId, req.session.userId)
+        //console.log(checkUserLiked)
+        //0 Liked
+        //1 Disliked 
+        //2 Neither
+        let likeMessage = "";
+        // let flagged = "";
+        if(checkUserLiked == 0)
+        {
+          likeMessage = "You liked this post!"
+        }
+        else if(checkUserLiked == 1)
+        {
+          likeMessage = "You disliked this post!"
+        }
+        if(checkUserFlag)
+        {
+          flagged = "You flagged this post"
+        }
         //const totalLikes/Dislikes = await postdata.getPostById(req.params.postId)
-        //const ifuserLiked/Disliked = await postdata.getPostById(req.params.postId)
-        res.render('singlePost', {post: [post],postId:req.params.postId });
+        //console.log(post.title)
+        let checkTotalLikes = await postdata.countLikes(req.params.postId)
+        //console.log(checkTotalLikes.numLikes + checkTotalLikes.numDisliked)
+        let totalMessage ="";
+        if(checkTotalLikes.numLikes - checkTotalLikes.numDisliked == 0)
+        {
+          totalMessage = "0 Likes/Dislikes"
+        }
+        else if(checkTotalLikes.numLikes - checkTotalLikes.numDisliked < 0)
+        {
+          totalMessage = (checkTotalLikes.numLikes - checkTotalLikes.numDisliked)*-1 +  " Dislikes"
+        }
+        else
+        {
+          totalMessage = (checkTotalLikes.numLikes - checkTotalLikes.numDisliked) +  " Likes"
+        }
+        res.render('singlePost', {post: [post],title:post.title,postId:req.params.postId, likeMessage:likeMessage, flagged:flagged, totalLikes: totalMessage});
       }
       else {
         res.status(403).render('forbiddenAccess');
@@ -229,35 +264,30 @@ router
     try {
       if (req.session.user) {
         let postlist;
-        if(req.body.ratingInput == "Any")
+        if(req.body.ratingInput == "Any" && req.body.buildingInput == "All")
         {
-          if(req.body.buildingInput == "All")
-          {
-           postlist = postdata.getAllPosts()
-          }
-          else
-          {
-          postlist = postdata.getPostByBuidling(req.body.buildingInput)
-          }
+          res.redirect('/posts/');
+        }
+        else if(req.body.ratingInput == "Any")
+        {
+          postlist = await postdata.getPostByBuidling(req.body.buildingInput)
+          res.render('posts', {post: postlist});
+        }
+        else if(req.body.buildingInput == "All") 
+        {
+         postlist = await postdata.getPostByRating(req.body.ratingInput)
+         res.render('posts', {post: postlist});
         }
         else
         {
-          helpFunctions.checkRating(req.body.ratingInput, "Noise")
+          postlist = await postdata.getPostByRatingBuilding(req.body.ratingInput,req.body.buildingInput);
+          res.render('posts', {post: postlist});
         }
-        if(req.body.buildingInput == "All") 
-        {
-         postlist = postdata.getPostByRating(req.body.ratingInput)
-        }
-        else if (req.body.ratingInput != "Any")
-        {
-           postList = await postdata.getPostByRatingBuilding(req.body.ratingInput,req.body.buildingInput);
-        }
-
-        res.render('posts', {post: postList});
+  
       }
     } catch (error) {
       console.log(error)
-      res.redirect('/posts/' +  req.params.postId);
+      res.redirect('/posts/');
     }
   })
 

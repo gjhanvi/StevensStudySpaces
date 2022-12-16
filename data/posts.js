@@ -212,10 +212,12 @@ const checkUserLiked = async(postId, userId) => {
                     return 0; //user liked
                 }
             }else{
-                return 1; //user disliked
+        
             }
+        
         }
 }
+return 1; //user disliked
 }
 
 const countLikes = async(postId) => {
@@ -224,15 +226,16 @@ const countLikes = async(postId) => {
     let likes = post.likes;
     let likeCount = 0;
     let dislikeCount = 0;
-    for (elem in likes){
-        if (Object.hasOwnProperty(key)){
-            if (elem[key] === true){
-                likeCount++;
-            }else{
-                dislikeCount++;
-            }
+    likes.forEach(element => {
+        if(Object.values(element)[0] == true)
+        {
+            likeCount++
         }
-    }
+        else
+        {
+            dislikeCount++;
+        }
+    });
     return {numLikes: likeCount, numDisliked: dislikeCount};
 }
 
@@ -333,8 +336,6 @@ const getPostByRatingBuilding = async (rating,buidling) => {
             posts.push(element)
         }
     });
-;
-
 
     return posts;
 }
