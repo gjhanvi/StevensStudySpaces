@@ -62,16 +62,16 @@ async function main() {
         console.log(e);
     }
 
-    try{
-        let addFlag = await posts.addFlag(postId,'randomUser');
-        console.log(`Adding flag to post with id of ${postId}.`);
-        console.log(addFlag);
-    }catch(e){
-        console.log(e);
-    }
+    // try{
+    //     let addFlag = await posts.addFlag(postId,'randomUser');
+    //     console.log(`Adding flag to post with id of ${postId}.`);
+    //     console.log(addFlag);
+    // }catch(e){
+    //     console.log(e);
+    // }
 
     try{ //adding like to a post
-        let addLike = await posts.addLike("639b98fdeca0fc87d5884d44", 'randomUser');
+        let addLike = await posts.addLike("639b996b0b9fda32b292d836", 'randomUser');
         console.log('after like is added')
         console.log(addLike);
     }catch(e){
