@@ -61,6 +61,15 @@ async function main() {
     //     console.log(e);
     // }
 
+<<<<<<< HEAD
+    try{
+        let postList = await posts.getAllPosts();
+        console.log('showing all posts:');
+        //console.log(postList);
+    }catch(e){
+        console.log(e);
+    }
+=======
     // try{
     //     let postList = await posts.getAllPosts();
     //     console.log('showing all posts:');
@@ -68,6 +77,7 @@ async function main() {
     // }catch(e){
     //     console.log(e);
     // }
+>>>>>>> f3836c8fa233b2981545c6166287e7b02371dd72
 
     // try{
     //     let addFlag = await posts.addFlag(postId,'randomUser');
@@ -77,6 +87,21 @@ async function main() {
     //     console.log(e);
     // }
 
+<<<<<<< HEAD
+    try{ //adding like to a post
+        let addLike = await posts.addLike("639b996b0b9fda32b292d836", 'randomUser');
+        console.log('after like is added')
+        console.log(addLike);
+    }catch(e){
+        console.log(e);
+    }
+    try{
+        let checklike = await posts.checkUserLiked(postId, userId);
+        console.log(checklike);
+    }catch(e){
+        console.log(e);
+    }
+=======
     // try{ //adding like to a post
     //     let addLike = await posts.addLike("639b98fdeca0fc87d5884d44", 'randomUser');
     //     console.log('after like is added')
@@ -90,6 +115,7 @@ async function main() {
     // }catch(e){
     //     console.log(e);
     // }
+>>>>>>> f3836c8fa233b2981545c6166287e7b02371dd72
     // try{// adding dislike to same post
     //     let addLike = await posts.addDislike(postId, userId);
     //     console.log(addLike);

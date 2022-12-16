@@ -31,7 +31,7 @@ const addPost = async(
     locationRating, 
     studentCapacity, 
     nycViewRating, 
-    photo, 
+    //photo, 
     foodNear
 ) => {
     userId = helpers.checkId(userId, 'User ID');  //--> still need to implement this in helper
@@ -45,7 +45,7 @@ const addPost = async(
     locationRating = helpers.checkRating(locationRating, 'location');
     nycViewRating = helpers.stringChecker(nycViewRating, 'View rating');
     nycViewRating = helpers.checkRating(nycViewRating, 'View');
-    foodNear = helpers.stringChecker(foodNear, 'Food input');
+    //foodNear = helpers.stringChecker(foodNear, 'Food input');
     //foodNear = helpers.checkFoodNear(foodNear);
     studentCapacity = helpers.stringChecker(studentCapacity, 'Capacity');
     studentCapacity = helpers.checkStudentCapacity(studentCapacity);
