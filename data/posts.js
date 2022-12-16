@@ -246,7 +246,7 @@ const countLikes = async(postId) => {
 // }
 
 
-const addFlag = async(postId, userId) => {
+const addFlag = async(postId, userId, reason, comments) => {
     //postId is already being input as an objectId not a string
     //checkId function should check if valid object ID
 
@@ -257,11 +257,11 @@ const addFlag = async(postId, userId) => {
     
     let flagList = gotPost.flags;
     for (i in flagList){
-        if (flagList[i] === userId){
+        if (flagList[i].user === userId){
             throw `User ${userId} already flagged this post`;
         }
     }
-    flagList.push(userId);
+    flagList.push({user: userId, reason: reason, comments: comments});
     const postCollection = await posts();
     const updatedInfo = await postCollection.updateOne(
         {_id: ObjectId(postId)},
