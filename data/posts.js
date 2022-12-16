@@ -351,4 +351,16 @@ const linkPhoto = async (postId,fileName) => {
       );
 }
 
-module.exports = {getAllPosts, getPostById, addPost, removePost, addFlag, addLike, addDislike,checkUserFlagged, checkUserLiked, getPostByBuidling,getPostByRating,getPostByRatingBuilding, countLikes,linkPhoto};
+const checkIds = async (postId, userId) => {
+    postId = helpers.checkId(postId, 'Post ID');
+    const post = await getPostById(postId);
+    console.log(post);
+    console.log(post.userId);
+    if (post.userId === userId) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+module.exports = {getAllPosts, getPostById, addPost, removePost, addFlag, addLike, addDislike,checkUserFlagged, checkUserLiked, getPostByBuidling,getPostByRating,getPostByRatingBuilding, countLikes,linkPhoto, checkIds};
