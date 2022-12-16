@@ -340,4 +340,15 @@ const getPostByRatingBuilding = async (rating,buidling) => {
     return posts;
 }
 
-module.exports = {getAllPosts, getPostById, addPost, removePost, addFlag, addLike, addDislike,checkUserFlagged, checkUserLiked, getPostByBuidling,getPostByRating,getPostByRatingBuilding, countLikes};
+const linkPhoto = async (postId,fileName) => {
+    postId = helpers.checkId(postId, 'Post ID');
+    helpers.stringChecker(fileName,"FileName")
+    const postCollection = await posts();
+    const post = await postCollection.findOne({_id: ObjectId(postId)});
+    const updatedInfo = await postCollection.updateOne(
+        {_id: ObjectId(postId)},
+        {$set: {photo: fileName}}
+      );
+}
+
+module.exports = {getAllPosts, getPostById, addPost, removePost, addFlag, addLike, addDislike,checkUserFlagged, checkUserLiked, getPostByBuidling,getPostByRating,getPostByRatingBuilding, countLikes,linkPhoto};

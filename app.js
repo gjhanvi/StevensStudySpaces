@@ -4,6 +4,7 @@
 const express = require("express");
 const session = require('express-session')
 const configRoutes = require("./routes");
+const fileUpload = require('express-fileupload');
 const static = express.static(__dirname + "/public");
 // We create our express isntance:
 const app = express();
@@ -14,6 +15,8 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }))
 app.use("/public", static);
+app.use(fileUpload());
+app.use(express.static(__dirname));
 
 // Middlewares:
 
@@ -24,7 +27,25 @@ app.use(session({
   saveUninitialized: true
 }))
 
-configRoutes(app);
+
+const postdata = require("./data/posts.js");
+
+app.post('/upload', function(req, res) {
+  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+   var fileName = req.files.file.name
+   let uploadFile = req.files.file;
+   let id = req.body.id;
+   //console.log(id)
+   //need a function that checks that userid is the same post id
+   let temp = postdata.linkPhoto(id,'/images/' + fileName + '.jpg')
+   uploadFile.mv(__dirname + '/images/' + fileName + '.jpg', function(err) {
+    if (err)
+    res.status(500).redirect("/home")
+   });
+   res.redirect("/posts/" + id)
+ })
+
+ configRoutes(app);
 
 // We can now navigate to localhost:3000
 app.listen(3000, function () {
