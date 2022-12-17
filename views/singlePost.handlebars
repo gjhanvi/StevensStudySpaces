@@ -33,8 +33,6 @@
 </div>
 
 <p>{{title}}</p>
-<p>{{likeMessage}}</p>
-<p>{{totalLikes}}</p>
 <ul class="post">
     {{#each post}}
     {{this.name}}
@@ -47,25 +45,31 @@
     <li id="desc">{{this.description}}</li>
     <li id="cap">Capacity: {{this.studentCapacity}}</li>
     <li>Foor Nearby: {{this.foodNear}}</li>
+</ul>
+    {{/each}}
+    <form action="/posts/like/{{postId}}" method="POST">
+        <button class="likes {{userLiked}}">
+            <span class="fa fa-thumbs-up"></span>
+            {{likes}}
+        </button>
+    </form>
+    <form action="/posts/dislike/{{postId}}" method="POST">
+        <button class="dislikes {{userDisliked}}">
+            <span class="fa fa-thumbs-down"></span>
+            {{dislikes}}
+        </button>
+    </form>
+    {{#each post}}
     {{#each comments}}
     <li>{{this.name}} {{this.comment}}</li>
     {{/each}}
     {{/each}}
-</ul>
 <p>{{postId}}</p>
 
 <form action="/posts/comment/{{postId}}" method="POST" id="comment-form">
     <label for="commentInput">Leave Comment</label>
     <input id="commentInput" type="text" name="commentInput" /><br />
     <button type="submit">Submit Comment</button>
-</form>
-
-<form action="/posts/dislike/{{postId}}" method="post">
-    <button name="dislike" value="dislike">dislike</button>
-</form>
-
-<form action="/posts/like/{{postId}}" method="post">
-    <button name="like" value="like">like</button>
 </form>
 
 <button name="flag" value="flag" onclick="flagPost()">flag</button>
