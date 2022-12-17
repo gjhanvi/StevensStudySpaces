@@ -14,7 +14,7 @@ router
   try {
     if(req.session.user)
     {
-      res.render('newPost', {title: "New Post"}); //Need to render a page that shows the post form
+      res.render('newPost', {title: "New Post", user: req.session.user}); //Need to render a page that shows the post form
     }
     else
     {
@@ -64,14 +64,14 @@ router
         req.body.foodInput
         );
         //console.log(post)
-        res.render('posts', {post: [post], header: 'Post Uploaded!'}); //Render page with post
+        res.render('posts', {post: [post], user: req.session.user, header: 'Post Uploaded!'}); //Render page with post
     }
     else
     {
       res.redirect('/');
     } 
   } catch (error) {
-      res.render('newPost',{title: "New Post", error: error} );
+      res.render('newPost',{title: "New Post", user: req.session.user, error: error} );
   }
 })
 
@@ -83,7 +83,7 @@ router
       if(req.session.user)
       {
         const postList = await postdata.getAllPosts();
-        res.render('posts', {post: postList, header: "All Posts", title:"Posts"});
+        res.render('posts', {post: postList, user: req.session.user, header: "All Posts", title:"Posts"});
       }
       else
       {
@@ -150,7 +150,7 @@ router
           text1 = 'hidden'
           text2 = 'hidden'
         }
-        res.render('singlePost', {text2:text2,text:text,text1:text1,post: [post],title:post.title,postId:req.params.postId, likeMessage:likeMessage, flagged:checkUserFlag, totalLikes: totalMessage});
+        res.render('singlePost', {text2:text2,text:text,text1:text1,post: [post], user: req.session.user,title:post.title,postId:req.params.postId, likeMessage:likeMessage, flagged:checkUserFlag, totalLikes: totalMessage});
       }
       else {
         res.status(403).render('forbiddenAccess');
@@ -303,17 +303,17 @@ router
         else if(xss(req.body.ratingInput) == "Any")
         {
           postlist = await postdata.getPostByBuidling(xss(req.body.buildingInput))
-          res.render('posts', {post: postlist, header: xss(req.body.buildingInput)});
+          res.render('posts', {post: postlist, user: req.session.user, header: xss(req.body.buildingInput)});
         }
         else if(xss(req.body.buildingInput) == "All") 
         {
          postlist = await postdata.getPostByRating(xss(req.body.ratingInput))
-         res.render('posts', {post: postlist, header: `Study Spaces with Maximum Noise Rating of ${xss(req.body.ratingInput)}`});
+         res.render('posts', {post: postlist, user: req.session.user, header: `Study Spaces with Maximum Noise Rating of ${xss(req.body.ratingInput)}`});
         }
         else
         {
           postlist = await postdata.getPostByRatingBuilding(xss(req.body.ratingInput),xss(req.body.buildingInput));
-          res.render('posts', {post: postlist, header: `Spots in ${req.body.buildingInput} with Maximum Noise Rating of ${xss(req.body.ratingInput)}`});
+          res.render('posts', {post: postlist, user: req.session.user, header: `Spots in ${req.body.buildingInput} with Maximum Noise Rating of ${xss(req.body.ratingInput)}`});
         }
   
       }else{
