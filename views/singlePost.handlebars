@@ -1,3 +1,4 @@
+<script src="../public/js/post.js"></script>
 <div class="topnav">
     <a class="active" href="/home">Home</a>
     <a href="/posts/new">New Post</a>
@@ -37,15 +38,15 @@
 <ul class="post">
     {{#each post}}
     {{this.name}}
-    <li class="building">Building: {{this.building}}</li>
-    <li class="floor">Floor: {{this.floor}}</li>
-    <li class="desc">{{this.description}}</li>
-    <li class="noiser">Noise Rating: {{this.noiseRating}}</li>
-    <li class="locr">Location Rating: {{this.locationRating}}</li>
-    <li class="cap">Capacity: {{this.studentCapacity}}</li>
-    <li class="viewr">View Rating: {{this.nycViewRating}}</li>
+    <li id="building">Building: {{this.building}}</li>
+    <li id="floor">Floor: {{this.floor}}</li>
+    <li id="noise">Noise: </li>
+    <li id="loc">Location: </li>
+    <li id="view">View: </li>
     <img src="{{this.photo}}" height="300px" width="500px">
-    <li>{{this.foodNear}}</li>
+    <li id="desc">{{this.description}}</li>
+    <li id="cap">Capacity: {{this.studentCapacity}}</li>
+    <li>Foor Nearby: {{this.foodNear}}</li>
     {{#each comments}}
     <li>{{this.name}} {{this.comment}}</li>
     {{/each}}
@@ -98,6 +99,14 @@
             modal.style.display = "none";
         }
     }
+
+    {{#each post}}
+    window.onload = function () {
+        addRating('noise', {{this.noiseRating}});
+        addRating('view', {{this.nycViewRating}});
+        addRating('loc', {{this.locationRating}});
+    }
+    {{/each}}
 
     function submitSpam() {
         modal.style.display = "none";
