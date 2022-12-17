@@ -86,7 +86,7 @@ router
   .route('/home')
   .get(async (req, res) => {
     if (req.session.user) {
-      res.render('homepage', { title: "home", username: req.session.user, date: new Date().toUTCString() }); // Needs to be whatever homepage it is and render that.
+      res.render('homepage', { title: "home", user: req.session.user, date: new Date().toUTCString() }); // Needs to be whatever homepage it is and render that.
       //res.render('newPost', {title: "New Post"});
     }
     else {
