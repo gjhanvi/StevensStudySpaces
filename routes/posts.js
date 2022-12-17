@@ -313,7 +313,7 @@ router
         else
         {
           postlist = await postdata.getPostByRatingBuilding(xss(req.body.ratingInput),xss(req.body.buildingInput));
-          res.render('posts', {post: postlist, user: req.session.user, header: `Spots in ${req.body.buildingInput} with Maximum Noise Rating of ${xss(req.body.ratingInput)}`});
+          res.render('posts', {post: postlist, user: req.session.user, header: `Spots in ${req.body.buildingInput} with Max Noise Rating of ${xss(req.body.ratingInput)}`});
         }
   
       }else{

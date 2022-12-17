@@ -151,7 +151,7 @@ let checkPassword = async (password) =>{
 
 let checkBuilding = (building) =>
 {
-  let buildings = ["Babbio","Edwin","Library","GatewayNorth","GatewaySouth","Carnegie","Burchard","McLean","UCC","Morton","Pierce","Kidde","ABS","Howe" ];
+  let buildings = ["Babbio","Edwin","Library","Gateway North","Gateway South","Carnegie","Burchard","McLean","UCC","Morton","Pierce","Kidde","ABS","Howe" ];
   if(!buildings.includes(building)){
     throw "This is not a valid building";
   }
