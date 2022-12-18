@@ -44,8 +44,8 @@ app.post('/upload', function(req, res) {
      res.status(500).redirect("/home")
     });
    }
-   });
    res.redirect("/posts/" + id)
+   });
 
  configRoutes(app);
 
