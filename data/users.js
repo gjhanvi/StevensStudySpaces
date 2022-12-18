@@ -20,8 +20,7 @@ const createUser = async (username, password, firstName, lastName) => {
     firstName: firstName,
     lastName: lastName,
     username: username.toLowerCase(),
-    password: hash,
-    comments: []
+    password: hash
   };
   const insertInfo = await userCol.insertOne(newUser);
   if (!insertInfo.acknowledged || !insertInfo.insertedId)
