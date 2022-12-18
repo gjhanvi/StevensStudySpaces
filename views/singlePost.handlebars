@@ -25,7 +25,7 @@
         <input type="radio" id="misinformation" name="spamradio" value="misinformation">
         <label for="misinformation">Wrong information</label><br>
 
-        <input id="spamcomment" type="tex" placeholder="Add any other comments here..." /><br>
+        <input id="spamcomment" type="text" /><br>
 
         <button onclick="submitSpam()">Submit</button>
     </div>
@@ -35,26 +35,23 @@
 <p>{{title}}</p>
 <p>{{likeMessage}}</p>
 <p>{{totalLikes}}</p>
-<ul class="post">
     {{#each post}}
     {{this.name}}
-    <li id="building">Building: {{this.building}}</li>
-    <li id="floor">Floor: {{this.floor}}</li>
-    <li id="noise">Noise: </li>
-    <li id="loc">Location: </li>
-    <li id="view">View: </li>
-    <img src="{{this.photo}}" height="300px" width="500px">
-    <li id="desc">{{this.description}}</li>
-    <li id="cap">Capacity: {{this.studentCapacity}}</li>
-    <li>Foor Nearby: {{this.foodNear}}</li>
+    <img src="{{this.photo}}" alt = "userphoto" height="300" width="500">
+    <p id="building">Building: {{this.building}}</p> <p id="floor">Floor: {{this.floor}}</p>
+    <p id="noise">Noise: </p>
+    <p id="loc">Location: </p>
+    <p id="view">View: </p>
+    <p id="desc">{{this.description}}</p>
+    <p id="cap">Capacity: {{this.studentCapacity}}</p>
+    <p>Foor Nearby: {{this.foodNear}}</p>
     <br>
     <br>
     <p>Comments:</p>
     {{#each comments}}
-    <li>{{this.name}}: {{this.comment}}</li>
+    <p>{{this.name}}: {{this.comment}}</p>
     {{/each}}
     {{/each}}
-</ul>
 
 
 <form action="/posts/comment/{{postId}}" method="POST" id="comment-form">
@@ -79,10 +76,10 @@
 
 <a href="/home">Return Home</a>
 
-<form ref='uploadForm' encType="multipart/form-data" class="" action="/upload" method="post">
+<form encType="multipart/form-data" class="" action="/upload" method="post">
     <input type="hidden" name="id" value="{{postId}}">
-    <input type="{{text1}}" name="file" value=""><br>
-    <input type="{{text}}" name="" value="upload!">
+    <input type="{{text1}}" name="file"><br>
+    <input type="{{text}}" name="button" value="upload!">
 </form>
 
 <script>
