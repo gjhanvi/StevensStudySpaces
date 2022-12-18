@@ -156,7 +156,7 @@ router
         res.status(403).render('forbiddenAccess');
       }
     } catch (error) {
-      res.status(400).render('userLogin', { title: "Login", error: error }); // 400 error
+      res.status(400).redirect('/home'); // 400 error
     }
   })
 
@@ -181,7 +181,7 @@ router
         res.status(403).render('forbiddenAccess');
       }
     } catch (error) {
-      res.status(400).render('userLogin', { title: "Login", error: error }); // 400 error
+      res.status(400).redirect('/posts/' + req.params.postId); // 400 error
     }
   })
 
@@ -192,16 +192,16 @@ router
     try {
       if (req.session.user) {
         helpFunctions.stringChecker(req.params.postId)
-        // if (
-        //   !req.params.postId ||
-        //   !ObjectId.isValid(req.params.postId)
-        // ) {
-        //   res.status(400).redirect('/home');
-        //   return null;
-        // }
-        console.log(req.params.postId + " " +req.session.userId)
+        if (
+          !req.params.postId ||
+          !ObjectId.isValid(req.params.postId)
+        ) {
+          res.status(400).redirect('/home');
+          return null;
+        }
+        //console.log(req.params.postId + " " +req.session.userId)
         const post = await postdata.addDislike(req.params.postId,req.session.userId)
-        console.log(post)
+        //console.log(post)
         res.redirect('/posts/' +  req.params.postId);
       }
       else {
@@ -243,7 +243,7 @@ router
     try {
       if (req.session.user) {
          let bool = await postdata.checkIds(req.params.postId,req.session.userId)
-         console.log(bool)
+         //console.log(bool)
          if(bool)
          {
           const post = await postdata.removePost(req.params.postId)
@@ -286,7 +286,7 @@ router
         res.status(403).render('forbiddenAccess');
       }
     } catch (error) {
-      res.status(400).send({ error: error });
+      res.status(400).redirect('/post/' + req.params.postId);
     }
   })
 

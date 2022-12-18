@@ -31,21 +31,20 @@ app.use(session({
 const postdata = require("./data/posts.js");
 
 app.post('/upload', function(req, res) {
-   var fileName = req.files.file.name
    let uploadFile = req.files.file;
    let id = req.body.id;
    //console.log(id)
    //need a function that checks that userid is the same post id
    if(postdata.checkIds(id,req.session.userId))
    {
-    let temp = postdata.linkPhoto(id,'/images/' + fileName + '.jpg')
-    uploadFile.mv(__dirname + '/images/' + fileName + '.jpg', function(err) {
+    let temp = postdata.linkPhoto(id,'/images/' + id + '.jpg')
+    uploadFile.mv(__dirname + '/images/' + id + '.jpg', function(err) {
      if (err)
      res.status(500).redirect("/home")
     });
    }
-   });
    res.redirect("/posts/" + id)
+   });
 
  configRoutes(app);
 

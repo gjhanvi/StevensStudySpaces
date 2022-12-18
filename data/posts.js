@@ -352,8 +352,8 @@ const linkPhoto = async (postId,fileName) => {
 const checkIds = async (postId, userId) => {
     postId = helpers.checkId(postId, 'Post ID');
     const post = await getPostById(postId);
-    console.log(post);
-    console.log(post.userId);
+   // console.log(post);
+    //console.log(post.userId);
     if (post.userId === userId) {
         return true;
     } else {
