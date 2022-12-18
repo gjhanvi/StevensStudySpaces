@@ -1,8 +1,6 @@
 # Stevens Study Spaces
 A forum where users can review or share new study spots at Stevens. We seek to build a website where you can go and find the perfect study spot for you or your group. 
 
-[Stevens Logo](/images/index.png)
-
 # Installing application
 
 In your terminal, run ```git clone https://github.com/gjhanvi/StevensStudySpaces ``` then cd to the new folder and run ```git pull``` just to keep the application up to date. Run ```npm i ``` to install all dependencies and packages. 
