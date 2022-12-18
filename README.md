@@ -1,6 +1,8 @@
 # Stevens Study Spaces
 A forum where users can review or share new study spots at Stevens. We seek to build a website where you can go and find the perfect study spot for you or your group. 
 
+[Stevens Logo](/images/index.png)
+
 # Installing application
 
 In your terminal, run ```git clone https://github.com/gjhanvi/StevensStudySpaces ``` then cd to the new folder and run ```git pull``` just to keep the application up to date. Run ```npm i ``` to install all dependencies and packages. 
@@ -20,7 +22,7 @@ Run ```node seed.js``` to populate the mongo database with fake users, posts. co
 3. [localhost:3000/](localhost:3000/)
 
 
-# Site Map & Features
+# Features
 + User Registration
 	- This site is meant for Steven Students so we require all users to create an account using their Stevens email.
 + User Login
