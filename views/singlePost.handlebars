@@ -45,15 +45,17 @@
     <p id="desc">{{this.description}}</p>
     <p id="cap">Capacity: {{this.studentCapacity}}</p>
     <p>Foor Nearby: {{this.foodNear}}</p>
+    <br>
+    <br>
+    <p>Comments:</p>
     {{#each comments}}
-    <p>{{this.name}} {{this.comment}}</p>
+    <p>{{this.name}}: {{this.comment}}</p>
     {{/each}}
     {{/each}}
 
-{{!-- <p>{{postId}}</p> --}}
 
 <form action="/posts/comment/{{postId}}" method="POST" id="comment-form">
-    <label for="commentInput">Leave Comment</label>
+    <label for="commentInput">Leave a comment</label>
     <input id="commentInput" type="text" name="commentInput" /><br />
     <button type="submit">Submit Comment</button>
 </form>

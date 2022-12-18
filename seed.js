@@ -136,6 +136,13 @@ async function main() {
     }catch(e){
         console.log(e);
     }
+
+    try{
+        let comment = await comments.createComment(shreyaId, uccPostId, 'I do not agree with your view rating.');
+    }catch(e){
+        console.log(e);
+    }
+
     
     let burchardPostId = '';
     try{
@@ -171,6 +178,11 @@ async function main() {
     }catch(e){
         console.log(e);
     }
+    try{ //adding like to a post
+        let addLike = await posts.addLike(howePostId, shreyaId);
+    }catch(e){
+        console.log(e);
+    }
     
     let gatewayPostId = '';
     try{
@@ -181,12 +193,40 @@ async function main() {
     }catch(e){
         console.log(e);
     }
+    try{ //adding like to a post
+        let addLike = await posts.addLike(gatewayPostId, shreyaId);
+    }catch(e){
+        console.log(e);
+    }
+    try{ //adding like to a post
+        let addLike = await posts.addLike(gatewayPostId, stevenId);
+    }catch(e){
+        console.log(e);
+    }
+    
+    try{
+        let comment = await comments.createComment(shreyaId, gatewayPostId, 'I love this spot too thanks for sharing Susan!');
+    }catch(e){
+        console.log(e);
+    }
+    try{
+        let comment = await comments.createComment(stevenId, gatewayPostId, 'Great post!');
+    }catch(e){
+        console.log(e);
+    }
+    
+
     let babbioPostId = '';
     try{
         let post = await posts.addPost(jhanviId, 'Hallway Desks', 'Babbio', '2', 
         'There are desks and tables in the hallway of Babbio which are a great quiet spot to study. I did not realize they were there until I had a class on this floor. Some spots are right near the window and have great city views!',
         '1', '2', '2', '4', 'Yes');
         babbioPostId = post._id.toString();
+    }catch(e){
+        console.log(e);
+    }
+    try{
+        let comment = await comments.createComment(susanId, babbioPostId, 'I just showed my friend this spot and she had no idea!');
     }catch(e){
         console.log(e);
     }
@@ -200,11 +240,7 @@ async function main() {
         console.log(e);
     }
 
-    try{
-        let comment = await comments.createComment(susanId, babbioPostId, 'I just showed my friend this spot and she had no idea!');
-    }catch(e){
-        console.log(e);
-    }
+    
     try{
         let comment = await comments.createComment(stevenId, kiddePostId, 'I am not music tech but this is a fun spot.');
     }catch(e){

@@ -120,7 +120,7 @@ input.floorInput {
 }
 
 .topnav {
-    background-color: #333d;
+    background-color: rgba(71, 69, 69, 0.867);
     overflow: hidden;
     position: fixed;
     top: 0;
@@ -128,34 +128,33 @@ input.floorInput {
     width: 100%;
 }
 
-/* Style the links inside the navigation bar */
 .topnav a {
     float: left;
-    color: #f2f2f2;
     text-align: center;
+    color: #f2f2f2;
     padding: 14px 16px;
     text-decoration: none;
     font-size: 17px;
 }
 
-/* Change the color of links on hover */
+
 .topnav a:hover {
-    background-color: #ddd;
+    background-color: lightcyan;
     color: black;
 }
 
-/* Add a color to the active/current link */
+
 .topnav a.active {
-    background-color: #008b0f  ;
+    background-color: rgb(31, 112, 31);
     color: white;
 }
 
 .topnav .User {
     float: right;
-    color: #f2f2f2;
     text-align: center;
+    color: #f2f2f2;
     padding: 14px 16px;
-    font-size: 17px;
+    font-size: 18px;
     text-decoration: none;
 }
 
