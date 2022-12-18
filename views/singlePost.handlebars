@@ -25,7 +25,7 @@
         <input type="radio" id="misinformation" name="spamradio" value="misinformation">
         <label for="misinformation">Wrong information</label><br>
 
-        <input id="spamcomment" type="tex" placeholder="Add any other comments here..." /><br>
+        <input id="spamcomment" type="text" /><br>
 
         <button onclick="submitSpam()">Submit</button>
     </div>
@@ -61,13 +61,13 @@
     </form>
     {{#each post}}
     {{#each comments}}
-    <li>{{this.name}} {{this.comment}}</li>
+    <p>{{this.name}}: {{this.comment}}</p>
     {{/each}}
     {{/each}}
 <p>{{postId}}</p>
 
 <form action="/posts/comment/{{postId}}" method="POST" id="comment-form">
-    <label for="commentInput">Leave Comment</label>
+    <label for="commentInput">Leave a comment</label>
     <input id="commentInput" type="text" name="commentInput" /><br />
     <button type="submit">Submit Comment</button>
 </form>
@@ -80,10 +80,10 @@
 
 <a href="/home">Return Home</a>
 
-<form ref='uploadForm' encType="multipart/form-data" class="" action="/upload" method="post">
+<form encType="multipart/form-data" class="" action="/upload" method="post">
     <input type="hidden" name="id" value="{{postId}}">
-    <input type="{{text1}}" name="file" value=""><br>
-    <input type="{{text}}" name="" value="upload!">
+    <input type="{{text1}}" name="file"><br>
+    <input type="{{text}}" name="button" value="upload!">
 </form>
 
 <script>

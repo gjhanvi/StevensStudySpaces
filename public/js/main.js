@@ -151,7 +151,7 @@ let checkPassword = async (password) =>{
 
 let checkBuilding = (building) =>
 {
-  let buildings = ["Babbio","Edwin","Library","GatewayNorth","GatewaySouth","Carnegie","Burchard","McLean","UCC","Morton","Pierce","Kidde","ABS","Howe" ];
+  let buildings = ["Babbio","Edwin","Library","Gateway North","Gateway South","Carnegie","Burchard","McLean","UCC","Morton","Pierce","Kidde","ABS","Howe" ];
   if(!buildings.includes(building)){
     throw "This is not a valid building";
   }
@@ -176,17 +176,18 @@ let checkValidFloor =(building, floorInput) =>
     if(floor <0 || floor >3 ){
         throw "The floor input for Edwin A Stevens is incorrect it has 3 floors."
     }
+  }
   if (building === "Library"){
     if(floor <0 || floor >3 ){
         throw "The floor input for Library is incorrect it  has 3 floors."
     }
   }
-  if (building === "GatewayNorth"){
+  if (building === "Gateway North"){
     if(floor <0 || floor >3 ){
         throw "The floor input for Gateway North is incorrect it  has 3 floors."
     }
   }
-  if (building === "GatewaySouth"){
+  if (building === "Gateway South"){
     if(floor <0 || floor >4 ){
         throw "The floor input for Gateway South is incorrect it  has 4 floors."
     }
@@ -238,7 +239,7 @@ let checkValidFloor =(building, floorInput) =>
   }
   
   return floorInput;
-}}
+}
 
 const staticForm = document.getElementById('newpost-form');
 const errorContainer = document.getElementById("error-container");

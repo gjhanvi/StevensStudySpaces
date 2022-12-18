@@ -16,8 +16,8 @@
         <option value="Babbio">Babbio</option>
         <option value="Edwin">Edwin A. Stevens Hall</option>
         <option value="Library">S.C. Williams Library</option>
-        <option value="GatewayNorth">Gateway North</option>
-        <option value="GatewaySouth">Gateway South</option>
+        <option value="Gateway North">Gateway North</option>
+        <option value="Gateway South">Gateway South</option>
         <option value="Carnegie">Carnegie</option>
         <option value="Burchard">Burchard</option>
         <option value="McLean">McLean Hall</option>
@@ -42,11 +42,10 @@
 
 <h1>{{header}}</h1>
 
-<ul >
 
     {{#each post}}
     <div class ="divBorder">
-    <a href="/posts/{{this._id}}">{{this.title}} {{this.name}}</a>
+    <a href="/posts/{{this._id}}">{{this.title}} By {{this.name}}</a>
     <p class ="eachPost">Building: {{this.building}}</p> 
     <p class = "eachPost">Floor: {{this.floor}} </p>
     <p class ="eachPost">Description of Study Spot: {{this.description}}</p>
@@ -56,12 +55,11 @@
     <p class ="eachPost">Rating of NYC View: {{this.nycViewRating}}</p>
     <p class ="eachPost">Is there food nearby? {{this.foodNear}}</p>
     <div class="fitPhoto">
-    <img src="{{this.photo}}">
+    <img src="{{this.photo}}" alt ="userPhotos">
     </div>
     
     </div>
     {{/each}}
-</ul>
 
 
 

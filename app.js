@@ -31,14 +31,18 @@ app.use(session({
 const postdata = require("./data/posts.js");
 
 app.post('/upload', function(req, res) {
-  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-   var fileName = req.files.file.name
-   let uploadFile = req.files.file;
-   let id = req.body.id;
+  let uploadFile;
+  let id;
+  try{
+    uploadFile = req.files.file;
+    id = req.body.id;
+  }catch(e){
+    res.redirect('/posts/');
+  }
    //console.log(id)
    //need a function that checks that userid is the same post id
-   let temp = postdata.linkPhoto(id,'/images/' + fileName + '.jpg')
-   uploadFile.mv(__dirname + '/images/' + fileName + '.jpg', function(err) {
+   let temp = postdata.linkPhoto(id,'/images/' + id + ".jpg")
+   uploadFile.mv(__dirname + '/images/' + id + ".jpg", function(err) {
     if (err)
     res.status(500).redirect("/home")
    });

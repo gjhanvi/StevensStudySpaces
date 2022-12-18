@@ -142,7 +142,7 @@ router
         res.status(403).render('forbiddenAccess');
       }
     } catch (error) {
-      res.status(400).render('userLogin', { title: "Login", error: error }); // 400 error
+      res.redirect('/home');
     }
   })
 
@@ -167,7 +167,7 @@ router
         res.status(403).render('forbiddenAccess');
       }
     } catch (error) {
-      res.status(400).render('userLogin', { title: "Login", error: error }); // 400 error
+      res.status(400).redirect('/posts/' +  req.params.postId);
     }
   })
 
@@ -178,17 +178,17 @@ router
     try {
       if (req.session.user) {
         helpFunctions.stringChecker(req.params.postId)
-        // if (
-        //   !req.params.postId ||
-        //   !ObjectId.isValid(req.params.postId)
-        // ) {
-        //   res.status(400).redirect('/home');
-        //   return null;
-        // }
-        console.log(req.params.postId + " " + req.session.userId)
-        const post = await postdata.addDislike(req.params.postId, req.session.userId)
-        console.log(post)
-        res.redirect('/posts/' + req.params.postId);
+        if (
+          !req.params.postId ||
+          !ObjectId.isValid(req.params.postId)
+        ) {
+          res.status(400).redirect('/home');
+          return null;
+        }
+        //console.log(req.params.postId + " " +req.session.userId)
+        const post = await postdata.addDislike(req.params.postId,req.session.userId)
+       // console.log(post)
+        res.redirect('/posts/' +  req.params.postId);
       }
       else {
         res.status(403).render('forbiddenAccess');
@@ -219,7 +219,7 @@ router
         res.status(403).render('forbiddenAccess');
       }
     } catch (error) {
-      res.redirect('/posts/' + req.params.postId);
+      res.status(400).redirect('/posts/' +  req.params.postId);
     }
   })
 
@@ -228,9 +228,10 @@ router
   .post(async (req, res) => {
     try {
       if (req.session.user) {
-        let bool = await postdata.checkIds(req.params.postId, req.session.userId)
-        console.log(bool)
-        if (bool) {
+         let bool = await postdata.checkIds(req.params.postId,req.session.userId)
+         //console.log(bool)
+         if(bool)
+         {
           const post = await postdata.removePost(req.params.postId)
           res.redirect('/posts/');
         }
@@ -243,7 +244,7 @@ router
       }
     } catch (error) {
       console.log(error)
-      res.redirect('/posts/' + req.params.postId);
+      res.status(400).redirect('/posts/' +  req.params.postId);
     }
   })
 
@@ -271,7 +272,7 @@ router
         res.status(403).render('forbiddenAccess');
       }
     } catch (error) {
-      res.status(400).send({ error: error });
+      res.status(400).redirect('/posts/' +  req.params.postId);
     }
   })
 
@@ -292,9 +293,7 @@ router
           postlist = await postdata.getPostByRating(xss(req.body.ratingInput))
           res.render('posts', { post: postlist, user: req.session.user, header: `Study Spaces with Maximum Noise Rating of ${xss(req.body.ratingInput)}` });
         }
-        else {
-          postlist = await postdata.getPostByRatingBuilding(xss(req.body.ratingInput), xss(req.body.buildingInput));
-          res.render('posts', { post: postlist, user: req.session.user, header: `Spots in ${req.body.buildingInput} with Maximum Noise Rating of ${xss(req.body.ratingInput)}` });
+        res.render('posts', { post: postlist, user: req.session.user, header: `Spots in ${req.body.buildingInput} with Maximum Noise Rating of ${xss(req.body.ratingInput)}` });
         }
 
       } else {
