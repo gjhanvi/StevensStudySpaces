@@ -16,7 +16,7 @@ Run ```node seed.js``` to populate the mongo database with fake users, posts. co
 
 1. ```git pull```
 2. ```node seed.js``` optional
-2. ```node start ```
+2. ```npm start ```
 3. [localhost:3000/](localhost:3000/)
 
 
