@@ -156,7 +156,7 @@ router
         res.status(403).render('forbiddenAccess');
       }
     } catch (error) {
-      res.status(400).render('userLogin', { title: "Login", error: error }); // 400 error
+      res.redirect('/home');
     }
   })
 
@@ -181,7 +181,7 @@ router
         res.status(403).render('forbiddenAccess');
       }
     } catch (error) {
-      res.status(400).render('userLogin', { title: "Login", error: error }); // 400 error
+      res.status(400).redirect('/posts/' +  req.params.postId);
     }
   })
 
@@ -192,13 +192,13 @@ router
     try {
       if (req.session.user) {
         helpFunctions.stringChecker(req.params.postId)
-        // if (
-        //   !req.params.postId ||
-        //   !ObjectId.isValid(req.params.postId)
-        // ) {
-        //   res.status(400).redirect('/home');
-        //   return null;
-        // }
+        if (
+          !req.params.postId ||
+          !ObjectId.isValid(req.params.postId)
+        ) {
+          res.status(400).redirect('/home');
+          return null;
+        }
         console.log(req.params.postId + " " +req.session.userId)
         const post = await postdata.addDislike(req.params.postId,req.session.userId)
         console.log(post)
@@ -233,7 +233,7 @@ router
         res.status(403).render('forbiddenAccess');
       }
     } catch (error) {
-      res.redirect('/posts/' +  req.params.postId);
+      res.status(400).redirect('/posts/' +  req.params.postId);
     }
   })
 
@@ -258,7 +258,7 @@ router
       }
     } catch (error) {
       console.log(error)
-      res.redirect('/posts/' +  req.params.postId);
+      res.status(400).redirect('/posts/' +  req.params.postId);
     }
   })
 
@@ -286,7 +286,7 @@ router
         res.status(403).render('forbiddenAccess');
       }
     } catch (error) {
-      res.status(400).send({ error: error });
+      res.status(400).redirect('/posts/' +  req.params.postId);
     }
   })
 
