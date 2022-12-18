@@ -31,8 +31,14 @@ app.use(session({
 const postdata = require("./data/posts.js");
 
 app.post('/upload', function(req, res) {
-   let uploadFile = req.files.file;
-   let id = req.body.id;
+  let uploadFile;
+  let id;
+  try{
+    uploadFile = req.files.file;
+    id = req.body.id;
+  }catch(e){
+    res.redirect('/posts/');
+  }
    //console.log(id)
    //need a function that checks that userid is the same post id
    let temp = postdata.linkPhoto(id,'/images/' + id + ".jpg")
