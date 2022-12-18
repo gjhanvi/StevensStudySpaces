@@ -199,9 +199,9 @@ router
           res.status(400).redirect('/home');
           return null;
         }
-        console.log(req.params.postId + " " +req.session.userId)
+        //console.log(req.params.postId + " " +req.session.userId)
         const post = await postdata.addDislike(req.params.postId,req.session.userId)
-        console.log(post)
+       // console.log(post)
         res.redirect('/posts/' +  req.params.postId);
       }
       else {
@@ -243,7 +243,7 @@ router
     try {
       if (req.session.user) {
          let bool = await postdata.checkIds(req.params.postId,req.session.userId)
-         console.log(bool)
+         //console.log(bool)
          if(bool)
          {
           const post = await postdata.removePost(req.params.postId)

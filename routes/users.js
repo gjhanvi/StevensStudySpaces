@@ -72,7 +72,7 @@ router
           res.status(400).render('userLogin', { title: "Login", error: "Invalid username or password" });
         }
         else {
-          req.session.user = xss(req.body.usernameInput);
+          req.session.user = xss(req.body.usernameInput.toLowerCase());
           req.session.userId = temp.userId;
           res.redirect('/home');
         }

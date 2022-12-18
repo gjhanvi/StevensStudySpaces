@@ -81,6 +81,78 @@ async function main() {
         console.log(e);
     }
 
+    let carnegieId = '';
+    try{
+        let post = await posts.addPost(jhanviId, 'Carnegie is okay', 'Carnegie', '2', 
+        'Hi Ta/Ca, Steven here. You will notice that some of the descriptions will be random sentences because I ran out of brain power thinking of them. Hope grading/finals is going well for yall.',
+        '2', '2', '11', '4', 'No');
+        carnegieId = post._id.toString();
+    }catch(e){
+        console.log(e);
+    }
+
+
+    let mcleanId = '';
+    try{
+        let post = await posts.addPost(susanId, 'Mclean more Mcdonalds or something', 'McLean', '2', 
+        'This is placeholder text Because I ran out of descriptions of study spots. This description is being written at 3:09am because we needed more posts of every building imho. - Steven. Send help ',
+        '4', '1', '13', '4', 'Yes');
+        mcleanId = post._id.toString();
+    }catch(e){
+        console.log(e);
+    }
+
+    let mortonId = '';
+    try{
+        let post = await posts.addPost(shreyaId, 'Morton is Neat', 'Morton', '4', 
+        'This is placeholder text Because I ran out of descriptions of study spots. Imagine a really funny description and accurate one about a study spot on the fourth floor of morton lol',
+        '5', '2', '17', '4', 'No');
+        mortonId = post._id.toString();
+    }catch(e){
+        console.log(e);
+    }
+
+    let pierceId = '';
+    try{
+        let post = await posts.addPost(zachId, 'The Dining Hall is Great For Studying and Eating', 'Pierce', '2', 
+        'Pierce food is fantastic and I would eat here every day and study here if I had unlimited swipes! Oh studying here is pretty cool here too I guess',
+        '3', '3', '19', '3', 'Yes');
+        pierceId = post._id.toString();
+    }catch(e){
+        console.log(e);
+    }
+
+    let absId = '';
+    try{
+        let post = await posts.addPost(stevenId, 'ABS stands for Awesome Basement Spot', 'ABS', '1', 
+        'This spot is so secert but so good!',
+        '2', '3', '4', '5', 'No');
+        absId = post._id.toString();
+    }catch(e){
+        console.log(e);
+    }
+
+    
+    let edwinId = '';
+    try{
+        let post = await posts.addPost(freshmanId, 'Fake Spot in Edwin. Try to Flag me!', 'Edwin', '1', 
+        'You gotta take the elevator from the 8th floor down into the 5th floor and jump out at the 17th floor while driving backwards to get here losers',
+        '1', '1', '1', '1', 'Yes');
+        edwinId = post._id.toString();
+    }catch(e){
+        console.log(e);
+    }
+
+    let gateWaySouthId = '';
+    try{
+        let post = await posts.addPost(freshmanId, 'Go ahread try to Spam my Post. Loser + Ratio + L Bozo', 'Gateway South', '3', 
+        'Stevens is a terrbile school and we should boycott it. Take this L admins and users, you guys smell ! >:)',
+        '5', '5', '5', '5', 'No');
+        gateWaySouthId = post._id.toString();
+    }catch(e){
+        console.log(e);
+    }
+
     try {
         let comment = await comments.createComment(susanId, gatewayBoothPostId, "I totally agree. This spot is so good and I get so excited when I actually get a seat.");
     }catch(e){
@@ -225,6 +297,24 @@ async function main() {
     }catch(e){
         console.log(e);
     }
+    let babbioPostId1 = '';
+    try{
+        let post = await posts.addPost(jhanviId, 'This is a duplicate babbio to show filters usage', 'Babbio', '3', 
+        'RanaisdaomOG Garbage Description SLASODKPSDKPOAISDKPASJKPDASJKPDIASJPIDJPSIAJ',
+        '3', '1', '6', '4', 'Yes');
+        babbioPostId1 = post._id.toString();
+    }catch(e){
+        console.log(e);
+    }
+    let babbioPostId2 = '';
+    try{
+        let post = await posts.addPost(jhanviId, 'This is a duplicate babbio to show filters usage', 'Babbio', '3', 
+        'RanaisdaomOG Garbage Description SLASODKPSDKPOAISDKPASJKPDASJKPDIASJPIDJPSIAJ',
+        '4', '2', '9', '2', 'Yes');
+        babbioPostId2 = post._id.toString();
+    }catch(e){
+        console.log(e);
+    }
     try{
         let comment = await comments.createComment(susanId, babbioPostId, 'I just showed my friend this spot and she had no idea!');
     }catch(e){
@@ -277,10 +367,80 @@ async function main() {
         console.log(e);
     }
 
+    try{ //adding like to a post
+        let addLike = await posts.addLike(mortonId, shreyaId);
+        let addDislike = await posts.addDislike(edwinId, shreyaId);
+        let comment = await comments.createComment(shreyaId, absId, "This is a comment to show you that comments work");
+        
+    }catch(e){
+        console.log(e);
+    }
+    try{
+        let addLike = await posts.addLike(mortonId, zachId);
+        let addDislike = await posts.addDislike(edwinId, zachId);
+        let comment = await comments.createComment(zachId, absId, "This is a comment to show you that comments work");
+    }catch(e){
+        console.log(e);
+    }
+    try{
+        let addLike = await posts.addLike(mortonId, susanId);
+        let addDislike = await posts.addDislike(edwinId, susanId);
+        let comment = await comments.createComment(susanId, absId, "This is a comment to show you that comments work");
+    }catch(e){
+        console.log(e);
+    }
+    try{
+        let addLike = await posts.addLike(mortonId, stevenId);
+        let addDislike = await posts.addDislike(edwinId, stevenId);
+        let comment = await comments.createComment(stevenId, absId, "This is a comment to show you that comments work");
+    }catch(e){
+        console.log(e);
+    }
+    try{
+        let addLike = await posts.addLike(mortonId, jhanviId);
+        let addDislike = await posts.addDislike(edwinId, jhanviId);
+        let comment = await comments.createComment(jhanviId, absId, "This is a comment to show you that comments work");
+    }catch(e){
+        console.log(e);
+    }
 
-
-
-
+    
+    try{ //adding like to a post
+        let addLike = await posts.addLike(carnegieId, shreyaId);
+        let addDislike = await posts.addDislike(pierceId, shreyaId);
+        let comment = await comments.createComment(shreyaId, babbioPostId, "This is a comment to show you that comments work");
+        
+    }catch(e){
+        console.log(e);
+    }
+    try{
+        let addLike = await posts.addLike(carnegieId, zachId);
+        let addDislike = await posts.addDislike(pierceId, zachId);
+        let comment = await comments.createComment(zachId, carnegieId, "This is a comment to show you that comments work");
+    }catch(e){
+        console.log(e);
+    }
+    try{
+        let addLike = await posts.addLike(pierceId, susanId);
+        let addDislike = await posts.addDislike(carnegieId, susanId);
+        let comment = await comments.createComment(susanId, pierceId, "This is a comment to show you that comments work");
+    }catch(e){
+        console.log(e);
+    }
+    try{
+        let addLike = await posts.addLike(gateWaySouthId, stevenId);
+        let addDislike = await posts.addDislike(mcleanId, stevenId);
+        let comment = await comments.createComment(stevenId, gateWaySouthId, "This is a comment to show you that comments work");
+    }catch(e){
+        console.log(e);
+    }
+    try{
+        let addLike = await posts.addLike(gateWaySouthId, jhanviId);
+        let addDislike = await posts.addDislike(mcleanId, jhanviId);
+        let comment = await comments.createComment(jhanviId, mcleanId, "This is a comment to show you that comments work");
+    }catch(e){
+        console.log(e);
+    }
     
     await connection.closeConnection();
 }

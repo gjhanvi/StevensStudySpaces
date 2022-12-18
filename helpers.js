@@ -211,21 +211,23 @@ let checkValidFloor =(building, floorInput) =>
     }
   }
   //VERIFY THE VALUE 
+  //console.log(building)
   if (building === "Edwin"){
     if(floor <0 || floor >3 ){
         throw "The floor input for Edwin A Stevens is incorrect it has 3 floors."
     }
+  }
   if (building === "Library"){
     if(floor <0 || floor >3 ){
         throw "The floor input for Library is incorrect it  has 3 floors."
     }
   }
-  if (building === "GatewayNorth"){
+  if (building === "Gateway North"){
     if(floor <0 || floor >3 ){
         throw "The floor input for Gateway North is incorrect it  has 3 floors."
     }
   }
-  if (building === "GatewaySouth"){
+  if (building === "Gateway South"){
     if(floor <0 || floor >4 ){
         throw "The floor input for Gateway South is incorrect it  has 4 floors."
     }
@@ -277,7 +279,7 @@ let checkValidFloor =(building, floorInput) =>
   }
   
   return floorInput;
-}}
+}
 
   module.exports = {stringChecker,letternumberonly,letterSpaceNumber,letterSpacesOnly,letterOnly,passwordChecker,checkId, checkUsername,checkPassword, checkRating,
   checkFoodNear, checkStudentCapacity, checkName, checkValidFloor,checkBuilding};

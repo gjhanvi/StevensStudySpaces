@@ -10,7 +10,8 @@ const createUser = async (username, password, firstName, lastName) => {
   password = await helper.checkPassword(password);
   firstName =  helper.checkName(firstName);
   lastName = helper. checkName(lastName); 
-
+  firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+  lastName = lastName.charAt(0).toUpperCase() + lastName.slice(1).toLowerCase();
   const userCol = await users();
   const user = await userCol.findOne({ username: { '$regex': username, $options: 'i' } });
   if (user != null) throw 'There already exists a user with this username';
