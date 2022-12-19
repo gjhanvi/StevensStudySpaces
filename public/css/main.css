@@ -1,10 +1,12 @@
 p.mainhead {
     font-size: 2rem;
-    color: rgb(42, 30, 30);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
+    background-color: rgba(192, 47, 47, 0.8);
+    color: #fff;
+    max-width: 50%;
+    padding: 27px;
+    margin: auto;
+    border: rgba(255, 255, 255, 0.9) 3px solid;
+    border-radius: 15px 15px 0 0;
 }
 
 img {
@@ -58,7 +60,7 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
-    font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
     font-size: 15pt;
 }
 
@@ -68,10 +70,6 @@ main {
     background-color: rgba(255, 255, 255, 0.9);
     padding: 30px;
     bottom: 0;
-}
-
-header {
-    padding-top: 1px;
 }
 
 h1 {
@@ -231,4 +229,20 @@ ul.post {
     float: right;
     transform: translateY(-26px);
     margin-right: 4 0px; 
+}
+
+.fitPhoto {
+    float: left;
+}
+
+.active {
+    color: darkblue;
+}
+
+form {
+    display: inline;
+}
+
+button.likes, button.dislikes {
+    display: inline-flex;
 }
